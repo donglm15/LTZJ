@@ -187,5 +187,18 @@ export default {
     tagsView: '开启 Tags-View',
     fixedHeader: '固定 Header',
     sidebarLogo: '侧边栏 Logo'
+  },
+  // 用户管理--用户列表标题
+  userManager: {
+    id: '序号',
+    account: '用户名',
+    userName: '姓名',
+    Organization: '组织机构',
+    position: '职位',
+    employeeNumber: '员工号',
+    phone: '电话',
+    lastLoginTime: '最后登录时间',
+    operate: '操作',
+    itemDetail: '查看'
   }
 }

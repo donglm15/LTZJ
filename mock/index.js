@@ -5,8 +5,12 @@ import user from './user'
 import role from './role'
 import article from './article'
 import search from './remote-search'
+import userManager from './userManager'   //引入用户管理的模拟Mock数据
 
 const mocks = [
+  //可Mock拦截这些请求
+  //ajax请求在src/api中
+  ...userManager,  //用户管理
   ...user,
   ...role,
   ...article,

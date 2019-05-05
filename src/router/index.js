@@ -2,11 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 Vue.use(Router)
-/* Layout
- * 需求分析：菜单路由
- * Author:liuf
- *
- * */
+
 /* Layout */
 import Layout from '@/layout'
 
