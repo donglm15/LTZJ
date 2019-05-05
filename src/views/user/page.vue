@@ -6,7 +6,7 @@
       <el-input v-model="listQuery.title" :placeholder="$t('userManager.userName')" style="width: 200px;" class="filter-item" @keyup.native.enter="getList" />
       <!--职位类别检索区-->
       <el-select v-model="listQuery.type" :placeholder="$t('userManager.position')" clearable class="filter-item" style="width: 130px" @change="getList">
-        <el-option v-for="item in positionType" :key="item.id" :label="item.positionName" :value="item.id" />
+        <el-option v-for="item in positionType" :key="item.id" :label="item.positionName" :value="item.positionName" />
       </el-select>
       <!--ID排序检索-->
       <el-select v-model="listQuery.sort" style="width: 140px" class="filter-item" @change="getList">
@@ -97,6 +97,13 @@
             <el-option v-for="item in positionType" :key="item.id" :label="item.positionName" :value="item.positionName" />
           </el-select>
         </el-form-item>
+
+        <!--<el-form-item :label="$t('userManager.position')" prop="position.positionName">-->
+        <!--<el-select v-model="temp.position.positionName" class="filter-item" placeholder="请选择职位">-->
+        <!--<el-option v-for="item in positionType" :key="item.id" :label="item.positionName" :value="item.positionName" />-->
+        <!--</el-select>-->
+        <!--</el-form-item>-->
+
         <!--最后登录时间-->
         <el-form-item :label="$t('userManager.lastLoginTime')" prop="lastLoginTime">
           <el-date-picker v-model="temp.lastLoginTime" type="datetime" placeholder="请选择日期和时间" />
@@ -179,7 +186,7 @@
         dialogFormVisible: false,  //编辑对话框是否显示
         dialogStatus: '',  //设置对话框的标题时使用
         temp: {   //编辑或新增时，临时存放数据的对象temp
-          position:'',  //职位
+          position:{id:'',positionName:''},  //职位(一个含有id,positionName的对象)
           lastLoginTime: new Date(), //最后登录时间
           account: '',  //用户名
           userName: '', //姓名
@@ -242,7 +249,7 @@
         let filterData=this.tableData.filter(item=>{
           //item.title.indexOf(title)等于-1说明不包含title
           if(title && item.userName.indexOf(title)<0) return false; //筛选姓名
-          if(type && item.position.id!=type) return false;  //筛选职位
+          if(type && item.position.positionName!=type) return false;  //筛选职位
           return true;
         })
 
@@ -304,8 +311,9 @@
       //点击编辑按钮时的逻辑
       handleUpdate(row) {
         this.temp = Object.assign({}, row) // 复制要编辑的这一行,成为temp对象
+        console.log("编辑按钮按下后:",this.temp.lastLoginTime);
         this.temp.lastLoginTime = new Date(this.temp.lastLoginTime);  //获取表格中的时间
-        console.log(this.temp.lastLoginTime);
+        console.log("获取表格中的时间:",this.temp.lastLoginTime);
         this.dialogStatus = 'update';   //使对话框标题为textMap[update],即“编辑”
         this.dialogFormVisible = true;  //显示编辑的对话框
         this.$nextTick(() => {
