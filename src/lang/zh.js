@@ -2,6 +2,8 @@ export default {
   route: {
     user: '用户管理',
     PageUser: '用户列表',
+    userDetail: '用户详情',
+    userStatistics: '用户统计',
     article: '图文管理',
     PageArticle: '图文列表',
     produce: '产品管理',

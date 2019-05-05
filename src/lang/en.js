@@ -2,6 +2,8 @@ export default {
   route: {
     user: ' user',
     PageUser: 'PageUser',
+    userDetail: 'UserDetails',
+    userStatistics: 'UserStatistics',
     article: 'article',
     PageArticle: 'PageArticle',
     produce: 'produce',

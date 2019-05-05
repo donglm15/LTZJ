@@ -146,12 +146,30 @@ export const asyncRoutes = [
       // roles: ['admin', 'editor'] // you can set roles in root nav
     },
     children: [
-      {
+      { // 用户信息列表
         path: 'page',
         component: () => import('@/views/user/page'),
         name: 'PageUser',
         meta: {
           title: 'PageUser'
+          // roles: ['admin'] // or you can only set roles in sub nav
+        }
+      },
+      { // 用户信息详情
+        path: 'userDetail/:id', // 以传递参数id的方式打开
+        component: () => import('@/views/user/component/userDetail'),
+        name: 'userDetail',
+        meta: {
+          title: 'userDetail'
+          // roles: ['admin'] // or you can only set roles in sub nav
+        }
+      },
+      { // 用户信息统计
+        path: 'userStatistics',
+        component: () => import('@/views/user/component/userStatistics'),
+        name: 'userStatistics',
+        meta: {
+          title: 'userStatistics'
           // roles: ['admin'] // or you can only set roles in sub nav
         }
       }

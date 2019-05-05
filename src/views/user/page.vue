@@ -46,7 +46,11 @@
       <!--2.account:用户名-->
       <el-table-column :label="$t('userManager.account')" prop="account" width="90px" align="center" />
       <!--3.userName:姓名-->
-      <el-table-column :label="$t('userManager.userName')" prop="userName" align="center" min-width="90px" />
+      <el-table-column :label="$t('userManager.userName')" prop="userName" align="center" min-width="90px">
+        <template slot-scope="scope">
+          <span class="link-type" @click="handleUpdate(scope.row)">{{ scope.row.userName }}</span>
+        </template>
+      </el-table-column>
       <!--4.Organization:组织机构-->
       <el-table-column :label="$t('userManager.Organization')" prop="Organization" width="180px" align="center" />
       <!--5.position:职位-->
@@ -233,19 +237,19 @@
         return position == '组长' ? 'danger' : (position == '主办' ? 'warning' : 'success')
       }
     },
-//    created() {  //创建完Vue组件页面后
-//      this.getList()
-//    },
-    mounted(){
-      //首次挂载用户列表组件获取的用户数据
-      fetchUserList({}).then(response=>{
-        console.log(response);
-        this.tableData=response.data.items;  //获取总的用户数据列表
-        this.total=response.data.total;   //获取用户列表总数
-        //获取第一页
-        this.getList();
-      })
+    created() {  //创建完Vue组件页面后
+      this.getList()
     },
+//    mounted(){
+//      //首次挂载用户列表组件获取的用户数据
+//      fetchUserList({}).then(response=>{
+//        console.log(response);
+//        this.tableData=response.data.items;  //获取总的用户数据列表
+//        this.total=response.data.total;   //获取用户列表总数
+//        //获取第一页
+//        this.getList();
+//      })
+//    },
     methods:{
       getList() {
         //从后端获取用户数据
@@ -392,8 +396,8 @@
       },
       //查看按钮的逻辑
       handleClick(index,row){
-//        this.$router.push('/news/'+row.id);
-//        this.$router.push('/userManager/'+row.id);
+        //以传递参数id的方式打开用户详情页面
+        this.$router.push('userDetail/'+row.id);
       },
     }
   }
