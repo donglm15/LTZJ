@@ -33,7 +33,7 @@
 
     <!--表格区域-->
     <el-table
-      :data="pageData"
+      :data="tableData"
       border
       fit
       highlight-current-row
@@ -162,6 +162,7 @@
 /* eslint-disable */
   // eslint-disable-next-line
   import {fetchUserList, updateArticle, createArticle} from '@/api/userManager'   //引入获取用户列表等函数
+  import { parseTime } from '@/utils'  //引入设置时间格式的工具
   import Pagination from '@/components/Pagination'  //分页子组件
   //不变化的业务字典数据，可以定义为全局变量
   const positionType=[  //职位类别（对象数组）
@@ -176,7 +177,7 @@
         //从后台获取的总数据
         tableData:[],
         //前台每页要呈现的数据
-        pageData:[],  //分页后，每个页面要显示的数据
+//        pageData:[],  //分页后，每个页面要显示的数据
         positionType,  //职位类别
 //        list: null,
         total:0,   //用户列表条数的总数
@@ -232,6 +233,9 @@
         return position == '组长' ? 'danger' : (position == '主办' ? 'warning' : 'success')
       }
     },
+//    created() {  //创建完Vue组件页面后
+//      this.getList()
+//    },
     mounted(){
       //首次挂载用户列表组件获取的用户数据
       fetchUserList({}).then(response=>{
@@ -243,30 +247,43 @@
       })
     },
     methods:{
-      //点击页码，改变每页数时执行,以及点击搜索按钮时,和删除一条数据后执行
-      getList(){   //更新当前页面显示的新闻数据方法（查询，点击分页等时执行）
-        //获取每一页要获取的数据
-        let {page,limit,title,sort,type}=this.listQuery; //查询条件
+      getList() {
+        //从后端获取用户数据
+//        this.listLoading = true
+        fetchUserList(this.listQuery).then(response => {
+          this.tableData = response.data.items  //获取总的用户数据列表
+          this.total = response.data.total  //获取用户列表总数
 
-        //过滤查询结果集(先过滤，再分页)
-        // filter:循环所有的数据，return1，保留，return0，去除
-        let filterData=this.tableData.filter(item=>{
-          //item.title.indexOf(title)等于-1说明不包含title
-          if(title && item.userName.indexOf(title)<0) return false; //筛选姓名
-          if(type && item.position.positionName!=type) return false;  //筛选职位
-          return true;
+          // 模拟后端响应的延时
+//          setTimeout(() => {
+//            this.listLoading = false
+//          }, 1.5 * 1000)
         })
-
-        //排序
-        if(sort=='-id')
-          filterData=filterData.reverse();
-
-        //从总数据中过滤出当前页要显示的数据集
-        this.pageData = filterData.filter((item,index)=>
-          index<page*limit && index>=(page-1)*limit)
-
-//        this.total=filterData.length;//搜索后分页页码总数要变化
       },
+//      //点击页码，改变每页数时执行,以及点击搜索按钮时,和删除一条数据后执行
+//      getList(){   //更新当前页面显示的新闻数据方法（查询，点击分页等时执行）
+//        //获取每一页要获取的数据
+//        let {page,limit,title,sort,type}=this.listQuery; //查询条件
+//
+//        //过滤查询结果集(先过滤，再分页)
+//        // filter:循环所有的数据，return1，保留，return0，去除
+//        let filterData=this.tableData.filter(item=>{
+//          //item.title.indexOf(title)等于-1说明不包含title
+//          if(title && item.userName.indexOf(title)<0) return false; //筛选姓名
+//          if(type && item.position.positionName!=type) return false;  //筛选职位
+//          return true;
+//        })
+//
+//        //排序
+//        if(sort=='-id')
+//          filterData=filterData.reverse();
+//
+//        //从总数据中过滤出当前页要显示的数据集
+//        this.pageData = filterData.filter((item,index)=>
+//          index<page*limit && index>=(page-1)*limit)
+//
+////        this.total=filterData.length;//搜索后分页页码总数要变化
+//      },
       handleFilter() {  //搜索按钮按下时的逻辑，要使结果显示在第一页
         this.listQuery.page=1;  //分页停留在第一页（为了显示搜索结果）
         this.getList()
@@ -301,7 +318,7 @@
             createArticle(this.temp).then(() => {
               this.tableData.unshift(this.temp)  //将temp中的数据添加至tableData中
               this.dialogFormVisible = false  //对话框消失
-              this.getList();  //删除完成后更新页面显示
+//              this.getList();  //新增完成后更新页面显示
               this.$notify({
                 title: '成功',
                 message: '创建成功',
@@ -337,7 +354,7 @@
                 }
               }
               this.dialogFormVisible = false; //对话框消失
-              this.getList();  //删除完成后更新页面显示
+//              this.getList();  //编辑完成后更新页面显示
               this.$notify({
                 title: '成功',
                 message: '更新成功',
@@ -361,7 +378,7 @@
               index=idx  //通过判断id字段，获取要删除数据的索引值
           })
           this.tableData.splice(index,1);   //删除要删除的数据
-          this.getList();  //删除完成后更新页面显示
+//          this.getList();  //删除完成后更新页面显示
           this.$message({
             type: 'success',
             message: '删除成功!'
