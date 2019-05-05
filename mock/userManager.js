@@ -13,9 +13,8 @@ for (let i = 0; i < count; i++) {  //循环产生数据
       "position|1":[{id:1,positionName:'组长'},{id:2,positionName:'主办'},{id:3,positionName:'助理'}],
       "employeeNumber":"@zip",
       "phone":/^1[3875][1-9]-\d{4}-\d{4}/,
-      "lastLoginTime":"@date",
-      // timestamp: +Mock.Random.date('T'),
-      // lastLoginTime: +Mock.Random.date('T'),
+      // "lastLoginTime":"@date",
+      lastLoginTime: +Mock.Random.date('T'),  //模拟最后登录时间（年月日时分）
     }
   ))
 }

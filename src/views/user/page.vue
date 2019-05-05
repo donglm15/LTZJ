@@ -3,7 +3,7 @@
     <!--用户筛选区域-->
     <div class="filter-container">
       <!--姓名检索输入框-->
-      <el-input v-model="listQuery.title" :placeholder="$t('userManager.userName')" style="width: 200px;" class="filter-item" @keyup.native.enter="getList" />
+      <el-input v-model="listQuery.title" :placeholder="$t('userManager.userName')" style="width: 200px;" class="filter-item" @keyup.native.enter="handleFilter" />
       <!--职位类别检索区-->
       <el-select v-model="listQuery.type" :placeholder="$t('userManager.position')" clearable class="filter-item" style="width: 130px" @change="getList">
         <el-option v-for="item in positionType" :key="item.id" :label="item.positionName" :value="item.positionName" />
@@ -56,13 +56,17 @@
         </template>
       </el-table-column>
       <!--6.employeeNumber:员工号-->
-      <el-table-column :label="$t('userManager.employeeNumber')" prop="employeeNumber" class-name="status-col" width="90" />
+      <el-table-column :label="$t('userManager.employeeNumber')" prop="employeeNumber" class-name="status-col" width="80" />
       <!--7.phone:电话-->
       <el-table-column :label="$t('userManager.phone')" prop="phone" align="center" width="120px" />
       <!--8.lastLoginTime:最后登录时间-->
-      <el-table-column :label="$t('userManager.lastLoginTime')" prop="lastLoginTime" align="center" width="120" />
+      <el-table-column :label="$t('userManager.lastLoginTime')" prop="lastLoginTime" sortable align="center" width="140">
+        <template slot-scope="scope">
+          <span>{{ scope.row.lastLoginTime | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
+        </template>
+      </el-table-column>
       <!--9.operate:操作-->
-      <el-table-column :label="$t('userManager.operate')" prop="operate" align="center" width="230" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('userManager.operate')" prop="operate" align="center" width="220" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <!--查看详情-->
           <el-button size="mini" type="success" @click="handleClick(scope.$index,scope.row)">
@@ -311,9 +315,7 @@
       //点击编辑按钮时的逻辑
       handleUpdate(row) {
         this.temp = Object.assign({}, row) // 复制要编辑的这一行,成为temp对象
-        console.log("编辑按钮按下后:",this.temp.lastLoginTime);
         this.temp.lastLoginTime = new Date(this.temp.lastLoginTime);  //获取表格中的时间
-        console.log("获取表格中的时间:",this.temp.lastLoginTime);
         this.dialogStatus = 'update';   //使对话框标题为textMap[update],即“编辑”
         this.dialogFormVisible = true;  //显示编辑的对话框
         this.$nextTick(() => {
@@ -326,9 +328,6 @@
           if (valid) {
             const tempData = Object.assign({}, this.temp);
             tempData.lastLoginTime = +new Date(tempData.lastLoginTime) // change Thu Nov 30 2017 16:41:05 GMT+0800 (CST) to 1512031311464
-//            this.temp.lastLoginTime = +new Date(this.temp.lastLoginTime)
-            console.log("tempData:",tempData.lastLoginTime);
-            console.log("this.temp:",this.temp.lastLoginTime);
             updateArticle(tempData).then(() => {
               for (const v of this.tableData) {
                 if (v.id === this.temp.id) {
