@@ -1,4 +1,14 @@
 export default {
+  notice: {
+    status: '状态',
+    noticeId: 'ID',
+    noticeDate: '日期',
+    noticePublish: '发布部门',
+    noticeTitle: '标题',
+    noticeContent: '内容',
+    noticeReadNum: '点击量',
+    actions: '操作'
+  },
   route: {
     user: '用户管理',
     PageUser: '用户列表',

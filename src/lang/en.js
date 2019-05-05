@@ -1,4 +1,14 @@
 export default {
+  notice: {
+    status: 'status',
+    noticeId: 'ID',
+    noticeDate: 'date',
+    noticePublish: 'department',
+    noticeTitle: 'title',
+    noticeContent: 'content',
+    noticeReadNum: 'readNum',
+    actions: 'operation'
+  },
   route: {
     user: ' user',
     PageUser: 'PageUser',
