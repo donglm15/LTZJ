@@ -135,9 +135,13 @@
 </template>
 
 <script>
+  import { parseTime } from '@/utils' // 引入设置时间格式的工具
+
 export default {
   data() {
-    return { msg: '用户详情' }
+    return {
+      msg: '用户详情'
+    }
   },
   methods: {
     goBack() {
@@ -148,5 +152,33 @@ export default {
 </script>
 
 <style>
+  .info_container{
+    padding: 10px;
+    margin: 0 10px;
+    overflow: auto;
+  }
+  .title{
+    text-align:center;
+    width:100%;
+    height:30px;
+    line-height:30px;
+    cursor: pointer;
+    background-color: #3bc5ff;
+    border:1px solid #3bc5ff;
+    color: white;
+    display: block;
+  }
+  .title .fa{
+    margin-right:5px;
+  }
 
+  .row{
+    margin:20px;
+  }
+  .info_row{}
+  .area {
+    border: 1px solid #dfdfdf;
+    height: 400px;
+    overflow: hidden;
+  }
 </style>
