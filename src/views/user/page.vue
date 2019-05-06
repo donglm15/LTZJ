@@ -397,7 +397,20 @@
       //查看按钮的逻辑
       handleClick(index,row){
         //以传递参数id的方式打开用户详情页面
-        this.$router.push('userDetail/'+row.id);
+//        this.$router.push('userDetail/'+row.id);
+        //以路由名称name和传递参数params的方式打开用户详情页面
+        this.$router.push({name:'userDetail',params:
+          {
+            id: row.id,  //序号
+            account: row.account,  //用户名
+            userName: row.userName, //姓名
+            Organization: row.Organization, //组织机构
+            position: row.position.positionName,  //职位(一个含有{id,positionName}的对象)
+            employeeNumber: row.employeeNumber, //员工号
+            phone: row.phone, //电话
+            lastLoginTime: row.lastLoginTime, //最后登录时间
+          }
+        })
       },
     }
   }
