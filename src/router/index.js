@@ -156,9 +156,9 @@ export const asyncRoutes = [
         }
       },
       { // 用户信息详情
-        path: 'userDetail/:id', // 以传递参数id的方式打开
+        path: 'userDetail',
         component: () => import('@/views/user/component/userDetail'),
-        name: 'userDetail',
+        name: 'userDetail', // 使用name参数,避免在URL中传参(安全)
         meta: {
           title: 'userDetail'
           // roles: ['admin'] // or you can only set roles in sub nav
