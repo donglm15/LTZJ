@@ -1,35 +1,75 @@
 <template>
   <div class="app-container">
-    <!--用户筛选区域-->
-    <div class="filter-container">
-      <!--姓名检索输入框-->
-      <el-input v-model="listQuery.title" :placeholder="$t('userManager.userName')" style="width: 200px;" class="filter-item" @keyup.native.enter="handleFilter" />
-      <!--职位类别检索区-->
-      <el-select v-model="listQuery.type" :placeholder="$t('userManager.position')" clearable class="filter-item" style="width: 130px" @change="getList">
-        <el-option v-for="item in positionType" :key="item.id" :label="item.positionName" :value="item.positionName" />
-      </el-select>
-      <!--ID排序检索-->
-      <el-select v-model="listQuery.sort" style="width: 140px" class="filter-item" @change="getList">
-        <el-option v-for="item in sortOptions" :key="item.key" :label="item.label" :value="item.key" />
-      </el-select>
-      <!--搜索按钮-->
-      <el-button class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
-        {{ $t('table.search') }}
-      </el-button>
-      <!--添加按钮-->
-      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
-        {{ $t('table.add') }}
-      </el-button>
-      <!--导出按钮-->
-      <!--<el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">-->
-      <!--{{ $t('table.export') }}-->
-      <!--</el-button>-->
-      <!--审核人-->
-      <!--<el-checkbox v-model="showReviewer" class="filter-item" style="margin-left:15px;" @change="tableKey=tableKey+1">-->
-      <!--{{ $t('table.reviewer') }}-->
-      <!--</el-checkbox>-->
+    <!--用户筛选区域,el-card:卡片布局-->
+    <el-card class="filter-container" shadow="hover">
+      <div>
+        <!--筛选区域顶部标题-->
+        <i class="el-icon-search" />
+        <span>筛选搜索</span>
+        <!--搜索按钮-->
+        <el-button
+          style="float: right"
+          type="primary"
+          size="small"
+          @click="handleFilter"
+        >
+          查询结果
+        </el-button>
+        <!--重置按钮-->
+        <el-button
+          style="float: right;margin-right: 15px"
+          size="small"
+          @click="handleResetSearch()"
+        >
+          重置
+        </el-button>
+      </div>
 
-    </div>
+      <div style="margin-top: 15px">
+        <!--姓名检索输入框-->
+        <el-input v-model="listQuery.title" :placeholder="$t('userManager.userName')" style="width: 200px;" class="filter-item" @keyup.native.enter="handleFilter" />
+        <!--职位类别检索区-->
+        <el-select v-model="listQuery.type" :placeholder="$t('userManager.position')" clearable class="filter-item" style="width: 130px" @change="getList">
+          <el-option v-for="item in positionType" :key="item.id" :label="item.positionName" :value="item.positionName" />
+        </el-select>
+        <!--ID排序检索-->
+        <el-select v-model="listQuery.sort" style="width: 140px" class="filter-item" @change="getList">
+          <el-option v-for="item in sortOptions" :key="item.key" :label="item.label" :value="item.key" />
+        </el-select>
+        <!--搜索按钮-->
+        <el-button class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
+          {{ $t('table.search') }}
+        </el-button>
+        <!--添加按钮-->
+        <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
+          {{ $t('table.add') }}
+        </el-button>
+        <!--导出按钮-->
+        <!--<el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">-->
+        <!--{{ $t('table.export') }}-->
+        <!--</el-button>-->
+        <!--审核人-->
+        <!--<el-checkbox v-model="showReviewer" class="filter-item" style="margin-left:15px;" @change="tableKey=tableKey+1">-->
+        <!--{{ $t('table.reviewer') }}-->
+        <!--</el-checkbox>-->
+      </div>
+    </el-card>
+
+    <!--数据列表区域（添加，导出）-->
+    <el-card class="operate-container" shadow="hover">
+      <!--标题-->
+      <i class="el-icon-tickets" />
+      <span>数据列表</span>
+      <!--添加按钮-->
+      <el-button
+        class="btn-add"
+        style="float: right"
+        size="mini"
+        @click="handleCreate()"
+      >
+        添加
+      </el-button>
+    </el-card>
 
     <!--表格区域-->
     <el-table
@@ -174,6 +214,14 @@
     {id:2,positionName:'主办'},
     {id:3,positionName:'助理'},
   ]
+  //默认搜索内容对象
+  const defaultListQuery = {
+    page: 1,  //当前页码
+    limit: 20,  //每页条数
+    title: null,    //查询的用户姓名
+    type: null,    //查询的职位类别
+    sort: '+id',  //排序方式 正序+id，倒序-id
+  };
 
   export default {
     data() {
@@ -411,6 +459,12 @@
             lastLoginTime: row.lastLoginTime, //最后登录时间
           }
         })
+      },
+      //筛选区域重置按钮的逻辑
+      handleResetSearch() {
+//        this.selectProductCateValue = [];
+        this.listQuery = Object.assign({}, defaultListQuery);
+        this.handleFilter();  //清空搜索条件后，马上以空的搜索条件搜索
       },
     }
   }
