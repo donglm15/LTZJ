@@ -1,7 +1,7 @@
 <template>
   <div>
     {{ this.$route.params.id }}<br>
-    <el-button @click="goBack">返回</el-button>
+    <el-button @click="goBack">返回123</el-button>
   </div>
 </template>
 
