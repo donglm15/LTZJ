@@ -135,7 +135,6 @@
 </template>
 
 <script>
-  import { parseTime } from '@/utils' // 引入设置时间格式的工具
 
 export default {
   data() {
@@ -180,5 +179,22 @@ export default {
     border: 1px solid #dfdfdf;
     height: 400px;
     overflow: hidden;
+  }
+  .imgarea {
+  text-align: center;
+  padding: 10px;
+  }
+  img {
+  width:120px;
+  height:120px;
+  border-radius: 50%;
+  }
+
+  .namearea{
+  padding:10px;
+  font-size:14px;
+  }
+  .namearea p{
+  line-height:24px;
   }
 </style>
