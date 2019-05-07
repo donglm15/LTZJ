@@ -25,7 +25,7 @@ export default [
     type: 'get',   //请求方式
     //模拟后台分页的方式
     response: config => {
-      const { position, userName, page = 1, limit = 20, sort, account, Organization, employeeNumber, phone } = config.query  //查询条件
+      const { position, userName, page = 1, limit = 20, sort, account, Organization, employeeNumber, phone, timeValue } = config.query  //查询条件
 
       //过滤查询结果集(先过滤，再分页)
       // filter:循环所有的数据，return1，保留，return0，去除
@@ -37,6 +37,7 @@ export default [
         if (Organization && item.Organization.indexOf(Organization) < 0) return false  //筛选组织机构
         if (employeeNumber && item.employeeNumber.indexOf(employeeNumber) < 0) return false  //筛选员工号
         if (phone && item.phone.indexOf(phone) < 0) return false  //筛选电话
+        if (timeValue && item.lastLoginTime<new Date(timeValue[0]) || item.lastLoginTime>new Date(timeValue[1])) return false  //时间筛选
         return true
       })
 

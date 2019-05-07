@@ -54,15 +54,24 @@
           </el-form-item>
           <!--职位搜索-->
           <el-form-item label="职位搜索：">
-            <el-select v-model="listQuery.position" :placeholder="$t('userManager.position')" clearable style="width: 200px" @change="handleFilter">
+            <el-select v-model="listQuery.position" :placeholder="$t('userManager.position')" clearable style="width: 80px" @change="handleFilter">
               <el-option v-for="item in positionType" :key="item.id" :label="item.positionName" :value="item.positionName" />
             </el-select>
           </el-form-item>
           <!--时间搜索-->
-          <el-form-item label="时间搜索：" />
+          <el-form-item label="时间搜索：">
+            <el-date-picker
+              v-model="listQuery.timeValue"
+              :picker-options="pickerOptions"
+              type="datetimerange"
+              start-placeholder="开始日期"
+              range-separator="至"
+              end-placeholder="结束日期"
+            />
+          </el-form-item>
           <!--ID排序检索-->
           <el-form-item label="排序检索：">
-            <el-select v-model="listQuery.sort" style="width: 140px" @change="handleFilter">
+            <el-select v-model="listQuery.sort" style="width: 100px" @change="handleFilter">
               <el-option v-for="item in sortOptions" :key="item.key" :label="item.label" :value="item.key" />
             </el-select>
           </el-form-item>
@@ -306,10 +315,11 @@
     userName: null,    //查询的用户姓名
     position: null,    //查询的职位类别
     sort: '+id',  //排序方式 正序+id，倒序-id
-    account:null,  //用户名
-    Organization:null,  //组织机构
-    employeeNumber:null,  //员工号
+    account: null,  //用户名
+    Organization: null,  //组织机构
+    employeeNumber: null,  //员工号
     phone:null,  //电话
+    timeValue: '',  //选取的时间（时间搜索）
   };
   //批量操作的选择项
   const operates = [
@@ -353,6 +363,7 @@
           Organization:undefined,  //组织机构
           employeeNumber:undefined,  //员工号
           phone:undefined,  //电话
+          timeValue: '',  //选取的时间（时间搜索）
         },
         dialogFormVisible: false,  //编辑对话框是否显示
         dialogStatus: '',  //设置对话框的标题时使用
@@ -385,6 +396,41 @@
         ],
         downloadLoading: false,  //是否导出（默认否）
         operateType: null,  //批量操作选取的操作类别
+        pickerOptions: {  //快速选择时间选项
+          shortcuts: [{
+            text: '最近一周',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+              picker.$emit('pick', [start, end]);
+            }
+          }, {
+            text: '最近一个月',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+              picker.$emit('pick', [start, end]);
+            }
+          }, {
+            text: '最近三个月',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+              picker.$emit('pick', [start, end]);
+            }
+          }, {
+            text: '最近十年',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 3650);
+              picker.$emit('pick', [start, end]);
+            }
+          }]
+        },
       }
     },
     components: { Pagination },//注册分页组件
