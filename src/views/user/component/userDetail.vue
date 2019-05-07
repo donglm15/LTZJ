@@ -139,7 +139,14 @@
 export default {
   data() {
     return {
-      msg: '用户详情'
+      msg: '用户详情',
+      bandata: [
+        { url: 'http://www.baidu.com', data: 300 },
+        { url: 'http://www.sina.com', data: 200 },
+        { url: 'http://www.360.com', data: 100 },
+        { url: 'http://www.weibo.com', data: 0 },
+        { url: 'http://www.hao123.com', data: 100 }
+      ]
     }
   },
   methods: {

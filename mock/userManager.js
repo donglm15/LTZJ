@@ -25,14 +25,18 @@ export default [
     type: 'get',   //请求方式
     //模拟后台分页的方式
     response: config => {
-      const { type, title, page = 1, limit = 20, sort } = config.query  //查询条件
+      const { position, userName, page = 1, limit = 20, sort, account, Organization, employeeNumber, phone } = config.query  //查询条件
 
       //过滤查询结果集(先过滤，再分页)
       // filter:循环所有的数据，return1，保留，return0，去除
       let mockList = List.filter(item => {  //过滤出查询后的数据
         //item.title.indexOf(title)等于-1说明不包含title
-        if (type && item.position.positionName !== type) return false   //筛选职位
-        if (title && item.userName.indexOf(title) < 0) return false  //筛选姓名
+        if (position && item.position.positionName !== position) return false   //筛选职位
+        if (userName && item.userName.indexOf(userName) < 0) return false  //筛选姓名
+        if (account && item.account.indexOf(account) < 0) return false  //筛选用户名
+        if (Organization && item.Organization.indexOf(Organization) < 0) return false  //筛选组织机构
+        if (employeeNumber && item.employeeNumber.indexOf(employeeNumber) < 0) return false  //筛选员工号
+        if (phone && item.phone.indexOf(phone) < 0) return false  //筛选电话
         return true
       })
 

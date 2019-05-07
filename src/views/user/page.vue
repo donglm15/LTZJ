@@ -8,6 +8,8 @@
         <span>筛选搜索</span>
         <!--搜索按钮-->
         <el-button
+          class="filter-item"
+          icon="el-icon-search"
           style="float: right"
           type="primary"
           size="small"
@@ -17,6 +19,8 @@
         </el-button>
         <!--重置按钮-->
         <el-button
+          class="filter-item"
+          icon="el-icon-delete"
           style="float: right;margin-right: 15px"
           size="small"
           @click="handleResetSearch()"
@@ -24,26 +28,64 @@
           重置
         </el-button>
       </div>
-
+      <!--搜索项-->
       <div style="margin-top: 15px">
+        <!--表单,inline:行内表单模式(搜索框横向排列),model:表单数据对象-->
+        <el-form :inline="true" :model="listQuery" size="small" label-width="140px">
+          <!--用户名搜索-->
+          <el-form-item label="用户搜索：">
+            <el-input v-model="listQuery.account" style="width: 200px" :placeholder="$t('userManager.account')" @keyup.native.enter="handleFilter" />
+          </el-form-item>
+          <!--姓名搜索-->
+          <el-form-item label="姓名搜索：">
+            <el-input v-model="listQuery.userName" style="width: 200px" :placeholder="$t('userManager.userName')" @keyup.native.enter="handleFilter" />
+          </el-form-item>
+          <!--组织机构搜索-->
+          <el-form-item label="组织机构：">
+            <el-input v-model="listQuery.Organization" style="width: 200px" :placeholder="$t('userManager.Organization')" @keyup.native.enter="handleFilter" />
+          </el-form-item>
+          <!--员工号搜索-->
+          <el-form-item label="员工搜索：">
+            <el-input v-model="listQuery.employeeNumber" style="width: 180px" :placeholder="$t('userManager.employeeNumber')" @keyup.native.enter="handleFilter" />
+          </el-form-item>
+          <!--电话搜索-->
+          <el-form-item label="电话搜索：">
+            <el-input v-model="listQuery.phone" style="width: 200px" :placeholder="$t('userManager.phone')" @keyup.native.enter="handleFilter" />
+          </el-form-item>
+          <!--职位搜索-->
+          <el-form-item label="职位搜索：">
+            <el-select v-model="listQuery.position" :placeholder="$t('userManager.position')" clearable style="width: 200px" @change="handleFilter">
+              <el-option v-for="item in positionType" :key="item.id" :label="item.positionName" :value="item.positionName" />
+            </el-select>
+          </el-form-item>
+          <!--时间搜索-->
+          <el-form-item label="时间搜索：" />
+          <!--ID排序检索-->
+          <el-form-item label="排序检索：">
+            <el-select v-model="listQuery.sort" style="width: 140px" @change="handleFilter">
+              <el-option v-for="item in sortOptions" :key="item.key" :label="item.label" :value="item.key" />
+            </el-select>
+          </el-form-item>
+        </el-form>
+
         <!--姓名检索输入框-->
-        <el-input v-model="listQuery.title" :placeholder="$t('userManager.userName')" style="width: 200px;" class="filter-item" @keyup.native.enter="handleFilter" />
+        <!--<el-input v-model="listQuery.title" :placeholder="$t('userManager.userName')" style="width: 200px;" class="filter-item" @keyup.native.enter="handleFilter" />-->
         <!--职位类别检索区-->
-        <el-select v-model="listQuery.type" :placeholder="$t('userManager.position')" clearable class="filter-item" style="width: 130px" @change="getList">
-          <el-option v-for="item in positionType" :key="item.id" :label="item.positionName" :value="item.positionName" />
-        </el-select>
+        <!--<el-select v-model="listQuery.type" :placeholder="$t('userManager.position')" clearable class="filter-item" style="width: 130px" @change="getList">-->
+        <!--<el-option v-for="item in positionType" :key="item.id" :label="item.positionName" :value="item.positionName" />-->
+        <!--</el-select>-->
         <!--ID排序检索-->
-        <el-select v-model="listQuery.sort" style="width: 140px" class="filter-item" @change="getList">
-          <el-option v-for="item in sortOptions" :key="item.key" :label="item.label" :value="item.key" />
-        </el-select>
+        <!--<el-select v-model="listQuery.sort" style="width: 140px" class="filter-item" @change="getList">-->
+        <!--<el-option v-for="item in sortOptions" :key="item.key" :label="item.label" :value="item.key" />-->
+        <!--</el-select>-->
         <!--搜索按钮-->
-        <el-button class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
-          {{ $t('table.search') }}
-        </el-button>
+        <!--<el-button class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">-->
+        <!--{{ $t('table.search') }}-->
+        <!--</el-button>-->
         <!--添加按钮-->
-        <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
-          {{ $t('table.add') }}
-        </el-button>
+        <!--<el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">-->
+        <!--{{ $t('table.add') }}-->
+        <!--</el-button>-->
         <!--导出按钮-->
         <!--<el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">-->
         <!--{{ $t('table.export') }}-->
@@ -62,80 +104,123 @@
       <span>数据列表</span>
       <!--添加按钮-->
       <el-button
-        class="btn-add"
+        class="filter-item"
+        icon="el-icon-edit"
         style="float: right"
+        type="primary"
         size="mini"
         @click="handleCreate()"
       >
         添加
       </el-button>
+      <!--导出按钮-->
+      <el-button
+        class="filter-item"
+        icon="el-icon-download"
+        style="float: right;margin-right: 15px"
+        size="mini"
+        @click="handleDownload"
+      >
+        导出
+      </el-button>
     </el-card>
 
-    <!--表格区域-->
-    <el-table
-      :data="tableData"
-      border
-      fit
-      highlight-current-row
-      style="width: 100%;"
-      text-align:
-      center
-    >
-      <!--1.id:序号-->
-      <el-table-column :label="$t('userManager.id')" prop="id" sortable align="center" width="80" />
-      <!--2.account:用户名-->
-      <el-table-column :label="$t('userManager.account')" prop="account" width="90px" align="center" />
-      <!--3.userName:姓名-->
-      <el-table-column :label="$t('userManager.userName')" prop="userName" align="center" min-width="90px">
-        <template slot-scope="scope">
-          <span class="link-type" @click="handleUpdate(scope.row)">{{ scope.row.userName }}</span>
-        </template>
-      </el-table-column>
-      <!--4.Organization:组织机构-->
-      <el-table-column :label="$t('userManager.Organization')" prop="Organization" width="180px" align="center" />
-      <!--5.position:职位-->
-      <el-table-column :label="$t('userManager.position')" prop="position.positionName" width="90px" align="center">
-        <template slot-scope="scope">
-          <el-tag :type="scope.row.position.positionName | typeFilter">{{ scope.row.position.positionName }}</el-tag>
-        </template>
-      </el-table-column>
-      <!--6.employeeNumber:员工号-->
-      <el-table-column :label="$t('userManager.employeeNumber')" prop="employeeNumber" class-name="status-col" width="80" />
-      <!--7.phone:电话-->
-      <el-table-column :label="$t('userManager.phone')" prop="phone" align="center" width="120px" />
-      <!--8.lastLoginTime:最后登录时间-->
-      <el-table-column :label="$t('userManager.lastLoginTime')" prop="lastLoginTime" sortable align="center" width="140">
-        <template slot-scope="scope">
-          <span>{{ scope.row.lastLoginTime | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
-        </template>
-      </el-table-column>
-      <!--9.operate:操作-->
-      <el-table-column :label="$t('userManager.operate')" prop="operate" align="center" width="220" class-name="small-padding fixed-width">
-        <template slot-scope="scope">
-          <!--查看详情-->
-          <el-button size="mini" type="success" @click="handleClick(scope.$index,scope.row)">
-            {{ $t('userManager.itemDetail') }}
-          </el-button>
-          <!--编辑-->
-          <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">
-            {{ $t('table.edit') }}
-          </el-button>
-          <!--草稿-->
-          <!--<el-button v-if="scope.row.status!='draft'" size="mini" @click="handleModifyStatus(row,'draft')">-->
-          <!--{{ $t('table.draft') }}-->
-          <!--</el-button>-->
-          <!--删除-->
-          <el-button v-if="scope.row.status!='deleted'" size="mini" type="danger" @click="handleModifyStatus(scope.row)">
-            {{ $t('table.delete') }}
-          </el-button>
-        </template>
-      </el-table-column>
-    </el-table>
+    <div class="table-container">
+      <!--表格区域,@selection-change:勾选，全选按钮变化时执行-->
+      <el-table
+        :data="tableData"
+        border
+        fit
+        highlight-current-row
+        style="width: 100%;"
+        text-align:
+        center
+        @selection-change="handleSelectionChange"
+      >
+        <!--勾选，全选按钮-->
+        <el-table-column type="selection" width="60" align="center" />
+        <!--1.id:序号-->
+        <el-table-column :label="$t('userManager.id')" prop="id" sortable align="center" width="80" />
+        <!--2.account:用户名-->
+        <el-table-column :label="$t('userManager.account')" prop="account" width="90px" align="center" />
+        <!--3.userName:姓名-->
+        <el-table-column :label="$t('userManager.userName')" prop="userName" align="center" min-width="90px">
+          <template slot-scope="scope">
+            <span class="link-type" @click="handleUpdate(scope.row)">{{ scope.row.userName }}</span>
+          </template>
+        </el-table-column>
+        <!--4.Organization:组织机构-->
+        <el-table-column :label="$t('userManager.Organization')" prop="Organization" width="180px" align="center" />
+        <!--5.position:职位-->
+        <el-table-column :label="$t('userManager.position')" prop="position.positionName" width="90px" align="center">
+          <template slot-scope="scope">
+            <el-tag :type="scope.row.position.positionName | typeFilter">{{ scope.row.position.positionName }}</el-tag>
+          </template>
+        </el-table-column>
+        <!--6.employeeNumber:员工号-->
+        <el-table-column :label="$t('userManager.employeeNumber')" prop="employeeNumber" class-name="status-col" width="80" />
+        <!--7.phone:电话-->
+        <el-table-column :label="$t('userManager.phone')" prop="phone" align="center" width="120px" />
+        <!--8.lastLoginTime:最后登录时间-->
+        <el-table-column :label="$t('userManager.lastLoginTime')" prop="lastLoginTime" sortable align="center" width="140">
+          <template slot-scope="scope">
+            <span>{{ scope.row.lastLoginTime | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
+          </template>
+        </el-table-column>
+        <!--9.operate:操作-->
+        <el-table-column :label="$t('userManager.operate')" prop="operate" align="center" width="220" class-name="small-padding fixed-width">
+          <template slot-scope="scope">
+            <!--查看详情-->
+            <el-button size="mini" type="success" @click="handleClick(scope.$index,scope.row)">
+              {{ $t('userManager.itemDetail') }}
+            </el-button>
+            <!--编辑-->
+            <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">
+              {{ $t('table.edit') }}
+            </el-button>
+            <!--草稿-->
+            <!--<el-button v-if="scope.row.status!='draft'" size="mini" @click="handleModifyStatus(row,'draft')">-->
+            <!--{{ $t('table.draft') }}-->
+            <!--</el-button>-->
+            <!--删除-->
+            <el-button v-if="scope.row.status!='deleted'" size="mini" type="danger" @click="handleModifyStatus(scope.row)">
+              {{ $t('table.delete') }}
+            </el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+    </div>
+
+    <!--批量操作区域（底部左侧）-->
+    <div class="batch-operate-container">
+      <el-select
+        v-model="operateType"
+        size="small"
+        placeholder="批量操作"
+      >
+        <el-option
+          v-for="item in operates"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        />
+      </el-select>
+      <el-button
+        style="margin-left: 20px"
+        type="primary"
+        size="small"
+        @click="handleBatchOperate()"
+      >
+        确定
+      </el-button>
+    </div>
 
     <!--分页组件-->
-    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
+    <div class="pagination-container">
+      <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
+    </div>
 
-    <!--编辑对话框-->
+    <!--编辑、新增对话框-->
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <!--对话框中的表单-->
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
@@ -218,10 +303,33 @@
   const defaultListQuery = {
     page: 1,  //当前页码
     limit: 20,  //每页条数
-    title: null,    //查询的用户姓名
-    type: null,    //查询的职位类别
+    userName: null,    //查询的用户姓名
+    position: null,    //查询的职位类别
     sort: '+id',  //排序方式 正序+id，倒序-id
+    account:null,  //用户名
+    Organization:null,  //组织机构
+    employeeNumber:null,  //员工号
+    phone:null,  //电话
   };
+  //批量操作的选择项
+  const operates = [
+    {
+      label: "删除",
+      value: "deleteAll"
+    },
+    {
+      label: "设置职位为组长",
+      value: "set1"
+    },
+    {
+      label: "设置职位为主办",
+      value: "set2"
+    },
+    {
+      label: "设置职位为助理",
+      value: "set3"
+    },
+  ]
 
   export default {
     data() {
@@ -231,14 +339,20 @@
         //前台每页要呈现的数据
 //        pageData:[],  //分页后，每个页面要显示的数据
         positionType,  //职位类别
+        operates,  //批量操作的选项
+        multipleSelection: [],  //勾选，全选的表格项
 //        list: null,
         total:0,   //用户列表条数的总数
         listQuery: {  //查询项
           page: 1,  //当前页码
           limit: 20,  //每页条数
-          title: undefined,    //查询的用户姓名
-          type: undefined,    //查询的职位类别
-          sort: '+id'  //排序方式 正序+id，倒序-id
+          userName: undefined,    //查询的用户姓名
+          position: undefined,    //查询的职位类别
+          sort: '+id',  //排序方式 正序+id，倒序-id
+          account:undefined,  //用户名
+          Organization:undefined,  //组织机构
+          employeeNumber:undefined,  //员工号
+          phone:undefined,  //电话
         },
         dialogFormVisible: false,  //编辑对话框是否显示
         dialogStatus: '',  //设置对话框的标题时使用
@@ -250,14 +364,7 @@
           Organization: '', //组织机构
           employeeNumber: '', //员工号
           phone: '', //电话
-
           id: undefined,  //序号
-//          importance: 1,
-//          remark: '',
-//          timestamp: new Date(),
-//          title: '',
-//          type: '',
-//          status: 'published'
         },
         textMap: {  //对话框的标题
           update: '编辑',
@@ -276,6 +383,8 @@
           { label: '正向排序', key: '+id' },
           { label: '逆向排序', key: '-id' }
         ],
+        downloadLoading: false,  //是否导出（默认否）
+        operateType: null,  //批量操作选取的操作类别
       }
     },
     components: { Pagination },//注册分页组件
@@ -466,10 +575,180 @@
         this.listQuery = Object.assign({}, defaultListQuery);
         this.handleFilter();  //清空搜索条件后，马上以空的搜索条件搜索
       },
+      //导出按钮的逻辑
+      handleDownload() {
+        this.downloadLoading = true
+        import('@/vendor/Export2Excel').then(excel => {
+          const tHeader = ['序号', '用户名', '姓名', '组织机构', '职位', '员工号', '电话', '最后登录时间',]
+          const filterVal = ['id', 'account', 'userName', 'Organization', 'position', 'employeeNumber', 'phone', 'lastLoginTime',]
+          const data = this.formatJson(filterVal, this.tableData)
+
+          excel.export_json_to_excel({
+            header: tHeader,
+            data,
+            filename: '联通之家用户列表'
+          })
+          this.downloadLoading = false
+        })
+      },
+      //导出时的时间及职位的数据转换
+      formatJson(filterVal, jsonData) {
+        return jsonData.map(v => filterVal.map(j => {
+          if (j === 'position'){
+            return v[j].positionName
+          } else if(j === 'lastLoginTime'){
+            return parseTime(v[j])
+          } else {
+            return v[j]
+          }
+        }))
+      },
+      //勾选，全选按钮变化时执行的逻辑
+      handleSelectionChange(val) {
+        this.multipleSelection = val;
+      },
+      //批量操作中点击确定按钮的逻辑
+      handleBatchOperate() {
+        if(this.operateType==null){
+          this.$message({
+            message: '请选择操作类型',
+            type: 'warning',
+            duration: 1000
+          });
+          return;
+        }
+        if(this.multipleSelection==null||this.multipleSelection.length<1){
+          this.$message({
+            message: '请选择要操作的商品',
+            type: 'warning',
+            duration: 1000
+          });
+          return;
+        }
+        this.$confirm('是否要进行该批量操作?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          let ids=[];
+          for(let i=0;i<this.multipleSelection.length;i++){
+            ids.push(this.multipleSelection[i].id);
+          }
+          switch (this.operateType) {
+            case this.operates[0].value:
+              this.batchDelete(ids);  //批量删除
+              break;
+            case this.operates[1].value:
+              this.batchSetfirst(ids);  //批量设置组长
+              break;
+            case this.operates[2].value:
+              this.batchSetsecond(ids);  //批量设置主办
+              break;
+            case this.operates[3].value:
+              this.batchSetthird(ids);  //批量设置助理
+              break;
+            default:
+              break;
+          }
+//          this.getList();  //操作后刷新表格内容
+        });
+      },
+      //批量删除方法
+      batchDelete(ids){
+//        this.$confirm('此操作将永久删除该数据, 是否继续?', '提示', {
+//          confirmButtonText: '确定',
+//          cancelButtonText: '取消',
+//          type: 'warning'
+//        }).then(() => {
+
+        //ids:数组（所选表格项的id值数组）
+        for (let i=0;i<ids.length;i++){  //循环所选中的表格项
+          this.tableData.forEach((user,idx)=>{  //循环此页码面的表格数据
+            if(user.id==ids[i]){   //若表格数据id与选中的id一致
+              this.tableData.splice(idx,1);   //删除要删除的数据
+            }
+          })
+        }
+//          this.getList();  //删除完成后更新页面显示
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          });
+
+//        }).catch(() => {
+//          this.$message({
+//            type: 'info',
+//            message: '已取消删除'
+//          });
+//        });
+      },
+      //批量设置组长
+      batchSetfirst(ids) {
+        //ids:数组（所选表格项的id值数组）
+        for (let i=0;i<ids.length;i++){  //循环所选中的表格项
+          this.tableData.forEach((user,idx)=>{  //循环此页码面的表格数据
+            if(user.id==ids[i]){   //若表格数据id与选中的id一致
+              this.tableData[idx].position={id:1,positionName:'组长'}
+            }
+          })
+        }
+//          this.getList();  //删除完成后更新页面显示
+        this.$message({
+          type: 'success',
+          message: '设置职位为组长成功!'
+        });
+      },
+      //批量设置主办
+      batchSetsecond(ids) {
+        //ids:数组（所选表格项的id值数组）
+        for (let i=0;i<ids.length;i++){  //循环所选中的表格项
+          this.tableData.forEach((user,idx)=>{  //循环此页码面的表格数据
+            if(user.id==ids[i]){   //若表格数据id与选中的id一致
+              this.tableData[idx].position={id:2,positionName:'主办'}
+            }
+          })
+        }
+//          this.getList();  //删除完成后更新页面显示
+        this.$message({
+          type: 'success',
+          message: '设置职位为主办成功!'
+        });
+      },
+      //批量设置助理
+      batchSetthird(ids) {
+        //ids:数组（所选表格项的id值数组）
+        for (let i=0;i<ids.length;i++){  //循环所选中的表格项
+          this.tableData.forEach((user,idx)=>{  //循环此页码面的表格数据
+            if(user.id==ids[i]){   //若表格数据id与选中的id一致
+              this.tableData[idx].position={id:3,positionName:'助理'}
+            }
+          })
+        }
+//          this.getList();  //删除完成后更新页面显示
+        this.$message({
+          type: 'success',
+          message: '设置职位为助理成功!'
+        });
+      },
+
     }
   }
 </script>
 
 <style>
-
+  .filter-container {
+    margin-bottom: 10px;
+  }
+  .operate-container {
+    margin-bottom: 10px;
+  }
+  .batch-operate-container {
+    display: inline-block;
+    margin-top: 20px;
+  }
+  .pagination-container {
+    display: inline-block;
+    float: right;
+    margin-top: -5px;
+  }
 </style>
