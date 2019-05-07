@@ -16,7 +16,7 @@ for (let i = 0; i < count; i++) {
     noticeTitle: '@ctitle(7,14)',
     noticeContent: '@cparagraph(7, 20)',
     noticeReadNum: '@integer(20, 300)',
-    'status|1': ['published', 'draft']
+    'noticeStatus|1': ['published', 'draft']
   }))
 }
 
@@ -55,3 +55,4 @@ export default [
     }
   }
 ]
+
