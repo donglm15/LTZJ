@@ -22,6 +22,7 @@ export default {
     noticeEst: 'noticeEst',
     PageNotice: 'manageNotice',
     noticeDetails: 'noticeDetails',
+    noticeCharts: 'noticeStatistic',
     member: ' member',
     PageMember: 'PageMember',
     convention: 'convention',

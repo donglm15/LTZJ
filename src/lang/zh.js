@@ -22,6 +22,7 @@ export default {
     noticeEst: '公告创建',
     PageNotice: '公告管理',
     noticeDetails: '公告详情',
+    noticeCharts: '公告统计',
     member: '党员管理',
     PageMember: '专题学习',
     convention: '会议管理',

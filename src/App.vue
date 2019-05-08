@@ -6,6 +6,10 @@
 
 <script>
 export default {
-  name: 'App'
+  name: 'App',
+  beforeCreate() {
+    this.$store.dispatch('pushNotice')
+    this.$router.push({ path: '/dashboard' })
+  }
 }
 </script>

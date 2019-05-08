@@ -16,6 +16,9 @@
         <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="selectFilter">
           {{ $t('table.search') }}
         </el-button>
+        <el-button v-waves class="filter-item" type="primary" icon="el-icon-data-analysis" @click="noticeChart">
+          统计
+        </el-button>
       </div>
       <!--表格-->
       <el-table v-loading="listLoading" :data="pageData" border style="width: 100%;text-align: center">
@@ -118,8 +121,8 @@ export default {
   },
   methods: {
     ...mapActions(['updateNotice', 'deleteNotice']),
-    gx() { // 修改状态为draft的数据
-      for (var j = 0; j < this.notice.notice.length; j++) {
+    gx() {
+      for (let j = 0; j < this.total; j++) {
         if (this.notice.notice[j].noticeStatus === 'draft') {
           this.notice.notice[j].editIf = false
           this.notice.notice[j].noticeReadNum = 0
@@ -176,6 +179,9 @@ export default {
     handleUpdate(row) {
       this.$router.push({ path: '/notice/noticeEst', query: { id: row.noticeId }})
     },
+    noticeChart() {
+      this.$router.push({ path: '/notice/noticeCharts' })
+    },
     handleDelete(row) {
       this.deleteNotice(row)
       if ((this.listQuery.page - 1) * this.listQuery.limit === this.tableData.length) { this.listQuery.page -= 1 }
@@ -193,9 +199,9 @@ export default {
   },
   mounted() {
     this.listLoading = true
-    this.gx()
     this.tableData = this.notice.notice
     this.total = this.tableData.length
+    this.gx()
     this.getList()
     setTimeout(() => {
       this.listLoading = false

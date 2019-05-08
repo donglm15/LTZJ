@@ -8,18 +8,3 @@ export function fetchNotice(query) {
   })
 }
 
-export function createNotice(data) {
-  return request({
-    url: '/notice/createNotice',
-    method: 'post',
-    data
-  })
-}
-
-export function updateNotice(data) {
-  return request({
-    url: '/notice/updateNotice',
-    method: 'post',
-    data
-  })
-}

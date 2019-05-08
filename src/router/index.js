@@ -271,6 +271,16 @@ export const asyncRoutes = [
           title: 'noticeDetails'
           // roles: ['admin'] // or you can only set roles in sub nav
         }
+      },
+      // 公告图表
+      {
+        path: 'noticeCharts',
+        component: () => import('@/views/notice/noticeCharts'),
+        name: 'noticeCharts',
+        meta: {
+          title: 'noticeCharts'
+          // roles: ['admin'] // or you can only set roles in sub nav
+        }
       }
     ]
   },
