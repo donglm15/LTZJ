@@ -145,6 +145,7 @@
         text-align:
         center
         @selection-change="handleSelectionChange"
+        @row-click="handleClick"
       >
         <!--勾选，全选按钮-->
         <el-table-column type="selection" width="60" align="center" />
@@ -155,7 +156,7 @@
         <!--3.userName:姓名-->
         <el-table-column :label="$t('userManager.userName')" prop="userName" align="center" min-width="90px">
           <template slot-scope="scope">
-            <span class="link-type" @click="handleUpdate(scope.row)">{{ scope.row.userName }}</span>
+            <span class="link-type" @click.stop="handleUpdate(scope.row)">{{ scope.row.userName }}</span>
           </template>
         </el-table-column>
         <!--4.Organization:组织机构-->
@@ -177,24 +178,24 @@
           </template>
         </el-table-column>
         <!--9.operate:操作-->
-        <el-table-column :label="$t('userManager.operate')" prop="operate" align="center" width="220" class-name="small-padding fixed-width">
+        <el-table-column :label="$t('userManager.operate')" prop="operate" align="center" width="155" class-name="small-padding fixed-width">
           <template slot-scope="scope">
             <!--查看详情-->
-            <el-button size="mini" type="success" @click="handleClick(scope.$index,scope.row)">
-              {{ $t('userManager.itemDetail') }}
-            </el-button>
+            <!--<el-button size="mini" type="success" @click="handleClick(scope.row)">-->
+            <!--{{ $t('userManager.itemDetail') }}-->
+            <!--</el-button>-->
             <!--编辑-->
-            <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">
+            <el-button type="primary" size="mini" @click.stop="handleUpdate(scope.row)">
               {{ $t('table.edit') }}
+            </el-button>
+            <!--删除-->
+            <el-button v-if="scope.row.status!='deleted'" size="mini" type="danger" @click.stop="handleModifyStatus(scope.row)">
+              {{ $t('table.delete') }}
             </el-button>
             <!--草稿-->
             <!--<el-button v-if="scope.row.status!='draft'" size="mini" @click="handleModifyStatus(row,'draft')">-->
             <!--{{ $t('table.draft') }}-->
             <!--</el-button>-->
-            <!--删除-->
-            <el-button v-if="scope.row.status!='deleted'" size="mini" type="danger" @click="handleModifyStatus(scope.row)">
-              {{ $t('table.delete') }}
-            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -232,24 +233,7 @@
     <!--编辑、新增对话框-->
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <!--对话框中的表单-->
-      <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
-        <!--职位-->
-        <el-form-item :label="$t('userManager.position')" prop="position.positionName">
-          <el-select v-model="temp.position.positionName" class="filter-item" placeholder="请选择职位">
-            <el-option v-for="item in positionType" :key="item.id" :label="item.positionName" :value="item.positionName" />
-          </el-select>
-        </el-form-item>
-
-        <!--<el-form-item :label="$t('userManager.position')" prop="position.positionName">-->
-        <!--<el-select v-model="temp.position.positionName" class="filter-item" placeholder="请选择职位">-->
-        <!--<el-option v-for="item in positionType" :key="item.id" :label="item.positionName" :value="item.positionName" />-->
-        <!--</el-select>-->
-        <!--</el-form-item>-->
-
-        <!--最后登录时间-->
-        <el-form-item :label="$t('userManager.lastLoginTime')" prop="lastLoginTime">
-          <el-date-picker v-model="temp.lastLoginTime" type="datetime" placeholder="请选择日期和时间" />
-        </el-form-item>
+      <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="110px" style="width: 400px; margin-left:80px;">
         <!--用户名-->
         <el-form-item :label="$t('userManager.account')" prop="account">
           <el-input v-model="temp.account" />
@@ -262,6 +246,12 @@
         <el-form-item :label="$t('userManager.Organization')" prop="Organization">
           <el-input v-model="temp.Organization" />
         </el-form-item>
+        <!--职位-->
+        <el-form-item :label="$t('userManager.position')" prop="position.positionName">
+          <el-select v-model="temp.position.positionName" class="filter-item" placeholder="请选择职位">
+            <el-option v-for="item in positionType" :key="item.id" :label="item.positionName" :value="item.positionName" />
+          </el-select>
+        </el-form-item>
         <!--员工号-->
         <el-form-item :label="$t('userManager.employeeNumber')" prop="employeeNumber">
           <el-input v-model="temp.employeeNumber" />
@@ -269,6 +259,10 @@
         <!--电话-->
         <el-form-item :label="$t('userManager.phone')" prop="phone">
           <el-input v-model="temp.phone" />
+        </el-form-item>
+        <!--最后登录时间-->
+        <el-form-item :label="$t('userManager.lastLoginTime')" prop="lastLoginTime">
+          <el-date-picker v-model="temp.lastLoginTime" type="datetime" placeholder="请选择日期和时间" />
         </el-form-item>
         <!--重要性-->
         <!--<el-form-item :label="$t('table.importance')">-->
@@ -598,7 +592,7 @@
         });
       },
       //查看按钮的逻辑
-      handleClick(index,row){
+      handleClick(row){
         //以传递参数id的方式打开用户详情页面
 //        this.$router.push('userDetail/'+row.id);
         //以路由名称name和传递参数params的方式打开用户详情页面
