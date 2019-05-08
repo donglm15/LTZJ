@@ -203,27 +203,15 @@ export default {
             subtext: '公告点击量统计情况',
             left: 'center'
           },
+          tooltip: {
+            trigger: 'item',
+            formatter: '{a} <br/>{b} : {c} ({d}%)'
+          },
           legend: {
             orient: 'vertical',
             left: 'right',
             right: 20,
             data: ['<50', '50-100', '100-150', '150-200', '200-250', '>250']
-          },
-          tooltip: {
-            trigger: 'item',
-            formatter: '{ a } <br/>{ b } : { c } ({ d }%)'
-          },
-          toolbox: {
-            show: true,
-            orient: 'vertical',
-            left: 'right',
-            top: 'center',
-            feature: {
-              mark: { show: true },
-              dataView: { show: true, readOnly: false },
-              restore: { show: true },
-              saveAsImage: { show: true }
-            }
           },
           series: [
             {
