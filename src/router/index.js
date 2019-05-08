@@ -159,6 +159,7 @@ export const asyncRoutes = [
         path: 'userDetail',
         component: () => import('@/views/user/component/userDetail'),
         name: 'userDetail', // 使用name参数,避免在URL中传参(安全)
+        hidden: true,
         meta: {
           title: 'userDetail'
           // roles: ['admin'] // or you can only set roles in sub nav
