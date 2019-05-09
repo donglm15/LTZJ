@@ -1,7 +1,8 @@
 <template>
   <div class="app-container">
     <div class="chart-container">
-      <el-button type="primary" icon="el-icon-arrow-right" style="position: relative; left: 10px; top:10px " @click="chooseNotice">切换</el-button>
+      <el-button type="primary" style="position: relative; left: 10px; top:10px " @click="backNotice">返回</el-button>
+      <el-button type="primary" style="position: relative; left: 10px; top:10px " @click="chooseNotice">切换</el-button>
       <div :id="id" :class="className" style="height:100%; width: 100%" />
     </div>
   </div>
@@ -104,10 +105,9 @@ export default {
           },
           tooltip: {
             trigger: 'axis',
+            formatter: null,
             axisPointer: {
-              textStyle: {
-                color: '#fff'
-              }
+              type: 'shadow'
             }
           },
           series: [{ name: '总计', type: 'bar', data: this.publishData1 }, { name: '发布', type: 'bar', data: this.publishData2 }],
@@ -163,10 +163,9 @@ export default {
           },
           tooltip: {
             trigger: 'axis',
+            formatter: null,
             axisPointer: {
-              textStyle: {
-                color: '#fff'
-              }
+              type: 'line'
             }
           },
           series: [{ name: '总计', type: 'line', data: this.dateData1 }, { name: '发布', type: 'line', data: this.dateData2 }],
@@ -239,6 +238,9 @@ export default {
         }
         this.chart.setOption(optionData, true)
       }
+    },
+    backNotice() {
+      this.$router.push({ path: '/notice/page' })
     }
   }
 }

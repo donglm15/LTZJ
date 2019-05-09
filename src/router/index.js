@@ -280,7 +280,8 @@ export const asyncRoutes = [
         meta: {
           title: 'noticeCharts'
           // roles: ['admin'] // or you can only set roles in sub nav
-        }
+        },
+        hidden: true
       }
     ]
   },
