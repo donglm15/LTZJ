@@ -1,21 +1,9 @@
 export default {
-  notice: {
-    status: '状态',
-    noticeId: '编号',
-    noticeDate: '日期',
-    noticePublish: '发布部门',
-    noticeTitle: '标题',
-    noticeContent: '内容',
-    noticeReadNum: '点击量',
-    actions: '操作'
-  },
   route: {
     user: '用户管理',
     PageUser: '用户列表',
-    market: '内部人力资源市场',
-    PageMarket: '岗位列表',
-    PageDetail: '岗位详情',
-    jobMap: '工作地点',
+    userDetail: '用户详情',
+    userStatistics: '用户统计',
     article: '图文管理',
     PageArticle: '图文列表',
     produce: '产品管理',
@@ -23,10 +11,7 @@ export default {
     democracy: '民主管理',
     PageDemocracy: '建言献策',
     notice: '通知管理',
-    noticeEst: '公告创建',
-    PageNotice: '公告管理',
-    noticeDetails: '公告详情',
-    noticeCharts: '公告统计',
+    PageNotice: '公告列表',
     member: '党员管理',
     PageMember: '专题学习',
     convention: '会议管理',
@@ -165,14 +150,7 @@ export default {
     draft: '草稿',
     delete: '删除',
     cancel: '取 消',
-    confirm: '确 定',
-    jobSort: '岗位序列',
-    jobName: '岗位名称',
-    endTime: '投递截止日期',
-    employName: '用人单位',
-    jobPlace: '工作地点',
-    jobDetail: '岗位详情',
-    importantly: '优先级'
+    confirm: '确 定'
   },
   example: {
     warning: '创建和编辑页面是不能被 keep-alive 缓存的，因为keep-alive 的 include 目前不支持根据路由来缓存，所以目前都是基于 component name 来进行缓存的。如果你想类似的实现缓存效果，可以使用 localStorage 等浏览器缓存方案。或者不要使用 keep-alive 的 include，直接缓存所有页面。详情见'
@@ -211,5 +189,18 @@ export default {
     tagsView: '开启 Tags-View',
     fixedHeader: '固定 Header',
     sidebarLogo: '侧边栏 Logo'
+  },
+  // 用户管理--用户列表标题
+  userManager: {
+    id: '序号',
+    account: '用户名',
+    userName: '姓名',
+    Organization: '组织机构',
+    position: '职位',
+    employeeNumber: '员工号',
+    phone: '电话',
+    lastLoginTime: '最后登录时间',
+    operate: '操作',
+    itemDetail: '查看'
   }
 }
