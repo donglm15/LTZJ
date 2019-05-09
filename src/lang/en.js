@@ -2,6 +2,10 @@ export default {
   route: {
     user: ' user',
     PageUser: 'PageUser',
+    market: ' market',
+    PageMarket: 'PageMarket',
+    PageDetail: 'PageDetail',
+    jobMap: 'jobMap',
     article: 'article',
     PageArticle: 'PageArticle',
     produce: 'produce',
@@ -101,16 +105,6 @@ export default {
     documentation: 'Documentation',
     github: 'Github Repository'
   },
-  permission: {
-    addRole: 'New Role',
-    editPermission: 'Edit',
-    roles: 'Your roles',
-    switchRoles: 'Switch roles',
-    tips: 'In some cases, using v-permission will have no effect. For example: Element-UI  el-tab or el-table-column and other scenes that dynamically render dom. You can only do this with v-if.',
-    delete: 'Delete',
-    confirm: 'Confirm',
-    cancel: 'Cancel'
-  },
   guide: {
     description: 'The guide page is useful for some people who entered the project for the first time. You can briefly introduce the features of the project. Demo is based on ',
     button: 'Show Guide'
@@ -148,7 +142,12 @@ export default {
     draft: 'Draft',
     delete: 'Delete',
     cancel: 'Cancel',
-    confirm: 'Confirm'
+    confirm: 'Confirm',
+    jobSort: 'jobSort',
+    jobName: 'jobName',
+    endTime: 'endTime',
+    employName: 'employName',
+    jobDetail: 'jobDetail'
   },
   example: {
     warning: 'Creating and editing pages cannot be cached by keep-alive because keep-alive include does not currently support caching based on routes, so it is currently cached based on component name. If you want to achieve a similar caching effect, you can use a browser caching scheme such as localStorage. Or do not use keep-alive include to cache all pages directly. See details'

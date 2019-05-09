@@ -2,6 +2,10 @@ export default {
   route: {
     user: '用户管理',
     PageUser: '用户列表',
+    market: '内部人力资源市场',
+    PageMarket: '岗位列表',
+    PageDetail: '岗位详情',
+    jobMap: '工作地点',
     article: '图文管理',
     PageArticle: '图文列表',
     produce: '产品管理',
@@ -148,7 +152,14 @@ export default {
     draft: '草稿',
     delete: '删除',
     cancel: '取 消',
-    confirm: '确 定'
+    confirm: '确 定',
+    jobSort: '岗位序列',
+    jobName: '岗位名称',
+    endTime: '投递截止日期',
+    employName: '用人单位',
+    jobPlace: '工作地点',
+    jobDetail: '岗位详情',
+    importantly: '优先级'
   },
   example: {
     warning: '创建和编辑页面是不能被 keep-alive 缓存的，因为keep-alive 的 include 目前不支持根据路由来缓存，所以目前都是基于 component name 来进行缓存的。如果你想类似的实现缓存效果，可以使用 localStorage 等浏览器缓存方案。或者不要使用 keep-alive 的 include，直接缓存所有页面。详情见'

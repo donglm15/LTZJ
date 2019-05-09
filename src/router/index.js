@@ -325,7 +325,49 @@ export const asyncRoutes = [
       }
     ]
   },
-
+  // 内部人力资源市场Internal Human Resource Market
+  {
+    path: '/market',
+    component: Layout,
+    redirect: '/market/page',
+    alwaysShow: true, // will always show the root menu
+    name: 'market',
+    meta: {
+      title: 'market',
+      icon: 'component'
+      // roles: ['admin', 'editor'] // you can set roles in root nav
+    },
+    children: [
+      {
+        path: 'page',
+        component: () => import('@/views/market/page'),
+        name: 'PageMarket',
+        meta: {
+          title: 'PageMarket'
+          // roles: ['admin'] // or you can only set roles in sub nav
+        }
+      },
+      {
+        path: 'detail',
+        component: () => import('@/views/market/detail'),
+        name: 'PageDetail',
+        hidden: true,
+        meta: {
+          title: 'PageDetail'
+          // roles: ['admin'] // or you can only set roles in sub nav
+        }
+      },
+      {
+        path: 'jobMap',
+        component: () => import('@/views/market/jobMap'),
+        name: 'jobMap',
+        meta: {
+          title: 'jobMap',
+          noCache: true
+        }
+      }
+    ]
+  },
   // 权限测试页
   {
     path: '/permission',
