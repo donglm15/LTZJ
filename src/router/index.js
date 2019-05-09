@@ -274,7 +274,30 @@ export const asyncRoutes = [
           title: 'PageMember'
           // roles: ['admin'] // or you can only set roles in sub nav
         }
+      },
+      {
+        path: 'member/:id',
+        component: () => import('@/views/member/components/memberDetail'),
+        name: 'memberDetail',
+        meta: {
+          title: 'memberDetail'
+        },
+        hidden:true      //eslint-disable-line
+      },
+
+      {
+        path: 'bar',
+        component: () => import('@/views/member/bar'),
+        name: 'barChart',
+        meta: { title: 'bar', noCache: true }
       }
+
+      // {
+      //   path:'memberChart',
+      //   component:()=>import('@/views/member/memberChart'),
+      //   name:'memberChart',
+      //   meta:{ title:'memberChart', noCache: true }
+      // }
     ]
   },
   // 会议管理
