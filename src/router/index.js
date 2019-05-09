@@ -159,25 +159,52 @@ export const asyncRoutes = [
   },
   // 资讯管理
   {
-    path: '/article',
+    path: '/info',
     component: Layout,
-    redirect: '/article/page',
+    redirect: '/info/page',
     alwaysShow: true, // will always show the root menu
-    name: 'article',
+    name: 'info',
     meta: {
-      title: 'article',
+      title: 'info',
       icon: 'education'
       // roles: ['admin', 'editor'] // you can set roles in root nav
     },
     children: [
       {
         path: 'page',
-        component: () => import('@/views/article/page'),
-        name: 'PageArticle',
+        component: () => import('@/views/info/page'),
+        name: 'info',
         meta: {
-          title: 'PageArticle'
+          title: 'infoList'
           // roles: ['admin'] // or you can only set roles in sub nav
         }
+      },
+      {
+        path: 'chart',
+        component: () => import('@/views/info/chart'),
+        name: 'infoChart',
+        meta: {
+          title: '资讯图表'
+          // roles: ['admin'] // or you can only set roles in sub nav
+        }
+      },
+      {
+        path: 'infoDetail',
+        component: () => import('@/views/info/components/infoDetail'),
+        name: 'infoDetail',
+        meta: {
+          title: '资讯详情'
+        },
+        hidden: true
+      },
+      {
+        path: 'create',
+        component: () => import('@/views/info/components/infoCreate'),
+        name: 'infoCreate',
+        meta: {
+          title: '资讯新增'
+        },
+        hidden: true
       }
     ]
   },
