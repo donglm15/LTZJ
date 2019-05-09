@@ -279,25 +279,44 @@ export const asyncRoutes = [
   },
   // 会议管理
   {
-    path: '/convention',
+    path: '/meeting',
     component: Layout,
-    redirect: '/convention/page',
+    redirect: '/meeting/index',
     alwaysShow: true, // will always show the root menu
-    name: 'convention',
+    name: 'meeting',
     meta: {
-      title: 'convention',
+      title: 'meeting',
       icon: 'list'
       // roles: ['admin', 'editor'] // you can set roles in root nav
     },
     children: [
       {
-        path: 'page',
-        component: () => import('@/views/convention/page'),
-        name: 'PageConvention',
+        path: 'index',
+        component: () => import('@/views/meeting/index'),
+        name: 'meetingAdd',
         meta: {
-          title: 'PageConvention'
+          title: 'meetingAdd'
           // roles: ['admin'] // or you can only set roles in sub nav
         }
+      },
+      {
+        path: 'meetingForm',
+        component: () => import('@/views/meeting/components/meetingForm'),
+        hidden: true,
+        name: 'Announcement',
+        meta: { title: 'Announcement' }
+      },
+      {
+        path: 'announcement',
+        component: () => import('@/views/meeting/announcement'),
+        name: '会议通知列表',
+        meta: { title: '会议通知列表', roles: ['admin'] }
+      },
+      {
+        path: 'meetingTotal',
+        component: () => import('@/views/meeting/meetingTotal'),
+        name: 'meetingTotal',
+        meta: { title: 'meetingTotal', roles: ['admin'] }
       }
     ]
   },
