@@ -2,8 +2,8 @@ export default {
   route: {
     user: '用户管理',
     PageUser: '用户列表',
-    article: '图文管理',
-    PageArticle: '图文列表',
+    info: '资讯管理',
+    infoList: '资讯列表',
     produce: '产品管理',
     PageProduce: '产品列表',
     democracy: '民主管理',
