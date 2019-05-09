@@ -6,6 +6,15 @@ import role from './role'
 import article from './article'
 import search from './remote-search'
 import userManager from './userManager'   //引入用户管理的模拟Mock数据
+import notice from './notice'
+import market from './market'
+import meeting from './meeting'
+import announcement from './announcement'
+import info from './info'
+import member from './member'
+import analysis from './analysis'
+import activity from './activity'
+import PageProduce from './PageProduce'
 
 const mocks = [
   //可Mock拦截这些请求
@@ -14,6 +23,15 @@ const mocks = [
   ...user,
   ...role,
   ...article,
+  ...notice,
+  ...market,
+  ...meeting,
+  ...announcement,
+  ...info,
+  ...member,
+  ...analysis,
+  ...activity,
+  ...PageProduce,
   ...search
 ]
 
