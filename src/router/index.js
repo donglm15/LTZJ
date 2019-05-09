@@ -205,25 +205,44 @@ export const asyncRoutes = [
       }
     ]
   },
-  // 民主管理
+  // 经营分析
   {
-    path: '/democracy',
+    path: '/analysis',
     component: Layout,
-    redirect: '/democracy/page',
+    redirect: '/analysis/daily',
     alwaysShow: true, // will always show the root menu
-    name: 'democracy',
+    name: 'analysis',
     meta: {
-      title: 'democracy',
+      title: 'analysis',
       icon: 'eye-open'
       // roles: ['admin', 'editor'] // you can set roles in root nav
     },
     children: [
       {
-        path: 'page',
-        component: () => import('@/views/democracy/page'),
-        name: 'PageDemocracy',
+        path: 'daily',
+        component: () => import('@/views/analysis/daily'),
+        name: 'DailyAnalysis',
         meta: {
-          title: 'PageDemocracy'
+          title: 'DailyAnalysis'
+          // roles: ['admin'] // or you can only set roles in sub nav
+        }
+      },
+      {
+        path: 'dailyMap',
+        component: () => import('@/views/analysis/dailyMap'),
+        name: 'DailyMap',
+        hidden: true,
+        meta: {
+          title: 'DailyMap'
+          // roles: ['admin'] // or you can only set roles in sub nav
+        }
+      },
+      {
+        path: 'ice',
+        component: () => import('@/views/analysis/ice'),
+        name: 'IceAnalysis',
+        meta: {
+          title: 'IceAnalysis'
           // roles: ['admin'] // or you can only set roles in sub nav
         }
       }
