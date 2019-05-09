@@ -25,7 +25,7 @@
         <el-table-column prop="noticeId" align="center" sortable :label="$t('notice.noticeId')" width="100" />
         <el-table-column prop="noticeDate" align="center" sortable :label="$t('notice.noticeDate')" width="120" />
         <el-table-column prop="noticePublish.typePublish" align="center" :label="$t('notice.noticePublish')" width="120" />
-        <el-table-column prop="noticeTitle" align="center" sortable :label="$t('notice.noticeTitle')" width="260" />
+        <el-table-column prop="noticeTitle" align="center" sortable :label="$t('notice.noticeTitle')" />
         <el-table-column :label="$t('table.status')" class-name="status-col" width="120">
           <template slot-scope="{row}">
             <el-tag :type="row.noticeStatus | statusFilter">
@@ -38,7 +38,7 @@
             <el-tag :type="scope.row.noticeReadNum | typeFilter">{{ scope.row.noticeReadNum }}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column :label="$t('notice.actions')" align="center" class-name="small-padding fixed-width">
+        <el-table-column :label="$t('notice.actions')" align="center" class-name="small-padding fixed-width" width="260">
           <template slot-scope="{row}">
             <el-button type="primary" size="mini" :disabled="row.editIf" @click="handleUpdate(row)">
               {{ $t('table.edit') }}
