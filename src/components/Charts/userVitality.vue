@@ -109,6 +109,7 @@ export default {
         // x 轴
         xAxis: [{
           type: 'category', // 类目轴(离散的)
+          name: '月份', // x轴单位
           axisLine: { // 坐标轴轴线相关设置
             lineStyle: {
               color: '#90979c'
@@ -131,6 +132,7 @@ export default {
         // y 轴
         yAxis: [{
           type: 'value', // 数值轴(连续的)
+          name: '活跃用户数', // y轴单位
           splitLine: { // 分隔线
             show: true,
             lineStyle: { // 线的类型
@@ -160,8 +162,8 @@ export default {
             0
           ],
           bottom: 30,
-          start: 10,
-          end: 80,
+          start: 0, // x轴从0开始
+          end: 100, // x轴到最末结束
           handleIcon: 'path://M306.1,413c0,2.2-1.8,4-4,4h-59.8c-2.2,0-4-1.8-4-4V200.8c0-2.2,1.8-4,4-4h59.8c2.2,0,4,1.8,4,4V413z',
           handleSize: '110%',
           handleStyle: { // 移动方块
@@ -285,7 +287,20 @@ export default {
             4298
           ]
         }
-        ]
+        ],
+        // 工具栏
+        toolbox: {
+          show: true,
+          orient: 'horizontal',
+          left: 'right',
+          top: 'top',
+          feature: {
+            mark: { show: true },
+            dataView: { show: true, readOnly: false },
+            restore: { show: true },
+            saveAsImage: { show: true }
+          }
+        }
       })
     }
   }
