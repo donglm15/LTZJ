@@ -242,6 +242,17 @@ export const asyncRoutes = [
       // roles: ['admin', 'editor'] // you can set roles in root nav
     },
     children: [
+      // 公告创建
+      {
+        path: 'noticeEst',
+        component: () => import('@/views/notice/noticeEst'),
+        name: 'noticeEst',
+        meta: {
+          title: 'noticeEst'
+          // roles: ['admin'] // or you can only set roles in sub nav
+        }
+      },
+      // 公告管理
       {
         path: 'page',
         component: () => import('@/views/notice/page'),
@@ -250,6 +261,27 @@ export const asyncRoutes = [
           title: 'PageNotice'
           // roles: ['admin'] // or you can only set roles in sub nav
         }
+      },
+      // 公告详情
+      {
+        path: 'noticeDetails',
+        component: () => import('@/views/notice/noticeDetails'),
+        name: 'noticeDetails',
+        meta: {
+          title: 'noticeDetails'
+          // roles: ['admin'] // or you can only set roles in sub nav
+        }
+      },
+      // 公告图表
+      {
+        path: 'noticeCharts',
+        component: () => import('@/views/notice/noticeCharts'),
+        name: 'noticeCharts',
+        meta: {
+          title: 'noticeCharts'
+          // roles: ['admin'] // or you can only set roles in sub nav
+        },
+        hidden: true
       }
     ]
   },

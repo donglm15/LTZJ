@@ -1,4 +1,14 @@
 export default {
+  notice: {
+    status: 'status',
+    noticeId: 'ID',
+    noticeDate: 'date',
+    noticePublish: 'department',
+    noticeTitle: 'title',
+    noticeContent: 'content',
+    noticeReadNum: 'readNum',
+    actions: 'operation'
+  },
   route: {
     user: ' user',
     PageUser: 'PageUser',
@@ -13,7 +23,10 @@ export default {
     democracy: 'democracy',
     PageDemocracy: 'PageDemocracy',
     notice: 'notice',
-    PageNotice: 'PageNotice',
+    noticeEst: 'noticeEst',
+    PageNotice: 'manageNotice',
+    noticeDetails: 'noticeDetails',
+    noticeCharts: 'noticeStatistic',
     member: ' member',
     PageMember: 'PageMember',
     convention: 'convention',

@@ -1,4 +1,14 @@
 export default {
+  notice: {
+    status: '状态',
+    noticeId: '编号',
+    noticeDate: '日期',
+    noticePublish: '发布部门',
+    noticeTitle: '标题',
+    noticeContent: '内容',
+    noticeReadNum: '点击量',
+    actions: '操作'
+  },
   route: {
     user: '用户管理',
     PageUser: '用户列表',
@@ -13,7 +23,10 @@ export default {
     democracy: '民主管理',
     PageDemocracy: '建言献策',
     notice: '通知管理',
-    PageNotice: '公告列表',
+    noticeEst: '公告创建',
+    PageNotice: '公告管理',
+    noticeDetails: '公告详情',
+    noticeCharts: '公告统计',
     member: '党员管理',
     PageMember: '专题学习',
     convention: '会议管理',
