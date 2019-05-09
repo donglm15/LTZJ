@@ -178,25 +178,52 @@ export const asyncRoutes = [
   },
   // 资讯管理
   {
-    path: '/article',
+    path: '/info',
     component: Layout,
-    redirect: '/article/page',
+    redirect: '/info/page',
     alwaysShow: true, // will always show the root menu
-    name: 'article',
+    name: 'info',
     meta: {
-      title: 'article',
+      title: 'info',
       icon: 'education'
       // roles: ['admin', 'editor'] // you can set roles in root nav
     },
     children: [
       {
         path: 'page',
-        component: () => import('@/views/article/page'),
-        name: 'PageArticle',
+        component: () => import('@/views/info/page'),
+        name: 'info',
         meta: {
-          title: 'PageArticle'
+          title: 'infoList'
           // roles: ['admin'] // or you can only set roles in sub nav
         }
+      },
+      {
+        path: 'chart',
+        component: () => import('@/views/info/chart'),
+        name: 'infoChart',
+        meta: {
+          title: '资讯图表'
+          // roles: ['admin'] // or you can only set roles in sub nav
+        }
+      },
+      {
+        path: 'infoDetail',
+        component: () => import('@/views/info/components/infoDetail'),
+        name: 'infoDetail',
+        meta: {
+          title: '资讯详情'
+        },
+        hidden: true
+      },
+      {
+        path: 'create',
+        component: () => import('@/views/info/components/infoCreate'),
+        name: 'infoCreate',
+        meta: {
+          title: '资讯新增'
+        },
+        hidden: true
       }
     ]
   },
@@ -210,39 +237,70 @@ export const asyncRoutes = [
     meta: {
       title: 'produce',
       icon: 'lock'
-      // roles: ['admin', 'editor'] // you can set roles in root nav
     },
     children: [
       {
-        path: 'page',
-        component: () => import('@/views/produce/page'),
+        path: 'PageProduce',
+        component: () => import('@/views/produce/components/PageProduce'),
         name: 'PageProduce',
         meta: {
           title: 'PageProduce'
-          // roles: ['admin'] // or you can only set roles in sub nav
+        }
+      },
+      {
+        path: 'ChartProduce',
+        component: () => import('@/views/produce/components/ChartProduce'),
+        name: 'ChartProduce',
+        meta: { title: 'ChartProduce', noCache: true }
+      },
+      {
+        path: 'ThingProduce',
+        component: () => import('@/views/produce/components/thing'),
+        name: 'ThingProduce',
+        meta: {
+          title: 'ThingProduce'
         }
       }
     ]
   },
   // 民主管理
   {
-    path: '/democracy',
+    path: '/analysis',
     component: Layout,
-    redirect: '/democracy/page',
+    redirect: '/analysis/daily',
     alwaysShow: true, // will always show the root menu
-    name: 'democracy',
+    name: 'analysis',
     meta: {
-      title: 'democracy',
+      title: 'analysis',
       icon: 'eye-open'
       // roles: ['admin', 'editor'] // you can set roles in root nav
     },
     children: [
       {
-        path: 'page',
-        component: () => import('@/views/democracy/page'),
-        name: 'PageDemocracy',
+        path: 'daily',
+        component: () => import('@/views/analysis/daily'),
+        name: 'DailyAnalysis',
         meta: {
-          title: 'PageDemocracy'
+          title: 'DailyAnalysis'
+          // roles: ['admin'] // or you can only set roles in sub nav
+        }
+      },
+      {
+        path: 'dailyMap',
+        component: () => import('@/views/analysis/dailyMap'),
+        name: 'DailyMap',
+        hidden: true,
+        meta: {
+          title: 'DailyMap'
+          // roles: ['admin'] // or you can only set roles in sub nav
+        }
+      },
+      {
+        path: 'ice',
+        component: () => import('@/views/analysis/ice'),
+        name: 'IceAnalysis',
+        meta: {
+          title: 'IceAnalysis'
           // roles: ['admin'] // or you can only set roles in sub nav
         }
       }
@@ -325,30 +383,72 @@ export const asyncRoutes = [
           title: 'PageMember'
           // roles: ['admin'] // or you can only set roles in sub nav
         }
+      },
+      {
+        path: 'member/:id',
+        component: () => import('@/views/member/components/memberDetail'),
+        name: 'memberDetail',
+        meta: {
+          title: 'memberDetail'
+        },
+        hidden:true      //eslint-disable-line
+      },
+
+      // {
+      //   path: 'bar',
+      //   component: () => import('@/views/member/bar'),
+      //   name: 'barChart',
+      //   meta: { title: 'bar', noCache: true }
+      // },
+
+      {
+        path: 'mumChart',
+        component: () => import('@/views/member/mumChart'),
+        name: 'mumChart',
+        meta: { title: 'mumChart', noCache: true }
       }
     ]
   },
   // 会议管理
   {
-    path: '/convention',
+    path: '/meeting',
     component: Layout,
-    redirect: '/convention/page',
+    redirect: '/meeting/index',
     alwaysShow: true, // will always show the root menu
-    name: 'convention',
+    name: 'meeting',
     meta: {
-      title: 'convention',
+      title: 'meeting',
       icon: 'list'
       // roles: ['admin', 'editor'] // you can set roles in root nav
     },
     children: [
       {
-        path: 'page',
-        component: () => import('@/views/convention/page'),
-        name: 'PageConvention',
+        path: 'index',
+        component: () => import('@/views/meeting/index'),
+        name: 'meetingAdd',
         meta: {
-          title: 'PageConvention'
+          title: 'meetingAdd'
           // roles: ['admin'] // or you can only set roles in sub nav
         }
+      },
+      {
+        path: 'meetingForm',
+        component: () => import('@/views/meeting/components/meetingForm'),
+        hidden: true,
+        name: 'Announcement',
+        meta: { title: 'Announcement' }
+      },
+      {
+        path: 'announcement',
+        component: () => import('@/views/meeting/announcement'),
+        name: '会议通知列表',
+        meta: { title: '会议通知列表', roles: ['admin'] }
+      },
+      {
+        path: 'meetingTotal',
+        component: () => import('@/views/meeting/meetingTotal'),
+        name: 'meetingTotal',
+        meta: { title: 'meetingTotal', roles: ['admin'] }
       }
     ]
   },
@@ -356,7 +456,7 @@ export const asyncRoutes = [
   {
     path: '/activity',
     component: Layout,
-    redirect: '/activity/page',
+    redirect: '/activity/activityList',
     alwaysShow: true, // will always show the root menu
     name: 'activity',
     meta: {
@@ -366,11 +466,39 @@ export const asyncRoutes = [
     },
     children: [
       {
-        path: 'page',
+        path: 'activityList',
         component: () => import('@/views/activity/page'),
         name: 'PageActivity',
         meta: {
           title: 'PageActivity'
+          // roles: ['admin'] // or you can only set roles in sub nav
+        }
+      },
+      {
+        path: 'activityDetail',
+        component: () => import('@/views/activity/components/ActivityDetail'),
+        name: '活动详情',
+        hidden: true,
+        meta: {
+          title: '活动详情'
+          // roles: ['admin'] // or you can only set roles in sub nav
+        }
+      },
+      {
+        path: 'activityNew',
+        component: () => import('@/views/activity/components/ActivityNew'),
+        name: '发起活动',
+        meta: {
+          title: '发起活动'
+          // roles: ['admin'] // or you can only set roles in sub nav
+        }
+      },
+      {
+        path: 'activityChat',
+        component: () => import('@/views/activity/components/ActivityChat'),
+        name: '活动图表',
+        meta: {
+          title: '活动图表'
           // roles: ['admin'] // or you can only set roles in sub nav
         }
       }
