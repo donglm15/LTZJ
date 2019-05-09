@@ -1,7 +1,8 @@
 <template>
   <div class="app-container">
+    <el-button type="primary" style="position: relative; left: 10px; top:10px " @click="backNotice">返回</el-button>
     <div class="createPost-container">
-      <div style="text-align: center; margin-top:5%">
+      <div style="text-align: center; margin-top:25px">
         <h1>{{ this.temp.noticeTitle }}</h1>
       </div>
       <div style="text-align: center;">
@@ -35,6 +36,9 @@ export default {
     ...mapState(['notice'])
   },
   methods: {
+    backNotice() {
+      this.$router.push({ path: '/notice/page' })
+    },
     ...mapActions(['addNotice', 'updateNotice']),
     pushTemp() {
       this.temp.noticeDate = '2019-5-20'
