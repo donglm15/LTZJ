@@ -21,7 +21,7 @@
         </el-button>
       </div>
       <!--表格-->
-      <el-table v-loading="listLoading" :data="pageData" border style="width: 100%;text-align: center">
+      <el-table v-loading="listLoading" :data="pageData" border style="width: 100%;text-align: center" height="390">
         <el-table-column prop="noticeId" align="center" sortable :label="$t('notice.noticeId')" width="100" />
         <el-table-column prop="noticeDate" align="center" sortable :label="$t('notice.noticeDate')" width="120" />
         <el-table-column prop="noticePublish.typePublish" align="center" :label="$t('notice.noticePublish')" width="120" />
@@ -183,14 +183,23 @@ export default {
       this.$router.push({ path: '/notice/noticeCharts' })
     },
     handleDelete(row) {
-      this.deleteNotice(row)
-      if ((this.listQuery.page - 1) * this.listQuery.limit === this.tableData.length) { this.listQuery.page -= 1 }
-      this.getList()
-      this.$notify({
-        title: '成功',
-        message: '删除成功',
-        type: 'success',
-        duration: 2000
+      this.$confirm('永久删除该公告, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.$message({
+          type: 'success',
+          message: '删除成功!'
+        })
+        this.deleteNotice(row)
+        if ((this.listQuery.page - 1) * this.listQuery.limit === this.tableData.length) { this.listQuery.page -= 1 }
+        this.getList()
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
       })
     }
   },
