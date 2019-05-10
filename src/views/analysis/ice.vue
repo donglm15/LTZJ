@@ -1,5 +1,5 @@
 <template>
-  <div style="background-color: #EDEFF1">
+  <div style="background-color: #08263a">
     <sex-chart />
     <el-row :gutter="10">
       <el-col :xs="24" :sm="24" :lg="8">

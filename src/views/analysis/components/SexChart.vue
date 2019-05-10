@@ -16,7 +16,7 @@ export default {
     const h = data()
     this.chart = echarts.init(this.$refs.chart)
     const option = {
-      backgroundColor: '#EDEFF1',
+      backgroundColor: '#08263a',
       title: {
         text: '冰激凌”用户不同年龄段男女人数统计',
         subtext: '单位:人',
