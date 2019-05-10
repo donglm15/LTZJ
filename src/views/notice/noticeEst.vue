@@ -39,7 +39,8 @@ import { mapState, mapActions } from 'vuex'
 const noticePublish = [
   { publishId: 1, typePublish: '人力资源部' },
   { publishId: 2, typePublish: '办公厅' },
-  { publishId: 3, typePublish: '综合部' }
+  { publishId: 3, typePublish: '综合部' },
+  { publishId: 4, typePublish: '监察室' }
 ]
 
 export default {

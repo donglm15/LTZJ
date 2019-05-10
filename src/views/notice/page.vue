@@ -21,7 +21,7 @@
         </el-button>
       </div>
       <!--表格-->
-      <el-table v-loading="listLoading" :data="pageData" border style="width: 100%;text-align: center" height="390">
+      <el-table v-loading="listLoading" :data="pageData" border style="width: 100%;text-align: center" height="385">
         <el-table-column prop="noticeId" align="center" sortable :label="$t('notice.noticeId')" width="100" />
         <el-table-column prop="noticeDate" align="center" sortable :label="$t('notice.noticeDate')" width="120" />
         <el-table-column prop="noticePublish.typePublish" align="center" :label="$t('notice.noticePublish')" width="120" />
@@ -67,7 +67,8 @@ import Pagination from '@/components/Pagination' // secondary package based on e
 const noticePublish = [
   { publishId: 1, typePublish: '人力资源部' },
   { publishId: 2, typePublish: '办公厅' },
-  { publishId: 3, typePublish: '综合部' }
+  { publishId: 3, typePublish: '综合部' },
+  { publishId: 4, typePublish: '监察室' }
 ]
 
 export default {
