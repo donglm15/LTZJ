@@ -35,6 +35,7 @@ export default {
   },
   data() {
     return {
+      dataMax: 0,
       chartChoose: -1,
       chart: null,
       numData: [],
@@ -57,6 +58,7 @@ export default {
         this.chartChoose = 0
       }
       if (this.chartChoose === 0) {
+        this.dataMax = 0
         for (let i = 0; i < this.notice.notice.length; i++) {
           if (this.publishXAxis.indexOf(this.notice.notice[i].noticePublish.typePublish) === -1) {
             this.publishXAxis.push(this.notice.notice[i].noticePublish.typePublish)
@@ -70,6 +72,9 @@ export default {
               num1 += 1
               if (v.noticeStatus === 'published') num2 += 1
             }
+          }
+          for (;this.dataMax < num1;) {
+            this.dataMax += 5
           }
           this.publishData1[px] = num1
           this.publishData2[px] = num2
@@ -87,7 +92,7 @@ export default {
           },
           yAxis: {
             min: 0,
-            max: 45,
+            max: this.dataMax,
             interval: 5,
             gridIndex: 0
           },
@@ -120,6 +125,7 @@ export default {
         this.chart.setOption(optionData)
       }
       if (this.chartChoose === 1) {
+        this.dataMax = 0
         for (let dx = 0; dx < this.dateXAxis.length; dx++) {
           let num1 = 0
           let num2 = 0
@@ -128,6 +134,9 @@ export default {
               num1 += 1
               if (v.noticeStatus === 'published') num2 += 1
             }
+          }
+          for (; this.dataMax < num1;) {
+            this.dataMax += 5
           }
           this.dateData1[dx] = num1
           this.dateData2[dx] = num2
@@ -145,7 +154,7 @@ export default {
           },
           yAxis: {
             min: 0,
-            max: 15,
+            max: this.dataMax,
             interval: 5,
             gridIndex: 0
           },
