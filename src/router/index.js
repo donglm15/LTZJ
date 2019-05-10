@@ -222,8 +222,8 @@ export const asyncRoutes = [
         name: 'infoCreate',
         meta: {
           title: '资讯新增'
-        },
-        hidden: true
+        }
+        // hidden: true
       }
     ]
   },
@@ -434,7 +434,6 @@ export const asyncRoutes = [
       {
         path: 'meetingForm',
         component: () => import('@/views/meeting/components/meetingForm'),
-        hidden: true,
         name: 'Announcement',
         meta: { title: 'Announcement' }
       },
@@ -446,6 +445,7 @@ export const asyncRoutes = [
       },
       {
         path: 'meetingTotal',
+        hidden: true,
         component: () => import('@/views/meeting/meetingTotal'),
         name: 'meetingTotal',
         meta: { title: 'meetingTotal', roles: ['admin'] }
