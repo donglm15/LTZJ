@@ -1,0 +1,334 @@
+<template>
+  <div class="app-container">
+    <!--头部输入框-->
+    <div class="filter-container">
+      <!--会议室名称检索输入框-->
+      <el-input v-model="listQuery.meetingName" :placeholder="$t('meeting.meetingName')" style="width: 200px;" class="filter-item" @keyup.native.enter="getList" />
+      <!--会议室地址检索输入框-->
+      <!--<el-input v-model="listQuery.meetingPosition" @keyup.native.enter="getList" :placeholder="$t('meeting.meetingPosition')" style="width: 200px;" class="filter-item"  />-->
+      <!--会议室容纳人数检索输入框-->
+      <el-input v-model="listQuery.peopleNum" :placeholder="$t('meeting.peopleNum')" style="width: 200px;" class="filter-item" @keyup.native.enter="getList" />
+      <!--ID排序选择-->
+      <el-select v-model="listQuery.sort" style="width: 140px" class="filter-item" @change="getList">
+        <el-option v-for="item in sortOptions" :key="item.key" :label="item.label" :value="item.key" />
+      </el-select>
+      <el-button class="filter-item" type="primary" icon="el-icon-search" @click="getList">
+        {{ $t('table.search') }}
+      </el-button>
+      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
+        {{ $t('meeting.add') }}
+      </el-button>
+      <!--<el-button :loading="downloadLoading" class="filter-item" style="padding: 10px 13px;" type="primary" icon="el-icon-download" @click="handleDownload">-->
+      <!--{{ $t('table.export') }}-->
+      <!--</el-button>-->
+    </div>
+    <!--表格-->
+    <el-table v-loading="listLoading" :data="pageData" border style="width: 100%;text-align: center">
+      <el-table-column prop="id" sortable :label="$t('meeting.id')" align="center" width="100" />
+      <el-table-column prop="meetingName" :label="$t('meeting.meetingName')" align="center" />
+      <el-table-column prop="meetingPosition" sortable :label="$t('meeting.meetingPosition')" align="center" width="200" />
+      <el-table-column prop="peopleNum" sortable :label="$t('meeting.peopleNum')" align="center" width="120" />
+      <el-table-column prop="ifMore.typeName" sortable :label="$t('meeting.ifMore')" align="center" width="120" />
+      <el-table-column prop="ifOpen.openName" sortable :label="$t('meeting.ifOpen')" align="center" width="120" />
+      <!--按钮-->
+      <el-table-column :label="$t('table.actions')" align="center" class-name="small-padding fixed-width" width="160">
+        <template slot-scope="{row}">
+          <el-button type="primary" size="mini" @click="handleUpdate(row)">
+            {{ $t('table.edit') }}
+          </el-button>
+          <el-button v-if="row.status!='deleted'" size="mini" type="danger" @click="del(row)">
+            {{ $t('table.delete') }}
+          </el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+    <!--底部分页-->
+    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
+    <!--编辑新增弹框-->
+    <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
+      <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="95px" style="width: 400px; margin-left:50px;">
+        <el-form-item :label="$t('meeting.meetingName')" prop="meetingName">
+          <el-input v-model="temp.meetingName" />
+        </el-form-item>
+        <el-form-item :label="$t('meeting.meetingPosition')" prop="meetingPosition">
+          <el-input v-model="temp.meetingPosition" />
+        </el-form-item>
+        <el-form-item :label="$t('meeting.peopleNum')" prop="peopleNum">
+          <el-input v-model="temp.peopleNum" />
+        </el-form-item>
+        <el-form-item :label="$t('ifMore')" prop="ifMore">
+          <el-select v-model="temp.ifMore" value-key="id" class="filter-item" placeholder="Please select">
+            <el-option v-for="item in ifMore" :key="item.id" :label="item.typeName" :value="item" />
+          </el-select>
+        </el-form-item>
+        <el-form-item :label="$t('ifOpen')" prop="ifOpen">
+          <el-select v-model="temp.ifOpen" value-key="id" class="filter-item" placeholder="Please select">
+            <el-option v-for="m in ifOpen" :key="m.id" :label="m.openName" :value="m" />
+          </el-select>
+        </el-form-item>
+
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">
+          {{ $t('table.cancel') }}
+        </el-button>
+        <el-button type="primary" @click="dialogStatus==='create'?createData():updateData()">
+          {{ $t('table.confirm') }}
+        </el-button>
+      </div>
+    </el-dialog>
+  </div>
+</template>
+<script>
+import { fetchMeetingList, updateMeeting, createMeeting } from '@/api/meeting'
+// import { parseTime } from '@/utils'//导出
+import Pagination from '@/components/Pagination' // secondary package based on el-pagination
+
+// 不变化的业务字典数据，可以定义为全局变量,否则应该放在data里
+const ifMore = [
+  { id: 1, typeName: '是' }, { id: 2, typeName: '否' }
+]
+const ifOpen = [
+  { id: 1, openName: '启用' }, { id: 2, openName: '未启用' }
+]
+
+export default {
+  components: { Pagination },
+  data() {
+    return {
+      // 从后台获取的总数据
+      pageData: null,
+      ifMore, // 全局变量的数据字典
+      ifOpen,
+      total: 0, // mock后台传过来的数据总条数
+      listQuery: {// 分页参数和头部检索参数的对象
+        page: 1,
+        limit: 10,
+        meetingName: undefined,
+        meetingPosition: undefined,
+        peopleNum: undefined,
+        sort: '+id'
+      },
+      //      pageData:[],//前台每页要显示的数据
+      // 生成id 正序 倒叙
+      sortOptions: [{ label: 'ID Ascending', key: '+id' }, { label: 'ID Descending', key: '-id' }],
+      // 控制loading加载特效
+      listLoading: false,
+      // 编辑时能赋值的对象
+      temp: {
+        id: '',
+        meetingName: '',
+        meetingPosition: '',
+        peopleNum: '',
+        ifMore: '',
+        ifOpen: {}
+      },
+
+      dialogFormVisible: false, // 关闭弹窗
+      dialogStatus: '', // 弹框中点击确定按钮判断是使用新增还是编辑方法
+      textMap: {
+        update: 'Edit',
+        create: 'Create'
+      },
+
+      rules: {
+        meetingName: [{ required: true, message: 'meetingName is required', trigger: 'blur' }],
+        meetingPosition: [{ required: true, message: 'meetingPosition is required', trigger: 'blur' }],
+        peopleNum: [{ required: true, message: 'peopleNum is required', trigger: 'blur' }],
+        ifMore: [
+          { required: true, message: '请选择会议地点', trigger: 'change' }
+
+        ]
+      }
+
+    }
+  },
+  // 前台分页
+  //  mounted(){
+  //    //显示加载框
+  //    this.listLoading=true;
+  //    //首次挂载新闻列表组件时获得的所有数据
+  //    fetchMeetingList({}).then(response=>{
+  //      console.log(response);
+  //      this.tableData=response.data.items;
+  //      //获得表格数据总量
+  //      this.total=response.data.total;
+  //
+  //      //前端分页  获取第一页
+  // //      this.getList();
+  //
+  //      //关闭加载框
+  //      this.listLoading=false
+  //    })
+  //  },
+  created() {
+    this.getList()
+  },
+  methods: {
+    // 获得每页要显示的数据
+    // 前端分页
+    //    getList(){
+    //
+    //      let {page,limit,meetingName,sort,meetingPosition,peopleNum}=this.listQuery;
+    //
+    //      //前台  过滤查询结果集（先过滤，再分页）
+    //      let filterData=this.tableData.filter(item=>{
+    //        //console.log(item.peopleNum)
+    //        this.listQuery.page=1;
+    //        if(meetingName && item.meetingName.indexOf(meetingName)<0) return false
+    //        if(meetingPosition && item.meetingPosition.indexOf(meetingPosition)<0) return false
+    //        if(peopleNum && item.peopleNum < peopleNum) return false
+    //        return true
+    //      })
+    //
+    //      //排序
+    //      if(sort=='-id')
+    //        filterData=filterData.reverse();
+    //
+    //      //从总数据中过滤出当前页要显示的数据集
+    //      this.pageData= filterData.filter((item,index)=>
+    //        index<page*limit && index>=limit*(page-1)
+    //      )
+    //    },
+    // 后台分页
+    getList() {
+      this.listLoading = true
+      fetchMeetingList(this.listQuery).then(response => {
+        console.log(response.data)
+        this.pageData = response.data.items
+        this.total = response.data.total
+
+        // Just to simulate the time of the request
+        setTimeout(() => {
+          this.listLoading = false
+        }, 1.5 * 1000)
+      })
+    },
+    // 删除
+    del(row) {
+      this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        let index = -1
+        this.pageData.forEach((news, idx) => {
+          if (news.id == row.id) { index = idx }//eslint-disable-line
+        })
+        this.pageData.splice(index, 1)
+
+        this.$message({
+          type: 'success',
+          message: '删除成功!'
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      })
+    },
+
+    // 修改
+    handleUpdate(row) {
+      this.temp = Object.assign({}, row) // copy obj
+      //      this.temp.date = new Date(this.temp.date)
+      this.dialogStatus = 'update'
+      this.dialogFormVisible = true// 开启弹窗
+      this.$nextTick(() => {
+        this.$refs['dataForm'].clearValidate()
+      })
+    },
+    updateData() {
+      this.$refs['dataForm'].validate((valid) => {
+        if (valid) {
+          const tempData = Object.assign({}, this.temp)
+          updateMeeting(tempData).then(() => { // updateMeeting定义在api/meeting.js和moke/meeting.js,后在本页import进来
+            for (const v of this.pageData) {
+              if (v.id === this.temp.id) {
+                const index = this.pageData.indexOf(v)
+                this.pageData.splice(index, 1, this.temp)
+                break
+              }
+            }
+            this.dialogFormVisible = false // 关闭弹窗
+            this.$notify({
+              title: '成功',
+              message: '更新成功',
+              type: 'success',
+              duration: 2000
+            })
+          })
+        }
+      })
+    },
+    resetTemp() {
+      this.temp = {
+        id: '',
+        meetingName: '',
+        meetingPosition: '',
+        peopleNum: '',
+        ifMore: {},
+        ifOpen: {}
+      }
+    },
+    // 新增
+    handleCreate() {
+      this.resetTemp()
+      this.dialogStatus = 'create'
+      this.dialogFormVisible = true
+      this.$nextTick(() => {
+        this.$refs['dataForm'].clearValidate()
+      })
+    },
+    createData() {
+      this.$refs['dataForm'].validate((valid) => {
+        if (valid) {
+          this.temp.id = parseInt(Math.random() * 100) + 1024 // mock a id
+          this.temp.author = 'vue-element-admin'
+          createMeeting(this.temp).then(() => {
+            this.pageData.unshift(this.temp)
+            this.dialogFormVisible = false
+            this.$notify({
+              title: '成功',
+              message: '创建成功',
+              type: 'success',
+              duration: 2000
+            })
+          })
+        }
+      })
+    }
+
+    // 导出
+    //    handleDownload() {
+    //      this.downloadLoading = true
+    //      import('@/vendor/Export2Excel').then(excel => {
+    //        const tHeader = ['timestamp', 'title', 'type', 'importance', 'status']
+    //        const filterVal = ['timestamp', 'title', 'type', 'importance', 'status']
+    //        const data = this.formatJson(filterVal, this.list)
+    //        excel.export_json_to_excel({
+    //          header: tHeader,
+    //          data,
+    //          filename: 'table-list'
+    //        })
+    //        this.downloadLoading = false
+    //      })
+    //    },
+    //    formatJson(filterVal, jsonData) {
+    //      return jsonData.map(v => filterVal.map(j => {
+    //        if (j === 'timestamp') {
+    //          return parseTime(v[j])
+    //        } else {
+    //          return v[j]
+    //        }
+    //      }))
+    //    }
+
+  }
+}
+</script>
+
+<style>
+
+</style>

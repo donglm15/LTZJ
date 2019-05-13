@@ -2,24 +2,29 @@ export default {
   route: {
     user: ' user',
     PageUser: 'PageUser',
-    market: ' market',
-    PageMarket: 'PageMarket',
-    PageDetail: 'PageDetail',
-    jobMap: 'jobMap',
+    userDetail: 'UserDetails',
+    userStatistics: 'UserStatistics',
     article: 'article',
     PageArticle: 'PageArticle',
     produce: 'produce',
     PageProduce: 'PageProduce',
-    democracy: 'democracy',
-    PageDemocracy: 'PageDemocracy',
+    analysis: 'analysis',
+    DailyAnalysis: 'DailyAnalysis',
+    DailyMap: 'DailyMap',
+    IceAnalysis: 'IceAnalysis',
     notice: 'notice',
     PageNotice: 'PageNotice',
     member: ' member',
     PageMember: 'PageMember',
-    convention: 'convention',
-    PageConvention: 'PageConvention',
+    meeting: 'Meeting',
+    meetingAdd: 'MeetingAdd',
+    Announcement: 'Announcement',
+    meetingTotal: 'MeetingTotal',
     activity: 'activity',
     PageActivity: 'PageActivity',
+    PageMarket: 'PageMarket',
+    PageDetail: 'PageDetail',
+    jobMap: 'jobMap',
     dashboard: 'Dashboard',
     documentation: 'Documentation',
     guide: 'Guide',
@@ -105,6 +110,16 @@ export default {
     documentation: 'Documentation',
     github: 'Github Repository'
   },
+  permission: {
+    addRole: 'New Role',
+    editPermission: 'Edit',
+    roles: 'Your roles',
+    switchRoles: 'Switch roles',
+    tips: 'In some cases, using v-permission will have no effect. For example: Element-UI  el-tab or el-table-column and other scenes that dynamically render dom. You can only do this with v-if.',
+    delete: 'Delete',
+    confirm: 'Confirm',
+    cancel: 'Cancel'
+  },
   guide: {
     description: 'The guide page is useful for some people who entered the project for the first time. You can briefly introduce the features of the project. Demo is based on ',
     button: 'Show Guide'
@@ -117,6 +132,34 @@ export default {
     backToTopTips1: 'When the page is scrolled to the specified position, the Back to Top button appears in the lower right corner',
     backToTopTips2: 'You can customize the style of the button, show / hide, height of appearance, height of the return. If you need a text prompt, you can use element-ui el-tooltip elements externally',
     imageUploadTips: 'Since I was using only the vue@1 version, and it is not compatible with mockjs at the moment, I modified it myself, and if you are going to use it, it is better to use official version.'
+  },
+  meeting: {
+    id: 'ID',
+    meetingName: 'MeetingName',
+    meetingPosition: 'MeetingPosition',
+    peopleNum: 'PeopleNum',
+    ifMore: 'IfMore',
+    ifOpen: 'IfOpen',
+    add: 'Add'
+  },
+  Announcement: {
+    meetingID: 'MeetingID',
+    meetingType: 'MeetingType',
+    meetingPosition: 'MeetingPosition',
+    user: 'User',
+    department: 'Department',
+    meetingStatus: 'MeetingStatus',
+    meetingPeople: 'MeetingPeople',
+    date1: 'Date1',
+    date2: 'Date2',
+    dateLong: 'DateLong',
+    meetingTheme: 'MeetingTheme',
+    Presenter: 'Presenter',
+    Data: 'Data',
+    meetingContent: 'MeetingContent',
+    checked: 'Checked',
+    Msg: 'Msg',
+    New: 'New'
   },
   table: {
     dynamicTips1: 'Fixed header, sorted by header order',
@@ -142,12 +185,7 @@ export default {
     draft: 'Draft',
     delete: 'Delete',
     cancel: 'Cancel',
-    confirm: 'Confirm',
-    jobSort: 'jobSort',
-    jobName: 'jobName',
-    endTime: 'endTime',
-    employName: 'employName',
-    jobDetail: 'jobDetail'
+    confirm: 'Confirm'
   },
   example: {
     warning: 'Creating and editing pages cannot be cached by keep-alive because keep-alive include does not currently support caching based on routes, so it is currently cached based on component name. If you want to achieve a similar caching effect, you can use a browser caching scheme such as localStorage. Or do not use keep-alive include to cache all pages directly. See details'
@@ -186,5 +224,18 @@ export default {
     tagsView: 'Open Tags-View',
     fixedHeader: 'Fixed Header',
     sidebarLogo: 'Sidebar Logo'
+  },
+  // 用户管理--用户列表标题
+  userManager: {
+    id: 'Id',
+    account: 'Account',
+    userName: 'User name',
+    Organization: 'Organization',
+    position: 'Position',
+    employeeNumber: 'Employee number',
+    phone: 'Phone',
+    lastLoginTime: 'Last Login Time',
+    operate: 'Operate',
+    itemDetail: 'Look'
   }
 }

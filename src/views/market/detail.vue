@@ -19,7 +19,10 @@
         <h3>{{ this.$route.params.title }}</h3>
         <p><span style="color:orange;font-size: 24px">{{ this.$route.params.salary }}</span>元/月</p>
         <p>学历：{{ this.$route.params.education }} | 经验：{{ this.$route.params.experience }} | 招聘人数：{{ this.$route.params.recruitment }}</p>
-        <p>岗位级别：{{ this.$route.params.importance }} </p>
+        <p>
+          岗位级别：
+          <svg-icon v-for="o in (this.$route.params.importance)" :key="o" icon-class="star" class="meta-item__icon" />
+        </p>
         <el-row>
           <el-col :span="10">岗位序列：{{ this.$route.params.type }}</el-col>
           <el-col :span="6" :offset="8">
@@ -37,7 +40,7 @@
         <el-card class="box-card-left">
           <h3>{{ this.$route.params.employName }}</h3>
           <p>公司福利：{{ this.$route.params.welfare }}</p>
-          <p>职位描述：{{ this.$route.params.remark }}</p>
+          <p style="line-height: 40px">职位描述：{{ this.$route.params.remark }}</p>
           <p>截止时间：{{ this.$route.params.display_time }}</p>
           <p>工作地点：{{ this.$route.params.jobPlace }}</p>
           <div width="800" :closable="false" :mask-closable="false" @on-cancel="cancel">
@@ -81,7 +84,7 @@
           <div style="padding: 14px;">
             <p>{{ this.$route.params.employName }}</p>
             <p>公司地点：{{ this.$route.params.jobPlace }}</p>
-            <p>公司简介：{{ this.$route.params.company }}</p>
+            <div style="line-height: 40px">公司简介：{{ this.$route.params.company }}</div>
           </div>
         </el-card>
       </el-col>

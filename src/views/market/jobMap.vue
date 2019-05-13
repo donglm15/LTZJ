@@ -231,7 +231,7 @@ export default {
         return res
       }
       myChart.setOption({
-        backgroundColor: '#F3F3F3',
+        //        backgroundColor: '#F3F3F3',
         title: {
           padding: [40, 0, 5, 0],
           text: '人才需求地理位置分析',
@@ -286,11 +286,14 @@ export default {
           },
           itemStyle: {
             normal: {
-              areaColor: '#323c48',
-              borderColor: '#111'
+              areaColor: '#fff',
+              borderColor: 'rgb(245,0,87)'
             },
             emphasis: {
-              areaColor: '#2a333d'
+              label: {
+                show: true// 选中状态是否显示省份名称
+              },
+              areaColor: 'red'
             }
           }
         },

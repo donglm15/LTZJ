@@ -16,6 +16,7 @@
             <svg-icon icon-class="user" />
           </span>
           <el-input
+            id="inputColor"
             ref="username"
             v-model="loginForm.username"
             :placeholder="$t('login.username')"
@@ -32,6 +33,7 @@
               <svg-icon icon-class="password" />
             </span>
             <el-input
+              id="inputColor"
               :key="passwordType"
               ref="password"
               v-model="loginForm.password"
@@ -241,7 +243,9 @@ export default {
       color: $cursor;
     }
   }
-
+#inputColor{
+  /*background-color:;*/
+}
   /* reset element-ui css */
   .container-imgBg{
     margin-top: 80px;
@@ -294,7 +298,7 @@ export default {
     padding: 30px 20px 35px 20px;;
     margin: 0 auto;
     overflow: hidden;
-    background-color: #FFFFFF;
+    background-color: rgba(49, 64, 66,.5);
     border: 1px solid $bg;
     border-radius: 20px;
   }

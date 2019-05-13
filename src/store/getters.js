@@ -11,6 +11,16 @@ const getters = {
   introduction: state => state.user.introduction,
   roles: state => state.user.roles,
   permission_routes: state => state.permission.routes,
-  errorLogs: state => state.errorLog.logs
+  errorLogs: state => state.errorLog.logs,
+  // editIf: state => state.notice.editIf,
+  // noticeIfRead: state => state.notice.noticeIfRead,
+  // noticeId: state => state.notice.noticeId,
+  // noticePublish: state => state.notice.noticePublish,
+  // noticeTitle: state => state.notice.noticeTitle,
+  // noticeContent: state => state.notice.noticeContent,
+  // noticeReadNum: state => state.notice.noticeReadNum,
+  // noticeStatus: state => state.notice.noticeStatus,
+  getNotice: state => state.noticeList,
+  getCount: state => state.count
 }
 export default getters

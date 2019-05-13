@@ -62,9 +62,12 @@ export default {
   @import "~@/styles/variables.scss";
 
   .app-wrapper {
+    background: url("../assets/img/timg.jpg");
+    background-size:100% 100%;
+    background-repeat:repeat;
     @include clearfix;
     position: relative;
-    height: 100%;
+    /*height: 100%;*/
     width: 100%;
 
     &.mobile.openSidebar {
