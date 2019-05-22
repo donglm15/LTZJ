@@ -100,12 +100,11 @@ export default {
       this.newFlag = true
       if (this.temp.noticePublish !== '' && this.temp.noticeContent !== '' && this.temp.noticeTitle !== '' && this.temp.noticeDate !== null) {
         if (this.newFlag) {
-          console.log(this.temp.noticeContent)
           this.temp.noticeReadNum = 0
           this.temp.noticeStatus = dd
           if (this.showFlag) {
             updateNoticeOne(this.temp).then(response => {
-              console.log(response.data)
+              console.log('更新数据')
             })
             this.showFlag = false
             this.$notify({
@@ -118,7 +117,7 @@ export default {
             this.$router.push({ path: '/notice/page', query: { page: this.page }})
           } else {
             insertNoticeOne(this.temp).then(response => {
-              console.log(response.data)
+              console.log('添加数据')
             })
             this.showFlag = false
             this.$notify({
