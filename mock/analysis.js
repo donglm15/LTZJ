@@ -1,34 +1,34 @@
 import Mock from 'mockjs'
 
-const List = []
-const count = 50
-for (let i = 0; i < count; i++) {
-  List.push(Mock.mock({
-    'id': '@increment',
-    'date|1': ['2019-05-05', '2019-05-06', '2019-05-07', '2019-05-08'],
-    'product': '@ctitle(3,5)',
-    'regionType|1': [{ id: 1, typeName: '福州' },
-      { id: 2, typeName: '厦门' },
-      { id: 3, typeName: '泉州' },
-      { id: 4, typeName: '漳州' },
-      { id: 5, typeName: '宁德' },
-      { id: 6, typeName: '莆田' },
-      { id: 7, typeName: '南平' },
-      { id: 8, typeName: '三明' },
-      { id: 9, typeName: '龙岩' }
-    ],
-    'value1': '@float(5, 90, 1, 1)',
-    'value2': '@integer(50,300)',
-    'tratio': '@float(-15, 50, 2, 2)',
-    'hratio': '@float(-10, 25, 2, 2)'
-  }))
-}
+// const List = []
+// const count = 50
+// for (let i = 0; i < count; i++) {
+//   List.push(Mock.mock({
+//     'id': '@increment',
+//     'date|1': ['2019-05-05', '2019-05-06', '2019-05-07', '2019-05-08'],
+//     'product': '@ctitle(3,5)',
+//     'regionType|1': [{ id: 1, typeName: '福州' },
+//       { id: 2, typeName: '厦门' },
+//       { id: 3, typeName: '泉州' },
+//       { id: 4, typeName: '漳州' },
+//       { id: 5, typeName: '宁德' },
+//       { id: 6, typeName: '莆田' },
+//       { id: 7, typeName: '南平' },
+//       { id: 8, typeName: '三明' },
+//       { id: 9, typeName: '龙岩' }
+//     ],
+//     'value1': '@float(5, 90, 1, 1)',
+//     'value2': '@integer(50,300)',
+//     'tratio': '@float(-15, 50, 2, 2)',
+//     'hratio': '@float(-10, 25, 2, 2)'
+//   }))
+// }
 export default [
   {
-    url: '/analysis/list',
+    // url: 'analysis/select',
     type: 'get',
     response: config => {
-      const { date, regionType, product, page = 1, limit = 20, sort } = config.query
+      const { date, regionType, product, page = 1, limit = 20 } = config.query
 
       const mockList = List.filter(item => {
         if (date && item.date < date[0] || item.date > date[1]) return false
@@ -63,7 +63,7 @@ export default [
     }
   },
   {
-    url: '/analysis/update',
+    // url: '/analysis/update',
     type: 'post',
     response: _ => {
       return {
@@ -73,7 +73,7 @@ export default [
     }
   },
   {
-    url: '/analysis/create',
+    // url: '/analysis/create',
     type: 'post',
     response: _ => {
       return {

@@ -2,23 +2,34 @@ import request from '@/utils/request'
 
 export function fetchNewsList(query) {
   return request({
-    url: '/analysis/list',
+    url: 'http://localhost:8080/analysis/select',
     method: 'get',
     params: query
   })
 }
-export function updateNews(data) {
+
+export function del(query) {
   return request({
-    url: '/analysis/update',
-    method: 'post',
-    data
+    url: 'http://localhost:8080/analysis/delete',
+    method: 'get',
+    params: query
   })
 }
 
-export function createNews(data) {
+export function updateNews(query) {
   return request({
-    url: '/analysis/create',
+    url: 'http://localhost:8080/analysis/update',
     method: 'post',
-    data
+    data: query,
+    headers: { 'content-Type': 'application/json' }
+  })
+}
+
+export function createNews(query) {
+  return request({
+    url: 'http://localhost:8080/analysis/insert',
+    method: 'post',
+    data: query,
+    headers: { 'content-Type': 'application/json' }
   })
 }
