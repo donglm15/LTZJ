@@ -11,16 +11,13 @@
           </el-button>
         </sticky>
         <el-row style="padding-top: 10px">
-          <el-form-item label-width="70px" label="编号：" prop="noticeId">
-            <el-input v-model="temp.noticeId" :disabled="this.showFlag" style="width: 20%" />
-          </el-form-item>
           <el-form-item label-width="100px" label="发布部门：" class="postInfo-container-item" prop="noticePublish">
-            <el-select v-model="temp.noticePublish.publishId" placeholder="选择发布部门">
-              <el-option v-for="item in noticePublish" :key="item.publishId" :label="item.typePublish" :value="item.publishId" />
+            <el-select v-model="temp.noticePublish" placeholder="选择发布部门">
+              <el-option v-for="(item,i) in publishData" :key="i" :label="item" :value="item" />
             </el-select>
           </el-form-item>
           <el-form-item label-width="100px" label="发布日期： " class="postInfo-container-item" prop="noticeDate">
-            <el-date-picker v-model="temp.noticeDate" value-format="yyyy-MM-dd" type="date" placeholder="Please pick a date" />
+            <el-date-picker v-model="temp.noticeDate" value-format="yyyy-MM-dd" type="date" placeholder="请输入日期" />
           </el-form-item>
         </el-row>
         <el-form-item style="margin-bottom: 40px;" label-width="70px" label="标题：" prop="noticeTitle">
@@ -37,24 +34,19 @@
 <script>
 import Tinymce from '@/components/Tinymce'
 import Sticky from '@/components/Sticky' // 粘性header组件
+import { insertNoticeOne, publishNoticeBack, getOneNotice, updateNoticeOne } from '@/api/notice'
 import { mapState, mapActions } from 'vuex'
-
-const noticePublish = [
-  { publishId: 1, typePublish: '人力资源部' },
-  { publishId: 2, typePublish: '办公厅' },
-  { publishId: 3, typePublish: '综合部' },
-  { publishId: 4, typePublish: '监察室' }
-]
 
 export default {
   components: { Tinymce, Sticky },
   data() {
     return {
-      noticePublish,
+      page: 0,
+      publishData: null,
       temp: {
         noticeId: '',
         noticeDate: '',
-        noticePublish: { publishId: '', typePublish: '' },
+        noticePublish: '',
         noticeTitle: '',
         noticeContent: '',
         noticeReadNum: 0,
@@ -62,10 +54,6 @@ export default {
       },
       showFlag: false,
       rules: {
-        noticeId: [
-          { required: true, message: '请输入编号', trigger: 'blur' },
-          { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
-        ],
         noticePublish: [
           { required: true, message: '请选择发布部门', trigger: 'change' }
         ],
@@ -74,7 +62,7 @@ export default {
         ],
         noticeTitle: [
           { required: true, message: '请输入标题', trigger: 'blur' },
-          { min: 7, max: 14, message: '长度在 7到 14 个字符', trigger: 'blur' }
+          { min: 5, message: '长度至少5个字符', trigger: 'blur' }
         ]
       },
       newFlag: true
@@ -84,13 +72,14 @@ export default {
     ...mapState(['notice'])
   },
   mounted() {
+    publishNoticeBack().then(response => {
+      this.publishData = response.data.items
+    })
     if (this.$route.query.id > 0) {
-      for (const v of this.notice.notice) {
-        if (v.noticeId === this.$route.query.id) {
-          this.temp = v
-          break
-        }
-      }
+      getOneNotice(this.$route.query.id).then(response => {
+        this.temp = response.data
+      })
+      this.page = this.$route.query.pageNext
       this.showFlag = true
     }
   },
@@ -99,9 +88,8 @@ export default {
     ...mapActions(['addNotice', 'updateNotice']),
     resetTemp() {
       this.temp = {
-        noticeId: '',
         noticeDate: '',
-        noticePublish: { publishId: -1, typePublish: '' },
+        noticePublish: '',
         noticeTitle: '',
         noticeContent: '',
         noticeReadNum: '',
@@ -110,36 +98,37 @@ export default {
     },
     handleCreate(dd) {
       this.newFlag = true
-      if (this.temp.noticePublish.publishId !== '' && this.temp.noticeContent !== '' && this.temp.noticeTitle !== '' && this.temp.noticeDate !== null && this.temp.noticeId !== '') {
-        if (!this.showFlag) {
-          for (const a of this.notice.notice) {
-            if (a.noticeId == this.temp.noticeId) {//eslint-disable-line
-              this.newFlag = false
-              this.temp.noticeId = ''
-              alert('编号已存在，请重新输入')
-              break
-            }
-          }
-        }
+      if (this.temp.noticePublish !== '' && this.temp.noticeContent !== '' && this.temp.noticeTitle !== '' && this.temp.noticeDate !== null) {
         if (this.newFlag) {
-          this.temp.editIf = true
-          this.temp.noticePublish.typePublish = noticePublish[this.temp.noticePublish.publishId - 1].typePublish
           this.temp.noticeReadNum = 0
           this.temp.noticeStatus = dd
           if (this.showFlag) {
-            this.updateNotice(this.temp)
+            updateNoticeOne(this.temp).then(response => {
+              console.log('更新数据')
+            })
+            this.showFlag = false
+            this.$notify({
+              title: '成功',
+              message: dd + '成功',
+              type: 'success',
+              duration: 2000
+            })
+            this.resetTemp()
+            this.$router.push({ path: '/notice/page', query: { page: this.page }})
           } else {
-            this.addNotice(this.temp)
+            insertNoticeOne(this.temp).then(response => {
+              console.log('添加数据')
+            })
+            this.showFlag = false
+            this.$notify({
+              title: '成功',
+              message: dd + '成功',
+              type: 'success',
+              duration: 2000
+            })
+            this.resetTemp()
+            this.$router.push({ path: '/notice/page' })
           }
-          this.showFlag = false
-          this.$notify({
-            title: '成功',
-            message: dd + '成功',
-            type: 'success',
-            duration: 2000
-          })
-          this.resetTemp()
-          this.$router.push({ path: '/notice/page' })
         }
       } else {
         alert('请输入完整信息！')
