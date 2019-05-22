@@ -54,7 +54,7 @@ export default {
   methods: {
     getList() {
       fetchActivityList(this.listQuery).then(response => {
-        this.tableData = response.data.items
+        this.tableData = response.data.list
         this.tableData.forEach(value => {
           if (value.prize.match('爱奇艺')) {
             this.ss1++

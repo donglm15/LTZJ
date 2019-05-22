@@ -64,7 +64,7 @@ export default {
   methods: {
     getList() {
       fetchActivityList(this.listQuery).then(response => {
-        this.tableData = response.data.items
+        this.tableData = response.data.list
         // console.log(this.tableData)
         this.tableData.forEach(value => {
           const tempStrs = value.startTime.split(' ')

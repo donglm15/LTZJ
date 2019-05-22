@@ -13,13 +13,13 @@
 import ActivityTable from './components/ActivityTable.vue'
 const tabOptions = [
   {
-    label: '正在进行中', key: 'doing'
+    label: '正在进行中', key: '1'
   },
   {
-    label: '未开始活动', key: 'do'
+    label: '未开始活动', key: '3'
   },
   {
-    label: '已结束活动', key: 'done'
+    label: '已结束活动', key: '2'
   }
 ]
 export default {
@@ -28,7 +28,7 @@ export default {
   },
   data() {
     return {
-      activeTab: 'doing',
+      activeTab: '1',
       tabOptions
     }
   }
