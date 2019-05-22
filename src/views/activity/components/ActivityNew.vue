@@ -79,7 +79,7 @@
         <el-col :span="12">
           <el-form v-if="active==3" ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="80px">
 
-            <el-form-item label="活动ID" prop="uid">
+            <el-form-item label="备案号" prop="uid">
               <el-input key="uid" v-model="temp.uid" />
             </el-form-item>
 
@@ -140,7 +140,7 @@ export default {
         address: [{ required: true, message: '请输入活动地址' }]
       },
       temp: {
-        id: undefined,
+        // id: undefined,
         content: '',
         startTime: '',
         endTime: '',
@@ -151,8 +151,29 @@ export default {
         other: '',
         message: '',
         master: '',
-        uid: undefined,
-        type: 'do'
+        uid: '',
+        activityType: {
+          id: 3,
+          type: ''
+        }
+      },
+      temp1: {
+        // id: undefined,
+        'content': 'ssss',
+        'startTime': '',
+        'endTime': '',
+        'title': 'ssss',
+        'people': undefined,
+        'prize': '',
+        'address': '',
+        'other': '',
+        'message': '',
+        'master': '',
+        'uid': '',
+        'activityType': {
+          'id': 3,
+          'type': ''
+        }
       },
       options: regionData,
       selectedOptions: []
@@ -188,8 +209,8 @@ export default {
       console.log(this.temp.address)
     },
     finish() {
-      this.temp.id = parseInt(Math.random() * 100) + 1024
-      console.log(this.temp)
+      // this.temp.id = parseInt(Math.random() * 100) + 1024
+      // console.log(this.temp)
       //            createActivity(this.temp).then(() => {
       //              this.$notify({
       //                title: '成功',
@@ -199,10 +220,11 @@ export default {
       //              })
       //            })
       // this.temp.startTime.Format("yyyy-MM-dd hh:mm")
-      createActivity(this.temp).then(() => {
+
+      createActivity(JSON.stringify(this.temp)).then(() => {
         this.$router.push({
-          path: '/activity/activityList',
-          query: this.temp
+          path: '/activity/activityList'
+          // query: this.temp
         })
         this.$notify({
           title: '成功',

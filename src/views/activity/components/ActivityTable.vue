@@ -86,7 +86,7 @@
 </template>
 <script>
 import waves from '@/directive/waves'
-import { fetchActivityList, updateActivities } from '@/api/activity'
+import { fetchActivityList, updateActivities, deleteActivity } from '@/api/activity'
 import Pagination from '@/components/Pagination'
 export default {
   directives: { waves },
@@ -98,7 +98,7 @@ export default {
         startTime: '',
         endTime: '',
         page: 1,
-        limit: 20,
+        limit: 10,
         title: undefined,
         type: this.type
       },
@@ -136,7 +136,7 @@ export default {
   created() {
     this.ss = Object.assign({}, this.$route.query)
     // this.ss.unshift(tt)
-    console.log('sss' + this.ss)
+    // console.log('sss' + this.ss)
     this.getList()
   },
   methods: {
@@ -160,31 +160,41 @@ export default {
     },
     getList() {
       this.listLoading = true
-      if (this.ss.type == this.listQuery.type) {//eslint-disable-line
-        fetchActivityList(this.listQuery).then(response => {
-          console.log(response)
-          this.tableData = response.data.items
-          this.total = response.data.total
-          this.tableData.unshift(this.ss)
-          setTimeout(() => {
-            this.listLoading = false
-          }, 1.5 * 1000)
-        })
-      } else {
-        fetchActivityList(this.listQuery).then(response => {
-          console.log(response)
-          this.tableData = response.data.items
-          this.total = response.data.total
-          setTimeout(() => {
-            this.listLoading = false
-          }, 1.5 * 1000)
-        })
-      }
+      //      if (this.ss.type == this.listQuery.type) {//eslint-disable-line
+      //        fetchActivityList(this.listQuery).then(response => {
+      //          console.log(response)
+      //          this.tableData = response.data.items
+      //          this.total = response.data.total
+      //          this.tableData.unshift(this.ss)
+      //          setTimeout(() => {
+      //            this.listLoading = false
+      //          }, 1.5 * 1000)
+      //        })
+      //      } else {
+      //        fetchActivityList(this.listQuery).then(response => {
+      //          console.log(response)
+      //          this.tableData = response.data.items
+      //          this.total = response.data.total
+      //          setTimeout(() => {
+      //            this.listLoading = false
+      //          }, 1.5 * 1000)
+      //        })
+      //      }
+      fetchActivityList(this.listQuery).then(response => {
+        //        response.data.list.forEach( (item,idx) => {
+        //          new Date(item.startTime) > new Date() ? this.listQuery.type=3:(new Date(item.endTime) < new Date()? this.listQuery.type=2:this.listQuery.type=1);
+        //        })
+        this.tableData = response.data.list
+        this.total = response.data.total
+        setTimeout(() => {
+          this.listLoading = false
+        }, 1.5 * 1000)
+      })
     },
     // 查询
     handleFilter() {
       this.listQuery.page = 1
-      if (this.listQuery.endTime != '' && this.listQuery.endTime < this.listQuery.startTime) {//eslint-disable-line
+      if (this.listQuery.endTime != '' && this.listQuery.endTime != null && this.listQuery.endTime < this.listQuery.startTime) {//eslint-disable-line
         this.$message.error('错了哦，活动结束时间不能比活动开始时间小')
       } else {
         this.getList()
@@ -241,6 +251,7 @@ export default {
           }
         })
         this.tableData.splice(this.flag, 1)
+        deleteActivity({ id: row.id })
         this.flag = -1
         this.$message({
           type: 'success',

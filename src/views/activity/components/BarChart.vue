@@ -73,10 +73,10 @@ export default {
   methods: {
     getList() {
       fetchActivityList(this.listQuery).then(response => {
-        this.tableData = response.data.items
+        this.tableData = response.data.list
         this.tableData.forEach(value => {
-          // console.log(value.type)
-          if (value.type == 'doing') {//eslint-disable-line
+          //           console.log(value)
+          if (value.activityType.type == 'doing') {//eslint-disable-line
             if (value.people >= 200) {
               // row.tag = '爆'
               this.ss1++
@@ -90,7 +90,7 @@ export default {
               // row.tag = '热'
               this.ss4++
             }
-          } else if (value.type == 'do') {//eslint-disable-line
+          } else if (value.activityType.type == 'do') {//eslint-disable-line
             if (value.people >= 200) {
               // row.tag = '爆'
               this.qq1++

@@ -1,5 +1,5 @@
 <template>
-  <div class="app-container" :class="{classA:temp.type=='doing', classB:temp.type=='done' , classC:temp.type == 'do'}">
+  <div class="app-container" :class="{classA:temp.activityType.type=='doing', classB:temp.activityType.type=='done' , classC:temp.activityType.type == 'do'}">
     <!--<el-form ref="dataForm" :model="temp" label-position="left" label-width="80px" style="width: 600px; margin-left:200px; margin-top: 40px">-->
 
     <!--<el-form-item label="活动名称" prop="title">-->
@@ -20,7 +20,7 @@
     <!--</el-form-item>-->
     <!--</el-form>-->
     <div class="div1">
-      <div :class="{div2:temp.type=='doing', div2p:temp.type=='done' , div2g:temp.type == 'do'}">
+      <div :class="{div2:temp.activityType.type=='doing', div2p:temp.activityType.type=='done' , div2g:temp.activityType.type == 'do'}">
         活动名称
       </div>
       <div class="div3">{{ temp.title }}</div>
@@ -28,28 +28,28 @@
     </div>
 
     <div class="divA">
-      <div :class="{div2:temp.type=='doing', div2p:temp.type=='done' , div2g:temp.type == 'do'}">
+      <div :class="{div2:temp.activityType.type=='doing', div2p:temp.activityType.type=='done' , div2g:temp.activityType.type == 'do'}">
         活动内容
       </div>
       <div style="margin: 10px 0px 10px 40px; text-indent: 2em; line-height: 2em">{{ temp.content }}</div>
     </div>
 
     <div class="divA">
-      <div :class="{div2:temp.type=='doing', div2p:temp.type=='done' , div2g:temp.type == 'do'}">
+      <div :class="{div2:temp.activityType.type=='doing', div2p:temp.activityType.type=='done' , div2g:temp.activityType.type == 'do'}">
         活动地点
       </div>
       <div style="margin: 10px 0px 10px 40px; text-indent: 2em; line-height: 2em">{{ temp.address }}</div>
     </div>
 
     <div class="divA">
-      <div :class="{div2:temp.type=='doing', div2p:temp.type=='done' , div2g:temp.type == 'do'}">
+      <div :class="{div2:temp.activityType.type=='doing', div2p:temp.activityType.type=='done' , div2g:temp.activityType.type == 'do'}">
         活动时间
       </div>
       <div style="margin: 10px 0px 10px 40px; text-indent: 2em; line-height: 2em">{{ temp.startTime }} -- {{ temp.endTime }}</div>
     </div>
 
     <div class="divA">
-      <div :class="{div2:temp.type=='doing', div2p:temp.type=='done' , div2g:temp.type == 'do'}">
+      <div :class="{div2:temp.activityType.type=='doing', div2p:temp.activityType.type=='done' , div2g:temp.activityType.type == 'do'}">
         活动人数及奖品
       </div>
       <div style="margin: 10px 0px 10px 40px; text-indent: 2em; line-height: 2em">人数有{{ temp.people }} —— 奖品为{{ temp.prize }}</div>
@@ -70,8 +70,8 @@ export default {
         endTime: '',
         title: '',
         people: '',
-        type: '',
-        prize: ''
+        prize: '',
+        activityType: []
       },
       typeTag: ''
     }
@@ -79,9 +79,9 @@ export default {
   mounted() {
     this.temp = Object.assign({}, this.$route.query)
     console.log(this.temp)
-    if (this.temp.type == 'doing') {//eslint-disable-line
+    if (this.temp.activityType.type == 'doing') {//eslint-disable-line
       this.typeTag = '进行中'
-    } else if (this.temp.type == 'done') {//eslint-disable-line
+    } else if (this.temp.activityType.type == 'done') {//eslint-disable-line
       this.typeTag = '已结束'
     } else {
       this.typeTag = '未开始'
