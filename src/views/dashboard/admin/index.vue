@@ -6,10 +6,6 @@
       </el-carousel-item>
     </el-carousel>
 
-    <!--<el-card style="margin-bottom: 40px">-->
-    <!--<div style="height:150px;"><time-chart /></div>-->
-    <!--</el-card>-->
-
     <el-row :gutter="8">
       <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 12}" :xl="{span: 12}" style="margin-bottom:30px;">
         <baidu />
@@ -100,7 +96,6 @@ export default {
 <style lang="scss" scoped>
 .dashboard-editor-container {
   padding: 32px;
-  /*background-image: url("../../../assets/img/timg.jpg");*/
   position: relative;
 }
 
