@@ -3,7 +3,7 @@
     <h2>{{ infoData.title }}</h2>
     <span>浏览量{{ infoData.read }} | 点赞{{ infoData.like }} | 收藏{{ infoData.favorite }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;发布时间{{ infoData.date }}</span>
     <br>
-    <img :src="infoData.imgUrl">
+    <img :src="infoData.imgUrl" style="max-width: 100%">
     <p v-html="infoData.content">{{ infoData.content }}</p>
 
     <div>
@@ -35,7 +35,8 @@ export default {
     getPage() {
       getInfoById(this.infoId).then(response => {
         this.infoData = response.data
-        this.infoData.imgUrl = 'http://localhost:8080/' + this.infoData.imgUrl
+        //        this.infoData.imgUrl = 'http://localhost:8080/' + this.infoData.imgUrl
+        if (this.infoData.imgUrl.match(/^img/)) { this.infoData.imgUrl = '/admin/' + this.infoData.imgUrl }
       })
     },
     likeOver() {

@@ -23,7 +23,7 @@
         <template slot-scope="scope">
           <!--<el-popover placement="right" title="" trigger="hover">-->
           <!--<img :src="scope.row.imgUrl">-->
-          <img slot="reference" :src="scope.row.imgUrl" style="max-width: 100%">
+          <img slot="reference" class="hoverScale" :src="scope.row.imgUrl" style="max-width: 100%">
           <!--</el-popover>-->
         </template>
       </el-table-column>
@@ -142,7 +142,7 @@ export default {
         this.tableData = response.data.list
         this.tableData.forEach(item => {
           item.previewContent = item.content.substring(0, 100)
-          item.imgUrl = 'http://localhost:8080/' + item.imgUrl
+          if (item.imgUrl.match(/^img/)) { item.imgUrl = '/admin/' + item.imgUrl }
         })
 
         this.total = response.data.total
@@ -210,4 +210,10 @@ export default {
 
 </script>
 <style>
+  img:hover.hoverScale{
+    transform: scale(1.1,1.1);
+  }
+  img{
+    transition: .5s;
+  }
 </style>

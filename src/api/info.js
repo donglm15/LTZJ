@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function fetchInfoList(query) {
   return request({
-    url: 'http://localhost:8080/info/list',
+    url: '/admin/info/list',
     method: 'get',
     params: query
   })
@@ -18,7 +18,7 @@ export function fetchInfoChart(query) {
 
 export function updateInfo(query) {
   return request({
-    url: 'http://localhost:8080/info/updateByEdit',
+    url: '/admin/info/updateByEdit',
     method: 'get',
     params: query
   })
@@ -26,7 +26,7 @@ export function updateInfo(query) {
 
 export function deleteInfo(query) {
   return request({
-    url: 'http://localhost:8080/info/delete',
+    url: '/admin/info/delete',
     method: 'get',
     params: query
   })
@@ -34,7 +34,7 @@ export function deleteInfo(query) {
 
 export function getInfoById(id) {
   return request({
-    url: 'http://localhost:8080/info/infoDetail/' + id,
+    url: '/admin/info/infoDetail/' + id,
     method: 'get'
     // params: id
   })
@@ -42,7 +42,7 @@ export function getInfoById(id) {
 
 export function updateRead(query) {
   return request({
-    url: 'http://localhost:8080/info/updateRead',
+    url: '/admin/info/updateRead',
     method: 'get',
     params: query
   })
@@ -50,7 +50,7 @@ export function updateRead(query) {
 
 export function updateLikeFavo(query) {
   return request({
-    url: 'http://localhost:8080/info/updateLikeFavo',
+    url: '/admin/info/updateLikeFavo',
     method: 'get',
     params: query
   })
@@ -58,7 +58,7 @@ export function updateLikeFavo(query) {
 
 export function createInfo(query) {
   return request({
-    url: 'http://localhost:8080/info/insert',
+    url: '/admin/info/insert',
     method: 'post',
     data: query
   })
