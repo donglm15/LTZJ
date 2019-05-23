@@ -18,25 +18,29 @@
       <!--{{ $t('table.export') }}-->
       <!--</el-button>-->
     </div>
-    <el-table v-loading="listLoading" :data="pageData" border style="width: 100%;text-align: center" @row-click="checkInfo">
+    <el-table v-loading="listLoading" :data="tableData" border style="width: 100%;text-align: center" @row-click="checkInfo">
       <el-table-column prop="" label="图片" width="200" align="center">
         <template slot-scope="scope">
-          <el-popover placement="right" title="" trigger="hover">
-            <img :src="scope.row.imgUrl">
-            <img slot="reference" :src="scope.row.imgUrl" style="max-width: 100%">
-          </el-popover>
+          <!--<el-popover placement="right" title="" trigger="hover">-->
+          <!--<img :src="scope.row.imgUrl">-->
+          <img slot="reference" :src="scope.row.imgUrl" style="max-width: 100%">
+          <!--</el-popover>-->
         </template>
       </el-table-column>
-      <el-table-column prop="title" sortable label="标题" width="120" align="center" />
+      <el-table-column prop="title" sortable label="标题" width="200" align="center" />
       <el-table-column prop="infoType.typeName" sortable label="类型" width="80" align="center" />
-      <el-table-column prop="previewContent" label="正文预览" />
+      <el-table-column prop="previewContent" label="正文预览" align="center">
+        <template slot-scope="scope">
+          <p v-html="scope.row.previewContent">{{ scope.row.previewContent }}</p>
+        </template>
+      </el-table-column>
       <el-table-column prop="read" sortable label="浏览量" width="100" align="center" :filters="[{text:'火爆',value:200},{text:'热点',value:100}]" :filter-method="filterTag">
         <template slot-scope="scope">
           <el-tag :type="scope.row.read | typeFilter">{{ scope.row.read }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column prop="date" sortable label="发布时间" width="120" align="center" />
-      <el-table-column label="操作" align="center" width="230" class-name="small-padding fixed-width">
+      <el-table-column label="操作" align="center" width="200" class-name="small-padding fixed-width">
         <template slot-scope="{row}">
           <el-button type="primary" size="mini" @click="handleUpdate(row)">
             编辑
@@ -75,7 +79,7 @@
   </div>
 </template>
 <script>
-import { fetchInfoList, updateInfo } from '@/api/info'
+import { fetchInfoList, updateInfo, deleteInfo, updateRead } from '@/api/info'
 import Pagination from '@/components/Pagination'
 import waves from '@/directive/waves' // waves directive
 // 不变化的业务字典数据，可以定义为全局常量
@@ -103,7 +107,7 @@ export default {
       total: 0,
       listQuery: {
         page: 1,
-        limit: 20,
+        limit: 10,
         title: undefined,
         type: undefined
       },
@@ -126,75 +130,38 @@ export default {
     }
   },
   mounted() {
-    this.listLoading = true
-
-    if (this.$route.query) { this.newInfo = this.$route.query }
-
-    // 首次挂载新闻列表组件时获得所有新闻数据
-    fetchInfoList({}).then(response => {
-      console.log(response)
-      this.tableData = response.data.items
-      // 获得数据总量
-      this.total = response.data.total
-
-      this.tableData.forEach((news) => {
-        news.previewContent = news.content.substring(0, 100)
-      })
-
-      if (this.newInfo.title) { this.tableData.unshift(this.newInfo) }
-      // 获取第一页
-      this.getList()
-
-      this.listLoading = false// 关闭加载框
-    })
+    this.getList()
   },
   methods: {
     // 获得每页要显示的数据
     getList() {
-      const { page, limit, title, type } = this.listQuery
+      this.listLoading = true
 
-      // 过滤查询结果集（先过滤，再分页）
-      const filterData = this.tableData.filter(item => {
-        if (title && item.title.indexOf(title) < 0) return false
-        if (type && item.infoType.id !== type) return false
-        return true
+      fetchInfoList(this.listQuery).then(response => {
+        console.log(response)
+        this.tableData = response.data.list
+        this.tableData.forEach(item => {
+          item.previewContent = item.content.substring(0, 100)
+          item.imgUrl = 'http://localhost:8080/' + item.imgUrl
+        })
+
+        this.total = response.data.total
+        this.listLoading = false
       })
-      this.total = filterData.length
-
-      // 从总数据中过滤出当前页要显示的数据集
-      this.pageData = filterData.filter((item, index) =>
-        index < page * limit && index >= limit * (page - 1)
-      )
     },
     filterTag(value, row) {
       if (value === 200) { return row.read >= value } else { return row.read > value && row.read < 200 }
     },
     handleCreate() {
-      this.$router.push({ name: 'infoCreate', params: { tableData: this.tableData }})
+      this.$router.push({ name: 'infoCreate', params: {}})
     },
     checkInfo(row) { // 查看资讯详情
-      this.tableData.forEach((news, idx) => {
-        if (news.id === row.id) {
-          this.tempId = idx
-        }
+      updateRead({ id: row.id }).then(() => {
+        this.getList()
+        this.$router.push({ path: 'infoDetail', query: { id: row.id }})
       })
-      this.tableData[this.tempId].read += 1
-      this.getList()
-      this.$router.push({ path: 'infoDetail', query: row })
     },
     handleUpdate(row) {
-      //        this.tableData.forEach((news, idx) => {
-      //          if (news.id == row.id) {
-      //            this.tempId = idx;
-      //          }
-      //        })
-      //        this.tempInfoType=this.tableData[this.tempId].infoType;
-      //        this.tempTitle=this.tableData[this.tempId].title;
-      //        this.tempContent=this.tableData[this.tempId].content;
-      //        this.dialogFormVisible = true;
-      //        this.$nextTick(() => {
-      //          this.$refs['dataForm'].clearValidate()
-      //        })
       this.temp = Object.assign({}, row) // copy obj
       this.dialogFormVisible = true
       this.$nextTick(() => {
@@ -204,55 +171,16 @@ export default {
       event.stopPropagation()
     },
     updateData() {
-      //        this.$confirm('是否保存修改的资讯, 是否继续?', '提示', {
-      //          confirmButtonText: '确定',
-      //          cancelButtonText: '取消',
-      //          type: 'warning'
-      //        }).then(() => {
-      //          this.tableData[this.tempId].title=this.tempTitle;
-      //          this.tableData[this.tempId].content=this.tempContent;
-      //          this.tableData[this.tempId].previewContent=this.tempContent.substring(0,100);
-      //          this.tableData[this.tempId].infoType=this.tempInfoType;
-      //          let nowTime= new Date();
-      //          this.tableData[this.tempId].date=nowTime.getFullYear()+'-'+(nowTime.getMonth()+1)+'-'+nowTime.getDate();
-      //          this.dialogFormVisible = false;
-      //          this.getList();
-      //
-      //          this.$message({
-      //            type: 'success',
-      //            message: '保存成功!'
-      //          });
-      //        }).catch(() => {
-      //          this.$message({
-      //            type: 'info',
-      //            message: '已取消保存'
-      //          });
-      //        });
-      this.$refs['dataForm'].validate((valid) => {
-        if (valid) {
-          this.temp.previewContent = this.temp.content.substring(0, 100)
-          const nowTime = new Date()
-          this.temp.date = nowTime.getFullYear() + '-' + (nowTime.getMonth() + 1) + '-' + nowTime.getDate()
-          const tempData = Object.assign({}, this.temp)
-          updateInfo(tempData).then(() => {
-            for (const v of this.tableData) {
-              if (v.id === this.temp.id) {
-                const index = this.tableData.indexOf(v)
-                console.log(this.temp)
-                this.tableData.splice(index, 1, this.temp)
-                this.getList()
-                break
-              }
-            }
-            this.dialogFormVisible = false
-            this.$notify({
-              title: '成功',
-              message: '更新成功',
-              type: 'success',
-              duration: 2000
-            })
-          })
-        }
+      //      const tempData = Object.assign({}, this.temp)
+      updateInfo({ id: this.temp.id, title: this.temp.title, content: this.temp.content, infoTypeId: this.temp.infoType.id }).then(() => {
+        this.dialogFormVisible = false
+        this.getList()
+        this.$notify({
+          title: '成功',
+          message: '更新成功',
+          type: 'success',
+          duration: 2000
+        })
       })
     },
     // 删除数据
@@ -262,18 +190,12 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        let index = -1
-        this.tableData.forEach((news, idx) => {
-          if (news.id === row.id) {
-            index = idx
-          }
-        })
-        this.tableData.splice(index, 1)
-        this.getList()
-
-        this.$message({
-          type: 'success',
-          message: '删除成功!'
+        deleteInfo({ id: row.id }).then(() => {
+          this.getList()
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          })
         })
       }).catch(() => {
         this.$message({
