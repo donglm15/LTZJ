@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard-editor-container">
-    <p>产品"{{ title }}"一周趋势变化</p>
+    <p>"{{ product }}"一周趋势变化</p>
     <panel-group @handleSetLineChartData="handleSetLineChartData" />
 
     <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
@@ -13,7 +13,7 @@
 <script>
 import PanelGroup from './components/PanelGroup'
 import LineChart from './components/DailyMapChart'
-function data() {
+function data1() {
   const t = []
   const h = []
   for (let i = 0; i < 7; i++) {
@@ -24,12 +24,14 @@ function data() {
 }
 const lineChartData = {
   users: {
-    tratio: data()[0],
-    hratio: data()[1]
+    title: '新增用户',
+    tratio: data1()[0],
+    hratio: data1()[1]
   },
   purchases: {
-    tratio: data()[0],
-    hratio: data()[1]
+    title: '计费收入',
+    tratio: data1()[0],
+    hratio: data1()[1]
   }
 }
 
@@ -42,13 +44,16 @@ export default {
   data() {
     return {
       lineChartData: lineChartData.users,
-      title: this.$route.query.product
+      product: this.$route.query.product,
+      person: this.$route.query.person,
+      billing: this.$route.query.billing
     }
   },
   methods: {
     handleSetLineChartData(type) {
       this.lineChartData = lineChartData[type]
     }
+
   }
 }
 </script>

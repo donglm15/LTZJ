@@ -79,8 +79,13 @@ export default {
         this.__resizeHandler()
       }
     },
-    setOptions({ tratio, hratio } = {}) {
+    setOptions({ title, tratio, hratio } = {}) {
       this.chart.setOption({
+        title: {
+          text: title,
+          top: '-2%',
+          x: 'center'
+        },
         xAxis: {
           data: ['05-05', '05-06', '05-07', '05-08', '05-09', '05-10', '05-11'],
           boundaryGap: false,
@@ -115,6 +120,7 @@ export default {
           }
         },
         legend: {
+          x: '4%',
           data: ['日均同比', '日均环比']
         },
         series: [{

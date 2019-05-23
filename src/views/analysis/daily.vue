@@ -283,7 +283,7 @@ export default {
       this.$router.push({
         path: '/analysis/dailyMap',
         name: 'DailyMap',
-        query: { product: row.product }
+        query: { product: row.product, person: row.person, billing: row.billing }
       })
     },
     handleDelete(row) {
