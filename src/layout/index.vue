@@ -64,7 +64,7 @@ export default {
   .app-wrapper {
     background: url("../assets/img/timg.jpg");
     background-size:100% 100%;
-    background-repeat:repeat;
+    background-repeat:no-repeat;
     @include clearfix;
     position: relative;
     /*height: 100%;*/
