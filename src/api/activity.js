@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function fetchActivityList(query) {
   return request({
-    url: 'http://localhost:8080/activity/select',
+    url: '/admin/activity/select',
     method: 'get',
     params: query
   })
@@ -10,7 +10,7 @@ export function fetchActivityList(query) {
 
 export function updateActivities(query) {
   return request({
-    url: 'http://localhost:8080/activity/update',
+    url: '/admin/activity/update',
     method: 'get',
     params: query
   })
@@ -18,7 +18,7 @@ export function updateActivities(query) {
 
 export function createActivity(query) {
   return request({
-    url: 'http://localhost:8080/activity/insert',
+    url: '/admin/activity/insert',
     method: 'post',
     data: query,
     headers: { 'content-Type': 'application/json' }
@@ -27,7 +27,7 @@ export function createActivity(query) {
 
 export function deleteActivity(query) {
   return request({
-    url: 'http://localhost:8080/activity/delete',
+    url: '/admin/activity/delete',
     method: 'get',
     params: query
   })
