@@ -100,7 +100,7 @@ export default {
 <style lang="scss" scoped>
 .dashboard-editor-container {
   padding: 32px;
-  background-image: url("../../../assets/img/timg.jpg");
+  /*background-image: url("../../../assets/img/timg.jpg");*/
   position: relative;
 }
 
