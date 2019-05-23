@@ -2,18 +2,24 @@
   <div>
     <div class="filter-container">
       <el-input v-model="listQuery.product" placeholder="产品名" style="width: 145px;margin-top:7px" class="filter-item" @keyup.enter.native="handleFilter" />
-      <el-select v-model="listQuery.regionType" placeholder="地域" clearable class="filter-item" style="margin-top:7px;width: 130px" @change="handleFilter">
+      <el-select v-model="listQuery.region" placeholder="地域" clearable class="filter-item" style="margin-top:7px;width: 130px" @change="handleFilter">
         <el-option v-for="item in regionTypeOptions" :key="item.id" :label="item.typeName" :value="item.id" />
       </el-select>
       <el-date-picker
-        v-model="listQuery.date"
-        type="daterange"
+        v-model="listQuery.startdate"
         align="right"
-        unlink-panels
-        range-separator="至"
-        start-placeholder="开始日期"
-        end-placeholder="结束日期"
+        type="date"
         value-format="yyyy-MM-dd"
+        placeholder="开始日期"
+        :picker-options="pickerOptions"
+      />
+      <el-date-picker
+        v-model="listQuery.enddate"
+        align="right"
+        type="date"
+        value-format="yyyy-MM-dd"
+        placeholder="结束日期"
+        :picker-options="pickerOptions"
       />
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" style="margin-top:7px" @click="handleFilter">
         {{ $t('table.search') }}
@@ -27,16 +33,16 @@
     </div>
     <el-table v-loading="listLoading" :data="tableData" border style="width: 100%">
       <el-table-column prop="product" label="产品名" width="120" align="center" />
-      <el-table-column prop="regionType.typeName" label="地域" width="120" align="center" />
+      <el-table-column prop="regionType.cityName" label="地域" width="120" align="center" />
       <el-table-column prop="date" sortable label="时间" format="yyyy-MM-dd" width="150" align="center" />
-      <el-table-column sortable prop="value1" label="产品计费收入(万)" width="160" align="center" />
-      <el-table-column sortable prop="value2" label="新增用户数" width="150" align="center" />
-      <el-table-column prop="hratio" sortable label="日均环比" width="180" align="center">
+      <el-table-column sortable prop="billing" label="产品计费收入(万)" width="160" align="center" />
+      <el-table-column sortable prop="person" label="新增用户数" width="130" align="center" />
+      <el-table-column prop="hratio" sortable label="日均环比" width="160" align="center">
         <template slot-scope="scope">
           <el-tag :type="scope.row.hratio|readFilter">{{ scope.row.hratio }}%</el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="tratio" sortable label="日均同比" width="180" align="center">
+      <el-table-column prop="tratio" sortable label="日均同比" width="160" align="center">
         <template slot-scope="scope">
           <el-tag :type="scope.row.tratio|readFilter">{{ scope.row.tratio }}%</el-tag>
         </template>
@@ -65,17 +71,17 @@
         </el-form-item>
         <el-form-item label="地域" prop="regionType">
           <el-select v-model="temp.regionType" value-key="id" class="filter-item" placeholder="Please select">
-            <el-option v-for="item in regionTypeOptions" :key="item.id" :label="item.typeName" :value="item" />
+            <el-option v-for="item in regionTypeOptions" :key="item.id" :label="item.cityName" :value="item" />
           </el-select>
         </el-form-item>
         <el-form-item label="日期" prop="date">
           <el-date-picker v-model="temp.date" type="date" value-format="yyyy-MM-dd" placeholder="Please pick a date" />
         </el-form-item>
-        <el-form-item label="产品计费收入" prop="value1">
-          <el-input v-model="temp.value1" />
+        <el-form-item label="产品计费收入" prop="billing">
+          <el-input v-model="temp.billing" />
         </el-form-item>
-        <el-form-item label="新增用户数" prop="value2">
-          <el-input v-model.number="temp.value2" />
+        <el-form-item label="新增用户数" prop="person">
+          <el-input v-model.number="temp.person" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -91,20 +97,20 @@
 </template>
 
 <script>
-import { fetchNewsList, createNews, updateNews } from '@/api/analysis'
+import { fetchNewsList, createNews, updateNews, del } from '@/api/analysis'
 import waves from '@/directive/waves'
 import Pagination from '@/components/Pagination'
 
 const regionTypeOptions = [
-  { id: 1, typeName: '福州' },
-  { id: 2, typeName: '厦门' },
-  { id: 3, typeName: '泉州' },
-  { id: 4, typeName: '漳州' },
-  { id: 5, typeName: '宁德' },
-  { id: 6, typeName: '莆田' },
-  { id: 7, typeName: '南平' },
-  { id: 8, typeName: '三明' },
-  { id: 9, typeName: '龙岩' }
+  { id: 1, cityName: '福州' },
+  { id: 2, cityName: '厦门' },
+  { id: 3, cityName: '泉州' },
+  { id: 4, cityName: '漳州' },
+  { id: 5, cityName: '宁德' },
+  { id: 6, cityName: '莆田' },
+  { id: 7, cityName: '南平' },
+  { id: 8, cityName: '三明' },
+  { id: 9, cityName: '龙岩' }
 ]
 
 export default {
@@ -117,6 +123,10 @@ export default {
   },
   data() {
     return {
+      pickerOptions: {
+        disabledDate(time) {
+          return time.getTime() > Date.now()
+        } },
       tableData: [],
       list: null,
       total: 0,
@@ -125,6 +135,7 @@ export default {
       listLoading: true,
       dialogStatus: '',
       regionType: '',
+      Date: '',
       rules: {
         regionType: [{ required: true, message: '地域必填', trigger: 'change' }],
         date: [{ required: true, message: '日期必填', trigger: 'change' }],
@@ -136,21 +147,20 @@ export default {
       listQuery: {
         page: 1,
         limit: 20,
-        product: undefined,
-        regionType: undefined,
-        date: '',
-        sort: '-date'
+        product: '',
+        region: '',
+        startdate: '',
+        enddate: ''
       },
       temp: {
-        id: undefined,
+        id: '',
         region: '',
         date: '',
         product: '',
-        hratio: 0,
-        tratio: 0,
-        value1: '',
-        value2: '',
-        regionType: ''
+        hratio: '',
+        tratio: '',
+        billing: '',
+        person: ''
       },
       textMap: {
         update: 'Edit',
@@ -160,15 +170,15 @@ export default {
       downloadLoading: false
     }
   },
-  watch: {
-    'listQuery.date': {
-      handler(val, oldVal) {
-        if (val === null) {
-          this.listQuery.date = ''
-        }
-      }
-    }
-  },
+  //  watch: {
+  //    'listQuery.date': {
+  //      handler(val, oldVal) {
+  //        if (val === null) {
+  //          this.listQuery.date = ''
+  //        }
+  //      }
+  //    }
+  //  },
   created() {
     this.getList()
   },
@@ -176,33 +186,33 @@ export default {
     getList() {
       this.listLoading = true
       fetchNewsList(this.listQuery).then(response => {
-        this.tableData = response.data.items
+        this.tableData = response.data.list
         this.total = response.data.total
       })
       this.listLoading = false
     },
     handleFilter() {
       this.listQuery.page = 1
-      this.getList()
-    },
-    sortByDate(order) {
-      if (order === 'ascending') {
-        this.listQuery.sort = '+date'
+      if (this.listQuery.startdate > this.listQuery.enddate) {
+        this.$message({
+          showClose: true,
+          message: '查询开始时间不能晚于结束时间',
+          type: 'error'
+        })
       } else {
-        this.listQuery.sort = '-date'
+        this.getList()
       }
-      this.handleFilter()
     },
     resetTemp() {
       this.temp = {
         id: undefined,
         date: '',
         product: '',
-        hratio: 0,
-        tratio: 0,
-        value1: '',
-        value2: '',
-        regionType: ''
+        hratio: '',
+        tratio: '',
+        billing: '',
+        person: '',
+        region: ''
       }
     },
     handleCreate() {
@@ -216,10 +226,12 @@ export default {
     createData() {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
-          this.temp.id = parseInt(Math.random() * 100) + 1024// mock a id
-          this.temp.author = 'vue-element-admin'
+          this.temp.id = ''
+          this.temp.region = this.temp.regionType.id
+          console.log(this.temp)
           createNews(this.temp).then(() => {
-            this.tableData.unshift(this.temp)
+            this.getList()
+            //            this.tableData.unshift(this.temp)
             this.dialogFormVisible = false
             this.$notify({
               title: '成功',
@@ -236,14 +248,17 @@ export default {
         if (valid) {
           const tempData = Object.assign({}, this.temp)
           //            tempData.date = +new Date(tempData.date) // change Thu Nov 30 2017 16:41:05 GMT+0800 (CST) to 1512031311464
+          tempData.id = this.temp.id
+          tempData.region = tempData.regionType.id
           updateNews(tempData).then(() => {
-            for (const v of this.tableData) {
-              if (v.id === this.temp.id) {
-                const index = this.tableData.indexOf(v)
-                this.tableData.splice(index, 1, this.temp)
-                break
-              }
-            }
+            this.getList()
+            //            for (const v of this.tableData) {
+            //              if (v.id === this.temp.id) {
+            //                const index = this.tableData.indexOf(v)
+            //                this.tableData.splice(index, 1, this.temp)
+            //                break
+            //              }
+            //            }
             this.dialogFormVisible = false
             this.$notify({
               title: '成功',
@@ -277,17 +292,16 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        let index = -1
-        this.tableData.forEach((news, idx) => {
-          if (news.id == row.id) { index = idx }//eslint-disable-line
-        })
-        this.tableData.splice(index, 1)
+        //        this.tableData.splice(index, 1)
+        del({ id: row.id })
+        this.getList()
         this.$notify({
           title: '成功',
           message: '删除成功',
           type: 'success',
           duration: 2000
         })
+        this.getList()
       }).catch(() => {
       })
     },
