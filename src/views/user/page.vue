@@ -55,7 +55,7 @@
           <!--职位搜索-->
           <el-form-item label="职位搜索：">
             <el-select v-model="listQuery.position" :placeholder="$t('userManager.position')" clearable style="width: 80px" @change="handleFilter">
-              <el-option v-for="item in positionType" :key="item.id" :label="item.positionName" :value="item.positionName" />
+              <el-option v-for="item in positionType" :key="item.id" :label="item.positionName" :value="item.id" />
             </el-select>
           </el-form-item>
           <!--时间搜索-->
@@ -72,7 +72,7 @@
           <!--ID排序检索-->
           <el-form-item label="排序检索：">
             <el-select v-model="listQuery.sort" style="width: 100px" @change="handleFilter">
-              <el-option v-for="item in sortOptions" :key="item.key" :label="item.label" :value="item.key" />
+              <el-option v-for="item in sortOptions" :key="item.label" :label="item.label" :value="item.key" />
             </el-select>
           </el-form-item>
         </el-form>
@@ -163,9 +163,9 @@
         <el-table-column :label="$t('userManager.Organization')" prop="Organization" width="180px" align="center" />
         <!--5.position:职位-->
         <el-table-column :label="$t('userManager.position')" prop="position.positionName" width="90px" align="center">
-          <template slot-scope="scope">
-            <el-tag :type="scope.row.position.positionName | typeFilter">{{ scope.row.position.positionName }}</el-tag>
-          </template>
+          <!--<template slot-scope="scope">-->
+          <!--<el-tag :type="scope.row.position.positionName | typeFilter(scope.row.position.positionName)">{{ scope.row.position.positionName}}</el-tag>-->
+          <!--</template>-->
         </el-table-column>
         <!--6.employeeNumber:员工号-->
         <el-table-column :label="$t('userManager.employeeNumber')" prop="employeeNumber" class-name="status-col" width="80" />
@@ -174,7 +174,7 @@
         <!--8.lastLoginTime:最后登录时间-->
         <el-table-column :label="$t('userManager.lastLoginTime')" prop="lastLoginTime" sortable align="center" width="140">
           <template slot-scope="scope">
-            <span>{{ scope.row.lastLoginTime | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
+            <span>{{ scope.row.lastLoginTime }}</span>
           </template>
         </el-table-column>
         <!--9.operate:操作-->
@@ -247,9 +247,9 @@
           <el-input v-model="temp.Organization" />
         </el-form-item>
         <!--职位-->
-        <el-form-item :label="$t('userManager.position')" prop="position.positionName">
-          <el-select v-model="temp.position.positionName" class="filter-item" placeholder="请选择职位">
-            <el-option v-for="item in positionType" :key="item.id" :label="item.positionName" :value="item.positionName" />
+        <el-form-item :label="$t('userManager.position')" prop="position.id">
+          <el-select v-model="temp.position.id" class="filter-item" placeholder="请选择职位">
+            <el-option v-for="item in positionType" :key="item.id" :label="item.positionName" :value="item.id" />
           </el-select>
         </el-form-item>
         <!--员工号-->
@@ -369,7 +369,7 @@
           Organization: '', //组织机构
           employeeNumber: '', //员工号
           phone: '', //电话
-          id: undefined,  //序号
+//          id: undefined,  //序号
         },
         textMap: {  //对话框的标题
           update: '编辑',
@@ -452,7 +452,7 @@
         //从后端获取用户数据
 //        this.listLoading = true
         fetchUserList(this.listQuery).then(response => {
-          this.tableData = response.data.items  //获取总的用户数据列表
+          this.tableData = response.data.list  //获取总的用户数据列表
           this.total = response.data.total  //获取用户列表总数
 
           // 模拟后端响应的延时
@@ -491,7 +491,7 @@
       },
       resetTemp() {  //重置（清空）temp(新增数据时使用)
         this.temp = {
-          id: undefined,  //序号
+//          id: undefined,  //序号
           account: '',  //用户名
           userName: '', //姓名
           Organization: '', //组织机构
@@ -514,12 +514,13 @@
       createData() {
         this.$refs['dataForm'].validate((valid) => {
           if (valid) {
-            this.temp.id = parseInt(Math.random() * 100) + 1024 // mock a id (随机生成一个id序号)
+//            this.temp.id = parseInt(Math.random() * 100) + 1024 // mock a id (随机生成一个id序号)
 //            this.temp.author = 'vue-element-admin'
             createArticle(this.temp).then(() => {
               this.tableData.unshift(this.temp)  //将temp中的数据添加至tableData中
               this.dialogFormVisible = false  //对话框消失
-//              this.getList();  //新增完成后更新页面显示
+              this.listQuery.sort = '-id';
+              this.getList();  //新增完成后更新页面显示
               this.$notify({
                 title: '成功',
                 message: '创建成功',
@@ -555,7 +556,7 @@
                 }
               }
               this.dialogFormVisible = false; //对话框消失
-//              this.getList();  //编辑完成后更新页面显示
+              this.getList();  //编辑完成后更新页面显示
               this.$notify({
                 title: '成功',
                 message: '更新成功',
