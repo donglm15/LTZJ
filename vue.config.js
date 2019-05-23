@@ -40,11 +40,11 @@ module.exports = {
           ['^' + process.env.VUE_APP_BASE_API]: ''
         }
       },
-      '/server': {
+      '/admin': {
         target: `http://localhost:8080`,
         changeOrigin: true,
         pathRewrite: {
-          '/server': ''
+          '/admin': ''
         }
       }
     },
