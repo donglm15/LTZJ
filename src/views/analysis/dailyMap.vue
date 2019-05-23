@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard-editor-container">
-    <p>产品"{{ title }}"一周趋势变化</p>
+    <p>产品"{{ product }}"一周趋势变化</p>
     <panel-group @handleSetLineChartData="handleSetLineChartData" />
 
     <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
@@ -42,13 +42,16 @@ export default {
   data() {
     return {
       lineChartData: lineChartData.users,
-      title: this.$route.query.product
+      product: this.$route.query.product,
+      person: this.$route.query.person,
+      billing: this.$route.query.billing
     }
   },
   methods: {
     handleSetLineChartData(type) {
       this.lineChartData = lineChartData[type]
     }
+
   }
 }
 </script>
