@@ -519,6 +519,7 @@
             createArticle(this.temp).then(() => {
               this.tableData.unshift(this.temp)  //将temp中的数据添加至tableData中
               this.dialogFormVisible = false  //对话框消失
+              this.listQuery.sort = '-id';
               this.getList();  //新增完成后更新页面显示
               this.$notify({
                 title: '成功',
@@ -555,7 +556,7 @@
                 }
               }
               this.dialogFormVisible = false; //对话框消失
-//              this.getList();  //编辑完成后更新页面显示
+              this.getList();  //编辑完成后更新页面显示
               this.$notify({
                 title: '成功',
                 message: '更新成功',

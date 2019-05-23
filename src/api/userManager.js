@@ -18,7 +18,7 @@ export function createArticle(data) { // 新增数据
 
 export function updateArticle(data) { // 更新数据（编辑）
   return request({
-    url: '/userManager/update',
+    url: '/admin/userManager/update',
     method: 'post',
     data
   })
