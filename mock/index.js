@@ -23,7 +23,7 @@ const mocks = [
   ...user,
   ...role,
   ...article,
-  ...notice,
+  // ...notice,
   ...market,
   ...meeting,
   ...announcement,
