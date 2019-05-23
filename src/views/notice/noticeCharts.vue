@@ -10,6 +10,7 @@
 <script>
 import { mapState } from 'vuex'
 import echarts from 'echarts'
+import { noticeStatistics } from '@/api/notice'
 
 export default {
   props: {
@@ -34,17 +35,82 @@ export default {
     return {
       chartChoose: -1,
       chart: null,
+      data: null,
+      Ymax: 0,
+      Ymax2: 0,
       numData: [],
-      publishData1: [],
-      publishData2: [],
+      publishData1: [0, 0, 0, 0, 0, 0, 0, 0, 0],
+      publishData2: [0, 0, 0, 0, 0, 0, 0, 0, 0],
       publishXAxis: [],
-      dateData1: [],
-      dateData2: [],
-      dateXAxis: ['2018-01-', '2018-02-', '2018-03-', '2018-04-', '2018-05-', '2018-06-', '2018-07-', '2018-08-', '2018-09-', '2018-10-', '2018-11-', '2018-12-']
+      dateData1: [0, 0, 0, 0, 0, 0, 0, 0, 0],
+      dateData2: [0, 0, 0, 0, 0, 0, 0, 0, 0],
+      dateXAxis: []
     }
   },
   computed: {
     ...mapState(['notice'])
+  },
+  created() {
+    noticeStatistics('noticePublish', 'noticeStatus').then(response => {
+      this.data = response.data.items
+      for (let i = 0; i < this.data.length; i++) {
+        for (let j = 0; ; j++) {
+          if (this.publishXAxis[j] === this.data[i].noticeFirst) {
+            if (this.data[i].noticeSecond === 'published') {
+              this.publishData2[j] = this.data[i].count
+            } else {
+              this.publishData1[j] = this.data[i].count
+            }
+            break
+          }
+          if (j >= this.publishXAxis.length) {
+            this.publishXAxis[j] = this.data[i].noticeFirst
+            if (this.data[i].noticeSecond === 'published') {
+              this.publishData2[j] = this.data[i].count
+            } else {
+              this.publishData1[j] = this.data[i].count
+            }
+            break
+          }
+        }
+      }
+      for (let i = 0; i < this.publishXAxis.length; i++) {
+        this.publishData1[i] += this.publishData2[i]
+        if (this.publishData1[i] > this.Ymax) {
+          this.Ymax = parseInt(this.publishData1[i] / 5) * 5 + 5
+        }
+      }
+    })
+    noticeStatistics('YEAR(noticeDate)', 'noticeStatus').then(response => {
+      this.data = response.data.items
+      for (let i = 0; i < this.data.length; i++) {
+        for (let j = 0; ; j++) {
+          if (this.dateXAxis[j] === this.data[i].noticeFirst) {
+            if (this.data[i].noticeSecond === 'published') {
+              this.dateData2[j] = this.data[i].count
+            } else {
+              this.dateData1[j] = this.data[i].count
+            }
+            break
+          }
+          if (j >= this.dateXAxis.length) {
+            this.dateXAxis[j] = this.data[i].noticeFirst
+            if (this.data[i].noticeSecond === 'published') {
+              this.dateData2[j] = this.data[i].count
+            } else {
+              this.dateData1[j] = this.data[i].count
+            }
+            break
+          }
+        }
+      }
+      for (let i = 0; i < this.dateXAxis.length; i++) {
+        this.dateData1[i] += this.dateData2[i]
+        if (this.dateData1[i] > this.Ymax2) {
+          this.Ymax2 = parseInt(this.dateData1[i] / 5) * 5 + 5
+        }
+      }
+    })
   },
   mounted() {
     this.chart = echarts.init(document.getElementById(this.id))
@@ -53,29 +119,10 @@ export default {
   methods: {
     chooseNotice() {
       this.chartChoose += 1
-      if (this.chartChoose > 2) {
+      if (this.chartChoose > 1) {
         this.chartChoose = 0
       }
       if (this.chartChoose === 0) {
-        for (let i = 0; i < this.notice.notice.length; i++) {
-          if (this.publishXAxis.indexOf(this.notice.notice[i].noticePublish.typePublish) === -1) {
-            this.publishXAxis.push(this.notice.notice[i].noticePublish.typePublish)
-          }
-        }
-        for (let px = 0; px < this.publishXAxis.length; px++) {
-          let num1 = 0
-          let num2 = 0
-          for (const v of this.notice.notice) {
-            if (this.publishXAxis[px] === v.noticePublish.typePublish) {
-              num1 += 1
-              if (v.noticeStatus === 'published') num2 += 1
-            }
-          }
-          this.publishData1[px] = num1
-          this.publishData2[px] = num2
-          num1 = 0
-          num2 = 0
-        }
         const optionData = {
           title: {
             text: '公告统计表',
@@ -87,7 +134,7 @@ export default {
           },
           yAxis: {
             min: 0,
-            max: 45,
+            max: this.Ymax,
             interval: 5,
             gridIndex: 0
           },
@@ -120,32 +167,18 @@ export default {
         this.chart.setOption(optionData)
       }
       if (this.chartChoose === 1) {
-        for (let dx = 0; dx < this.dateXAxis.length; dx++) {
-          let num1 = 0
-          let num2 = 0
-          for (const v of this.notice.notice) {
-            if (v.noticeDate.includes(this.dateXAxis[dx])) {
-              num1 += 1
-              if (v.noticeStatus === 'published') num2 += 1
-            }
-          }
-          this.dateData1[dx] = num1
-          this.dateData2[dx] = num2
-          num1 = 0
-          num2 = 0
-        }
         const optionData = {
           title: {
             text: '公告统计表',
-            subtext: '2018年各月份公告发布情况',
+            subtext: '各年公告发布情况',
             left: 'center'
           },
           xAxis: {
-            data: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
+            data: this.dateXAxis
           },
           yAxis: {
             min: 0,
-            max: 15,
+            max: this.Ymax2,
             interval: 5,
             gridIndex: 0
           },
@@ -176,67 +209,6 @@ export default {
           }
         }
         this.chart.setOption(optionData)
-      }
-      if (this.chartChoose === 2) {
-        let n1 = 0, n2 = 0, n3 = 0, n4 = 0, n5 = 0, n6 = 0 //eslint-disable-line
-        for (const v of this.notice.notice) {
-          if (v.noticeStatus === 'published') {
-            if (v.noticeReadNum <= 50) {
-              n1 += 1
-            } else if (v.noticeReadNum <= 100) {
-              n2 += 1
-            } else if (v.noticeReadNum <= 150) {
-              n3 += 1
-            } else if (v.noticeReadNum <= 200) {
-              n4 += 1
-            } else if (v.noticeReadNum <= 250) {
-              n5 += 1
-            } else if (v.noticeReadNum <= 300) {
-              n6 += 1
-            }
-          }
-        }
-        const optionData = {
-          title: {
-            text: '公告统计表',
-            subtext: '公告点击量统计情况',
-            left: 'center'
-          },
-          tooltip: {
-            trigger: 'item',
-            formatter: '{a} <br/>{b} : {c} ({d}%)'
-          },
-          legend: {
-            orient: 'vertical',
-            left: 'right',
-            right: 20,
-            data: ['<50', '50-100', '100-150', '150-200', '200-250', '>250']
-          },
-          series: [
-            {
-              name: '点击量',
-              type: 'pie',
-              radius: '55%',
-              center: ['50%', '60%'],
-              data: [
-                { value: n1, name: '<50' },
-                { value: n2, name: '50-100' },
-                { value: n3, name: '100-150' },
-                { value: n4, name: '150-200' },
-                { value: n5, name: '200-250' },
-                { value: n6, name: '>250' }
-              ],
-              itemStyle: {
-                emphasis: {
-                  shadowBlur: 10,
-                  shadowOffsetX: 0,
-                  shadowColor: 'rgba(0, 0, 0, 0.5)'
-                }
-              }
-            }
-          ]
-        }
-        this.chart.setOption(optionData, true)
       }
     },
     backNotice() {
