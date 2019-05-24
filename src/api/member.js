@@ -2,15 +2,9 @@ import request from '@/utils/request'
 
 export function fetchList(query) {
   return request({
-    url: '/admin/member/select',
+    url: '/admin/member/list',
     method: 'get',
     params: query
-  })
-}
-export function deleteMember(id) {
-  return request({
-    url: '/admin/member/delete/' + id,
-    method: 'get'
   })
 }
 
@@ -29,21 +23,26 @@ export function fetchMemberChart(query) {
     params: query
   })
 }
+// export function fetchPv(pv) {
+//   return request({
+//     url: '/member/pv',
+//     method: 'get',
+//     params: { pv }
+//   })
+// }
 
-export function createMember(query) {
+export function createMember(data) {
   return request({
-    url: '/admin/member/insert',
+    url: '/admin/member/create',
     method: 'post',
-    data: query,
-    headers: { 'content-Type': 'application/json' }
+    data
   })
 }
 
-export function updateMember(query) {
+export function updateMember(data) {
   return request({
     url: '/admin/member/update',
     method: 'post',
-    data: query,
-    headers: { 'content-Type': 'application/json' }
+    data
   })
 }

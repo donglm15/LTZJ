@@ -38,7 +38,7 @@
           </el-form-item>
           <el-form-item label="开会日期" prop="meetingDate">
             <el-date-picker
-              v-model="listQuery.meetingDate"
+              v-model="announcementDate"
               prop="meetingDate"
               type="daterange"
               align="right"
@@ -90,7 +90,8 @@
       <el-table-column prop="department" :label="$t('Announcement.department')" align="center" width="110" />
       <el-table-column prop="meetingDate" :label="$t('Announcement.meetingDate')" align="center" width="140">
         <template slot-scope="scope">
-          <span>{{ scope.row.meetingDate | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
+          <!--<span>{{ scope.row.meetingDate | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>-->
+          <span>{{ scope.row.meetingDate }}</span>
         </template>
       </el-table-column>
       <!--<el-table-column prop="meetingPosition" :label="$t('Announcement.meetingPosition')" align="center" width="110">-->
@@ -218,9 +219,11 @@ export default {
         meetingTheme: undefined,
         department: undefined,
         meetingPosition: undefined,
-        meetingDate: '',
+        startDateTime: undefined,
+        endDateTime: undefined,
         meetingStatus: undefined
       },
+      announcementDate: '',
       meetingPosition: undefined,
       meetingStatus,
       // 给延迟赋值
@@ -298,10 +301,10 @@ export default {
 
   // 监听时间置空
   watch: {
-    'listQuery.meetingDate': {
+    'announcementDate': {
       handler(val, oldVar) {
         if (val == null) {
-          this.listQuery.meetingDate = ''
+          this.announcementDate = ''
         }
       }
     }
@@ -317,6 +320,7 @@ export default {
     // 重置
     resetForm(listQuery) {
       this.$refs[listQuery].resetFields()
+      this.announcementDate = ''
     },
     handleAdd(row) {
       this.$router.push(
@@ -366,15 +370,18 @@ export default {
       //        })
       //      }
 
+      this.listQuery.startDateTime = this.announcementDate[0]
+      this.listQuery.endDateTime = this.announcementDate[1]
       fetchAnnouncementList(this.listQuery).then(response => {
         //            console.log(response.data)
         this.pageData = response.data.list
         this.total = response.data.total
         //          this.pageData.unshift(this.ss)
         // Just to simulate the time of the request
-        setTimeout(() => {
-          this.listLoading = false
-        }, 1.5 * 1000)
+        //        setTimeout(() => {
+        //          this.listLoading = false
+        //        }, 1.5 * 1000)
+        this.listLoading = false
       })
     },
     // 获取会议地址

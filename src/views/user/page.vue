@@ -133,11 +133,22 @@
       >
         导出
       </el-button>
+      <!--批量删除按钮-->
+      <el-button
+        v-if="multipleSelectionFlag"
+        type="danger"
+        size="mini"
+        style="float: right;margin-right: 15px"
+        @click="selectedDelete"
+      >
+        批量删除
+      </el-button>
     </el-card>
 
     <div class="table-container">
       <!--表格区域,@selection-change:勾选，全选按钮变化时执行-->
       <el-table
+        v-loading="listLoading"
         :data="tableData"
         border
         fit
@@ -203,28 +214,28 @@
     </div>
 
     <!--批量操作区域（底部左侧）-->
-    <div class="batch-operate-container">
-      <el-select
-        v-model="operateType"
-        size="small"
-        placeholder="批量操作"
-      >
-        <el-option
-          v-for="item in operates"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-        />
-      </el-select>
-      <el-button
-        style="margin-left: 20px"
-        type="primary"
-        size="small"
-        @click="handleBatchOperate()"
-      >
-        确定
-      </el-button>
-    </div>
+    <!--<div class="batch-operate-container">-->
+    <!--<el-select-->
+    <!--v-model="operateType"-->
+    <!--size="small"-->
+    <!--placeholder="批量操作"-->
+    <!--&gt;-->
+    <!--<el-option-->
+    <!--v-for="item in operates"-->
+    <!--:key="item.value"-->
+    <!--:label="item.label"-->
+    <!--:value="item.value"-->
+    <!--/>-->
+    <!--</el-select>-->
+    <!--<el-button-->
+    <!--style="margin-left: 20px"-->
+    <!--type="primary"-->
+    <!--size="small"-->
+    <!--@click="handleBatchOperate()"-->
+    <!--&gt;-->
+    <!--确定-->
+    <!--</el-button>-->
+    <!--</div>-->
 
     <!--分页组件-->
     <div class="pagination-container">
@@ -343,6 +354,7 @@
       return {
         //从后台获取的总数据
         tableData:[],
+        listLoading:false,
         //前台每页要呈现的数据
 //        pageData:[],  //分页后，每个页面要显示的数据
         positionType,  //职位类别
@@ -367,6 +379,7 @@
         },
         dialogFormVisible: false,  //编辑对话框是否显示
         dialogStatus: '',  //设置对话框的标题时使用
+        multipleSelectionFlag:false, //批量删除按钮是否显示
         temp: {   //编辑或新增时，临时存放数据的对象temp
           position:{id:'',positionName:''},  //职位(一个含有id,positionName的对象)
           lastLoginTime: new Date(), //最后登录时间
@@ -465,17 +478,14 @@
 //    },
     methods:{
       getList() {
+        this.listLoading = true;
+        this.listQuery.startDateTime= this.timeValue[0]; //起始时间
+        this.listQuery.endDateTime = this.timeValue[1];  //截止时间
         //从后端获取用户数据
-//        this.listLoading = true
-
-        this.listQuery.startDateTime= this.timeValue[0];
-          this.listQuery.endDateTime = this.timeValue[1];
-//        this.listQuery.startDateTime = this.listQuery.startDateTime.toString();
-          console.log(this.listQuery)
         fetchUserList(this.listQuery).then(response => {
           this.tableData = response.data.list  //获取总的用户数据列表
           this.total = response.data.total  //获取用户列表总数
-
+          this.listLoading = false;
           // 模拟后端响应的延时
 //          setTimeout(() => {
 //            this.listLoading = false
@@ -669,6 +679,11 @@
       //勾选，全选按钮变化时执行的逻辑
       handleSelectionChange(val) {
         this.multipleSelection = val;
+        this.multipleSelectionFlag = true; //显示批量删除按钮
+        if (this.multipleSelection.length === 0 || this.multipleSelection==null||this.multipleSelection.length<1) {
+          // 如不进行判断则勾选完毕后批量删除按钮还是会在
+          this.multipleSelectionFlag = false; //批量删除按钮消失
+        }
       },
       //批量操作中点击确定按钮的逻辑
       handleBatchOperate() {
@@ -682,7 +697,7 @@
         }
         if(this.multipleSelection==null||this.multipleSelection.length<1){
           this.$message({
-            message: '请选择要操作的商品',
+            message: '请选择要操作的用户数据',
             type: 'warning',
             duration: 1000
           });
@@ -695,6 +710,7 @@
         }).then(() => {
           let ids=[];
           for(let i=0;i<this.multipleSelection.length;i++){
+            //数组ids，获取所选取的用户数据的id [1,2,3] 删除id为1,2,3的数据
             ids.push(this.multipleSelection[i].id);
           }
           switch (this.operateType) {
@@ -726,13 +742,16 @@
 
         //ids:数组（所选表格项的id值数组）
         for (let i=0;i<ids.length;i++){  //循环所选中的表格项
-          this.tableData.forEach((user,idx)=>{  //循环此页码面的表格数据
-            if(user.id==ids[i]){   //若表格数据id与选中的id一致
-              this.tableData.splice(idx,1);   //删除要删除的数据
-            }
+          fetchDeleteUser({id:ids[i]}).then(response => {
+//            this.getList();  //删除完成后更新页面显示
           })
+//          this.tableData.forEach((user,idx)=>{  //循环此页码面的表格数据
+//            if(user.id==ids[i]){   //若表格数据id与选中的id一致
+//              this.tableData.splice(idx,1);   //删除要删除的数据
+//            }
+//          })
         }
-//          this.getList();  //删除完成后更新页面显示
+          this.getList();  //删除完成后更新页面显示
           this.$message({
             type: 'success',
             message: '删除成功!'
@@ -791,6 +810,31 @@
         this.$message({
           type: 'success',
           message: '设置职位为助理成功!'
+        });
+      },
+      //顶部批量删除按钮
+      selectedDelete(){
+        this.$confirm('是否要批量删除所选用户数据?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          let ids=[];
+          for(let i=0;i<this.multipleSelection.length;i++){
+            //数组ids，获取所选取的用户数据的id [1,2,3] 删除id为1,2,3的数据
+            ids.push(this.multipleSelection[i].id);
+          }
+          //ids:数组（所选表格项的id值数组）
+          for (let i=0;i<ids.length;i++){  //循环所选中的表格项
+            fetchDeleteUser({id:ids[i]}).then(response => {
+            this.getList();  //删除完成后更新页面显示
+            })
+          }
+          this.getList();  //删除完成后更新页面显示
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          });
         });
       },
 
