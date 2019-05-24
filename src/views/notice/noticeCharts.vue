@@ -202,7 +202,7 @@ export default {
               type: 'shadow'
             }
           },
-          series: [{ name: '总计', type: 'bar', data: this.publishData1 }, { name: '发布', type: 'bar', data: this.publishData2 }],
+          series: [{ name: '总计', type: 'bar', data: this.publishData1 }, { name: '发布', type: 'bar', data: this.publishData2, color: 'orange' }],
           legend: {
             show: true,
             data: [{ name: '总计', icon: 'cricle' }, { name: '发布', icon: 'cricle' }],
