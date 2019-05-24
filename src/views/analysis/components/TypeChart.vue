@@ -41,8 +41,11 @@ export default {
           subtext: '单位:%',
           x: 'center',
           textStyle: {
-            color: '#333333',
+            color: '#fff',
             fontWeight: 'bold'
+          },
+          subtextStyle: {
+            color: '#fff'
           }
         },
         tooltip: {
@@ -52,6 +55,9 @@ export default {
         legend: {
           left: 'center',
           bottom: '10',
+          textStyle: {
+            color: '#fff'
+          },
           data: ['手机视频', '即时通信', '手机音频', '地图导航', '电子支付', '新闻资讯', '网上购物']
         },
         calculable: true,

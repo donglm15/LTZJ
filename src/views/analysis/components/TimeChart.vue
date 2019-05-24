@@ -18,7 +18,13 @@ export default {
       title: {
         text: '“冰激凌”用户活跃时段',
         subtext: '“冰激凌”用户分时段平均使用流量',
-        x: 'center'
+        x: 'center',
+        textStyle: {
+          color: '#fff'
+        },
+        subtextStyle: {
+          color: '#fff'
+        }
       },
       tooltip: {
         trigger: 'item',

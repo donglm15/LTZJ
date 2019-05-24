@@ -3,23 +3,16 @@
     <div class="filter-container">
       <el-input v-model="listQuery.product" placeholder="产品名" style="width: 145px;margin-top:7px" class="filter-item" @keyup.enter.native="handleFilter" />
       <el-select v-model="listQuery.region" placeholder="地域" clearable class="filter-item" style="margin-top:7px;width: 130px" @change="handleFilter">
-        <el-option v-for="item in regionTypeOptions" :key="item.id" :label="item.typeName" :value="item.id" />
+        <el-option v-for="item in regionTypeOptions" :key="item.id" :label="item.cityName" :value="item.id" />
       </el-select>
       <el-date-picker
-        v-model="listQuery.startdate"
-        align="right"
-        type="date"
-        value-format="yyyy-MM-dd"
-        placeholder="开始日期"
+        v-model="datepicker"
+        type="daterange"
         :picker-options="pickerOptions"
-      />
-      <el-date-picker
-        v-model="listQuery.enddate"
-        align="right"
-        type="date"
         value-format="yyyy-MM-dd"
-        placeholder="结束日期"
-        :picker-options="pickerOptions"
+        range-separator="至"
+        start-placeholder="开始日期"
+        end-placeholder="结束日期"
       />
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" style="margin-top:7px" @click="handleFilter">
         {{ $t('table.search') }}
@@ -135,6 +128,7 @@ export default {
       listLoading: true,
       dialogStatus: '',
       regionType: '',
+      datepicker: '',
       Date: '',
       rules: {
         regionType: [{ required: true, message: '地域必填', trigger: 'change' }],
@@ -170,21 +164,15 @@ export default {
       downloadLoading: false
     }
   },
-  //  watch: {
-  //    'listQuery.date': {
-  //      handler(val, oldVal) {
-  //        if (val === null) {
-  //          this.listQuery.date = ''
-  //        }
-  //      }
-  //    }
-  //  },
   created() {
     this.getList()
   },
   methods: {
     getList() {
       this.listLoading = true
+      this.listQuery.startdate = this.datepicker[0]
+      this.listQuery.enddate = this.datepicker[1]
+      console.log(this.listQuery)
       fetchNewsList(this.listQuery).then(response => {
         this.tableData = response.data.list
         this.total = response.data.total
@@ -193,15 +181,7 @@ export default {
     },
     handleFilter() {
       this.listQuery.page = 1
-      if (this.listQuery.startdate > this.listQuery.enddate) {
-        this.$message({
-          showClose: true,
-          message: '查询开始时间不能晚于结束时间',
-          type: 'error'
-        })
-      } else {
-        this.getList()
-      }
+      this.getList()
     },
     resetTemp() {
       this.temp = {
@@ -231,7 +211,6 @@ export default {
           console.log(this.temp)
           createNews(this.temp).then(() => {
             this.getList()
-            //            this.tableData.unshift(this.temp)
             this.dialogFormVisible = false
             this.$notify({
               title: '成功',
@@ -247,18 +226,10 @@ export default {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
           const tempData = Object.assign({}, this.temp)
-          //            tempData.date = +new Date(tempData.date) // change Thu Nov 30 2017 16:41:05 GMT+0800 (CST) to 1512031311464
           tempData.id = this.temp.id
           tempData.region = tempData.regionType.id
           updateNews(tempData).then(() => {
             this.getList()
-            //            for (const v of this.tableData) {
-            //              if (v.id === this.temp.id) {
-            //                const index = this.tableData.indexOf(v)
-            //                this.tableData.splice(index, 1, this.temp)
-            //                break
-            //              }
-            //            }
             this.dialogFormVisible = false
             this.$notify({
               title: '成功',
@@ -272,7 +243,6 @@ export default {
     },
     handleUpdate(row) {
       this.temp = Object.assign({}, row) // copy obj
-      //        this.temp.date = new Date(this.temp.date)
       this.dialogStatus = 'update'
       this.dialogFormVisible = true
       this.$nextTick(() => {
@@ -333,5 +303,10 @@ export default {
 </script>
 
 <style>
-
+  .el-pagination__total{
+       color:white;
+     }
+  .el-pagination__jump{
+    color:white;
+  }
 </style>
