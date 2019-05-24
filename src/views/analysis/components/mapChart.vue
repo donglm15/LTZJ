@@ -47,7 +47,13 @@ export default {
         text: '福建“冰激凌”用户分布',
         subtext: '福建“冰激凌”用户分布（单位:万）',
         left: 'center',
-        top: 'top'
+        top: 'top',
+        textStyle: {
+          color: '#fff'
+        },
+        subtextStyle: {
+          color: '#fff'
+        }
       }, // 地图左侧数据过滤器
       visualMap: {
         min: 0,
@@ -61,6 +67,9 @@ export default {
         text: ['人口', '万'],
         left: 'left',
         bottom: 20,
+        textStyle: {
+          color: '#fff'
+        },
         inRange: {
           color: ['green', 'yellow', 'red']
         }

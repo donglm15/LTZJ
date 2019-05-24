@@ -2,7 +2,16 @@ import request from '@/utils/request'
 
 export function fetchMeetingList(query) {
   return request({
-    url: '/meeting/list',
+    // url: '/meeting/list',
+    url: '/admin/meeting/select',
+    method: 'get',
+    params: query
+  })
+}
+
+export function deleteMeeting(query) {
+  return request({
+    url: '/admin/meeting/delete',
     method: 'get',
     params: query
   })
@@ -10,15 +19,16 @@ export function fetchMeetingList(query) {
 
 export function updateMeeting(data) {
   return request({
-    url: '/meeting/update',
+    url: '/admin/meeting/update',
     method: 'post',
     data
   })
 }
 
 export function createMeeting(data) {
+  console.log(data)
   return request({
-    url: '/meeting/create',
+    url: '/admin/meeting/saveOne',
     method: 'post',
     data
   })
