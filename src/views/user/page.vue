@@ -314,7 +314,9 @@
     Organization: null,  //组织机构
     employeeNumber: null,  //员工号
     phone:null,  //电话
-    timeValue: '',  //选取的时间（时间搜索）
+    startDateTime:null,
+    endDateTime:null,
+//    timeValue: '',  //选取的时间（时间搜索）
   };
   //批量操作的选择项
   const operates = [
@@ -396,6 +398,14 @@
         operateType: null,  //批量操作选取的操作类别
         pickerOptions: {  //快速选择时间选项
           shortcuts: [{
+            text: '最近3天',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 3);
+              picker.$emit('pick', [start, end]);
+            }
+          }, {
             text: '最近一周',
             onClick(picker) {
               const end = new Date();
@@ -417,14 +427,6 @@
               const end = new Date();
               const start = new Date();
               start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
-              picker.$emit('pick', [start, end]);
-            }
-          }, {
-            text: '最近十年',
-            onClick(picker) {
-              const end = new Date();
-              const start = new Date();
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 3650);
               picker.$emit('pick', [start, end]);
             }
           }]
@@ -633,6 +635,7 @@
       handleResetSearch() {
 //        this.selectProductCateValue = [];
         this.listQuery = Object.assign({}, defaultListQuery);
+        this.timeValue = '';
         this.handleFilter();  //清空搜索条件后，马上以空的搜索条件搜索
       },
       //导出按钮的逻辑
