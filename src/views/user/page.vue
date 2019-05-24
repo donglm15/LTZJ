@@ -72,7 +72,7 @@
           <!--ID排序检索-->
           <el-form-item label="排序检索：">
             <el-select v-model="listQuery.sort" style="width: 100px" @change="handleFilter">
-              <el-option v-for="item in sortOptions" :key="item.label" :label="item.label" :value="item.key" />
+              <el-option v-for="item in sortOptions" :key="item.key" :label="item.label" :value="item.key" />
             </el-select>
           </el-form-item>
         </el-form>
@@ -154,7 +154,7 @@
         <!--2.account:用户名-->
         <el-table-column :label="$t('userManager.account')" prop="account" width="90px" align="center" />
         <!--3.userName:姓名-->
-        <el-table-column :label="$t('userManager.userName')" prop="userName" align="center" min-width="90px">
+        <el-table-column :label="$t('userManager.userName')" prop="userName" align="center" min-width="70px">
           <template slot-scope="scope">
             <span class="link-type" @click.stop="handleUpdate(scope.row)">{{ scope.row.userName }}</span>
           </template>
@@ -163,22 +163,22 @@
         <el-table-column :label="$t('userManager.Organization')" prop="Organization" width="180px" align="center" />
         <!--5.position:职位-->
         <el-table-column :label="$t('userManager.position')" prop="position.positionName" width="90px" align="center">
-          <!--<template slot-scope="scope">-->
-          <!--<el-tag :type="scope.row.position.positionName | typeFilter(scope.row.position.positionName)">{{ scope.row.position.positionName}}</el-tag>-->
-          <!--</template>-->
+          <template slot-scope="scope">
+            <el-tag :type="scope.row.position.positionName | typeFilter">{{ scope.row.position.positionName }}</el-tag>
+          </template>
         </el-table-column>
         <!--6.employeeNumber:员工号-->
         <el-table-column :label="$t('userManager.employeeNumber')" prop="employeeNumber" class-name="status-col" width="80" />
         <!--7.phone:电话-->
         <el-table-column :label="$t('userManager.phone')" prop="phone" align="center" width="120px" />
         <!--8.lastLoginTime:最后登录时间-->
-        <el-table-column :label="$t('userManager.lastLoginTime')" prop="lastLoginTime" sortable align="center" width="140">
+        <el-table-column :label="$t('userManager.lastLoginTime')" prop="lastLoginTime" sortable align="center" width="160">
           <template slot-scope="scope">
             <span>{{ scope.row.lastLoginTime }}</span>
           </template>
         </el-table-column>
         <!--9.operate:操作-->
-        <el-table-column :label="$t('userManager.operate')" prop="operate" align="center" width="155" class-name="small-padding fixed-width">
+        <el-table-column :label="$t('userManager.operate')" prop="operate" align="center" width="160" class-name="small-padding fixed-width">
           <template slot-scope="scope">
             <!--查看详情-->
             <!--<el-button size="mini" type="success" @click="handleClick(scope.row)">-->
@@ -293,7 +293,7 @@
 <script>
 /* eslint-disable */
   // eslint-disable-next-line
-  import {fetchUserList, updateArticle, createArticle} from '@/api/userManager'   //引入获取用户列表等函数
+  import {fetchUserList, updateArticle, createArticle, fetchDeleteUser} from '@/api/userManager'   //引入获取用户列表等函数
   import { parseTime } from '@/utils'  //引入设置时间格式的工具
   import Pagination from '@/components/Pagination'  //分页子组件
   //不变化的业务字典数据，可以定义为全局变量
@@ -433,6 +433,16 @@
       typeFilter(position){  //用户职位过滤器,根据职位字符串，改变tag种类
         return position == '组长' ? 'danger' : (position == '主办' ? 'warning' : 'success')
       }
+//      typeFilter(status){
+//        const meetingStatus = {
+//          助理: 'success',
+//          草稿: 'info',
+//          主办: 'warning',
+//          组长: 'danger'
+//        }
+//        return meetingStatus[status]
+//      }
+
     },
     created() {  //创建完Vue组件页面后
       this.getList()
@@ -519,6 +529,7 @@
             createArticle(this.temp).then(() => {
               this.tableData.unshift(this.temp)  //将temp中的数据添加至tableData中
               this.dialogFormVisible = false  //对话框消失
+              this.listQuery.page=1;  //分页停留在第一页（为了显示新增的数据结果）
               this.listQuery.sort = '-id';
               this.getList();  //新增完成后更新页面显示
               this.$notify({
@@ -574,13 +585,12 @@
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          let index=-1;
-          this.tableData.forEach((user,idx)=>{
-            if(user.id==row.id)
-              index=idx  //通过判断id字段，获取要删除数据的索引值
+          fetchDeleteUser({id:row.id}).then(response => {
+            console.log(row.id);
+            this.getList();  //删除完成后更新页面显示
+//            this.tableData = response.data.list  //获取总的用户数据列表
+//            this.total = response.data.total  //获取用户列表总数
           })
-          this.tableData.splice(index,1);   //删除要删除的数据
-//          this.getList();  //删除完成后更新页面显示
           this.$message({
             type: 'success',
             message: '删除成功!'
