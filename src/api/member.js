@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function fetchList(query) {
   return request({
-    url: '/member/list',
+    url: '/admin/member/list',
     method: 'get',
     params: query
   })
@@ -10,7 +10,7 @@ export function fetchList(query) {
 
 export function fetchMember(id) {
   return request({
-    url: '/member/detail',
+    url: '/admin/member/detail',
     method: 'get',
     params: { id }
   })
@@ -18,7 +18,7 @@ export function fetchMember(id) {
 
 export function fetchMemberChart(query) {
   return request({
-    url: '/member/chart',
+    url: '/admin/member/chart',
     method: 'get',
     params: query
   })
@@ -33,7 +33,7 @@ export function fetchMemberChart(query) {
 
 export function createMember(data) {
   return request({
-    url: '/member/create',
+    url: '/admin/member/create',
     method: 'post',
     data
   })
@@ -41,7 +41,7 @@ export function createMember(data) {
 
 export function updateMember(data) {
   return request({
-    url: '/member/update',
+    url: '/admin/member/update',
     method: 'post',
     data
   })
