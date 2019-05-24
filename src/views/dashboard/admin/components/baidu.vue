@@ -13,7 +13,7 @@
               :zoom="zoom"
               :scroll-wheel-zoom="true"
             >
-              <bm-view style="width: 100%; height:600px;" />
+              <bm-view style="width:100%; height:600px;" />
               <bm-marker :position="{lng: center.lng, lat: center.lat}" :dragging="true" animation="BMAP_ANIMATION_BOUNCE" />
             </baidu-map>
           </div>
