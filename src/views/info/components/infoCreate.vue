@@ -99,7 +99,7 @@ export default {
       }
     }
     return {
-      tableData: this.$route.params.tableData,
+      //      tableData: this.$route.params.tableData,
       infoType,
       postForm: Object.assign({}, defaultForm),
       loading: false,
@@ -112,11 +112,9 @@ export default {
   },
   methods: {
     submitForm() {
-      console.log(this.tableData)
-      if (this.tableData == null) { this.postForm.id = -1 } else { this.postForm.id = this.tableData[this.tableData.length - 1].id + 1 }
-
-      this.postForm.imgUrl = 'http://dummyimage.com/800x300/79f2e3&text=new'
-      this.postForm.previewContent = this.postForm.content.substring(3, this.postForm.content.length - 4)
+      console.log(this.postForm.imgUrl)
+      //      this.postForm.imgUrl = 'img/infoImg/10.jpg'
+      //      this.postForm.previewContent = this.postForm.content.substring(3, this.postForm.content.length - 4)
 
       console.log(this.postForm)
       this.$refs.postForm.validate(valid => {
@@ -133,7 +131,7 @@ export default {
               duration: 2000
             })
             this.loading = false
-            this.$router.push({ path: 'page', query: tempData })
+            //            this.$router.push({ path: 'page'})
           })
         } else {
           console.log('error submit!!')

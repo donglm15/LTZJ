@@ -27,9 +27,8 @@ const mocks = [
   ...market,
   ...meeting,
   ...announcement,
-  ...info,
   ...member,
-  ...analysis,
+  // ...analysis,
   // ...activity,
   ...PageProduce,
   ...search
