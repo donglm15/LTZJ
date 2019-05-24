@@ -7,8 +7,9 @@
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
-            新增用户
+            新增用户数
           </div>
+          <count-to :start-val="0" :end-val="person" :duration="2600" class="card-panel-num" />
         </div>
       </div>
     </el-col>
@@ -19,8 +20,9 @@
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
-            产品计费收入
+            产品计费收入(万)
           </div>
+          <count-to :start-val="0" :end-val="billing" :duration="2600" class="card-panel-num" />
         </div>
       </div>
     </el-col>
@@ -28,9 +30,18 @@
 </template>
 
 <script>
+import CountTo from 'vue-count-to'
 
 export default {
-
+  components: {
+    CountTo
+  },
+  data() {
+    return {
+      person: this.$parent.$data.person,
+      billing: this.$parent.$data.billing
+    }
+  },
   methods: {
     handleSetLineChartData(type) {
       this.$emit('handleSetLineChartData', type)
@@ -39,7 +50,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss"  type="text/scss">
 .panel-group {
   margin-top: 18px;
   .card-panel-col{
@@ -88,8 +99,7 @@ export default {
     .card-panel-description {
       float: right;
       font-weight: bold;
-      margin: 45px;
-      margin-left: 0px;
+      margin: 26px;
       .card-panel-text {
         line-height: 18px;
         color: rgba(0, 0, 0, 0.45);
