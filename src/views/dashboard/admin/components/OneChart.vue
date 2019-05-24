@@ -4,7 +4,7 @@
 
 <script>
 import echarts from 'echarts'
-require('echarts/theme/macarons') // echarts theme
+require('echarts/theme/macarons')
 
 export default {
   data() {
@@ -15,7 +15,6 @@ export default {
   mounted() {
     this.chart = echarts.init(this.$refs.chart)
     const option = {
-      backgroundColor: 'rgb(255, 255, 255)', // 背景色
       tooltip: {
         trigger: 'item',
         formatter: '{b}点<br>{c}M ({d}%)'
@@ -81,7 +80,7 @@ export default {
               [1, '#63869e']
             ],
             width: '40%',
-            shadowColor: '#0d4b81', // 默认透明
+            shadowColor: '#0d4b81',
             shadowBlur: 40,
             opacity: 1
           }
@@ -168,7 +167,7 @@ export default {
       }
       ]
     }
-    function data() { // 用户上网流量
+    function data() {
       const d = []
       for (let i = 0; i < 24; i++) {
         d.push({
