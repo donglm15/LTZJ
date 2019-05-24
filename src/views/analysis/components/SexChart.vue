@@ -27,7 +27,7 @@ export default {
           fontSize: '22'
         },
         subtextStyle: {
-          color: '#90979c',
+          color: '#fff',
           fontSize: '16'
 
         }
@@ -54,7 +54,7 @@ export default {
         x: '4%',
         top: '11%',
         textStyle: {
-          color: '#90979c'
+          color: '#fff'
         },
         data: ['女', '男', '平均']
       },
@@ -64,7 +64,7 @@ export default {
         type: 'category',
         axisLine: {
           lineStyle: {
-            color: '#90979c'
+            color: '#fff'
           }
         },
         splitLine: {
@@ -89,7 +89,7 @@ export default {
         },
         axisLine: {
           lineStyle: {
-            color: '#90979c'
+            color: '#fff'
           }
         },
         axisTick: {
