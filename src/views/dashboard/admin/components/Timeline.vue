@@ -86,7 +86,7 @@ export default {
     color: #E6A23C;
   }
   .el-timeline-item__timestamp{
-    color: white!important;
+    color: white;
   }
 </style>
 
