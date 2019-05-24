@@ -61,7 +61,8 @@
           <!--时间搜索-->
           <el-form-item label="时间搜索：">
             <el-date-picker
-              v-model="listQuery.timeValue"
+              v-model="timeValue"
+              value-format="yyyy-MM-dd HH:mm:ss"
               :picker-options="pickerOptions"
               type="datetimerange"
               start-placeholder="开始日期"
@@ -72,7 +73,7 @@
           <!--ID排序检索-->
           <el-form-item label="排序检索：">
             <el-select v-model="listQuery.sort" style="width: 100px" @change="handleFilter">
-              <el-option v-for="item in sortOptions" :key="item.label" :label="item.label" :value="item.key" />
+              <el-option v-for="item in sortOptions" :key="item.key" :label="item.label" :value="item.key" />
             </el-select>
           </el-form-item>
         </el-form>
@@ -154,7 +155,7 @@
         <!--2.account:用户名-->
         <el-table-column :label="$t('userManager.account')" prop="account" width="90px" align="center" />
         <!--3.userName:姓名-->
-        <el-table-column :label="$t('userManager.userName')" prop="userName" align="center" min-width="90px">
+        <el-table-column :label="$t('userManager.userName')" prop="userName" align="center" min-width="70px">
           <template slot-scope="scope">
             <span class="link-type" @click.stop="handleUpdate(scope.row)">{{ scope.row.userName }}</span>
           </template>
@@ -163,22 +164,22 @@
         <el-table-column :label="$t('userManager.Organization')" prop="Organization" width="180px" align="center" />
         <!--5.position:职位-->
         <el-table-column :label="$t('userManager.position')" prop="position.positionName" width="90px" align="center">
-          <!--<template slot-scope="scope">-->
-          <!--<el-tag :type="scope.row.position.positionName | typeFilter(scope.row.position.positionName)">{{ scope.row.position.positionName}}</el-tag>-->
-          <!--</template>-->
+          <template slot-scope="scope">
+            <el-tag :type="scope.row.position.positionName | typeFilter">{{ scope.row.position.positionName }}</el-tag>
+          </template>
         </el-table-column>
         <!--6.employeeNumber:员工号-->
         <el-table-column :label="$t('userManager.employeeNumber')" prop="employeeNumber" class-name="status-col" width="80" />
         <!--7.phone:电话-->
         <el-table-column :label="$t('userManager.phone')" prop="phone" align="center" width="120px" />
         <!--8.lastLoginTime:最后登录时间-->
-        <el-table-column :label="$t('userManager.lastLoginTime')" prop="lastLoginTime" sortable align="center" width="140">
+        <el-table-column :label="$t('userManager.lastLoginTime')" prop="lastLoginTime" sortable align="center" width="160">
           <template slot-scope="scope">
             <span>{{ scope.row.lastLoginTime }}</span>
           </template>
         </el-table-column>
         <!--9.operate:操作-->
-        <el-table-column :label="$t('userManager.operate')" prop="operate" align="center" width="155" class-name="small-padding fixed-width">
+        <el-table-column :label="$t('userManager.operate')" prop="operate" align="center" width="160" class-name="small-padding fixed-width">
           <template slot-scope="scope">
             <!--查看详情-->
             <!--<el-button size="mini" type="success" @click="handleClick(scope.row)">-->
@@ -293,7 +294,7 @@
 <script>
 /* eslint-disable */
   // eslint-disable-next-line
-  import {fetchUserList, updateArticle, createArticle} from '@/api/userManager'   //引入获取用户列表等函数
+  import {fetchUserList, updateArticle, createArticle, fetchDeleteUser} from '@/api/userManager'   //引入获取用户列表等函数
   import { parseTime } from '@/utils'  //引入设置时间格式的工具
   import Pagination from '@/components/Pagination'  //分页子组件
   //不变化的业务字典数据，可以定义为全局变量
@@ -313,7 +314,9 @@
     Organization: null,  //组织机构
     employeeNumber: null,  //员工号
     phone:null,  //电话
-    timeValue: '',  //选取的时间（时间搜索）
+    startDateTime:null,
+    endDateTime:null,
+//    timeValue: '',  //选取的时间（时间搜索）
   };
   //批量操作的选择项
   const operates = [
@@ -346,6 +349,7 @@
         operates,  //批量操作的选项
         multipleSelection: [],  //勾选，全选的表格项
 //        list: null,
+        timeValue:'',
         total:0,   //用户列表条数的总数
         listQuery: {  //查询项
           page: 1,  //当前页码
@@ -357,7 +361,9 @@
           Organization:undefined,  //组织机构
           employeeNumber:undefined,  //员工号
           phone:undefined,  //电话
-          timeValue: '',  //选取的时间（时间搜索）
+          startDateTime:undefined,
+          endDateTime:undefined,
+//          timeValue: '',  //选取的时间（时间搜索）
         },
         dialogFormVisible: false,  //编辑对话框是否显示
         dialogStatus: '',  //设置对话框的标题时使用
@@ -392,6 +398,14 @@
         operateType: null,  //批量操作选取的操作类别
         pickerOptions: {  //快速选择时间选项
           shortcuts: [{
+            text: '最近3天',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 3);
+              picker.$emit('pick', [start, end]);
+            }
+          }, {
             text: '最近一周',
             onClick(picker) {
               const end = new Date();
@@ -415,14 +429,6 @@
               start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
               picker.$emit('pick', [start, end]);
             }
-          }, {
-            text: '最近十年',
-            onClick(picker) {
-              const end = new Date();
-              const start = new Date();
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 3650);
-              picker.$emit('pick', [start, end]);
-            }
           }]
         },
       }
@@ -433,6 +439,16 @@
       typeFilter(position){  //用户职位过滤器,根据职位字符串，改变tag种类
         return position == '组长' ? 'danger' : (position == '主办' ? 'warning' : 'success')
       }
+//      typeFilter(status){
+//        const meetingStatus = {
+//          助理: 'success',
+//          草稿: 'info',
+//          主办: 'warning',
+//          组长: 'danger'
+//        }
+//        return meetingStatus[status]
+//      }
+
     },
     created() {  //创建完Vue组件页面后
       this.getList()
@@ -451,6 +467,11 @@
       getList() {
         //从后端获取用户数据
 //        this.listLoading = true
+
+        this.listQuery.startDateTime= this.timeValue[0];
+          this.listQuery.endDateTime = this.timeValue[1];
+//        this.listQuery.startDateTime = this.listQuery.startDateTime.toString();
+          console.log(this.listQuery)
         fetchUserList(this.listQuery).then(response => {
           this.tableData = response.data.list  //获取总的用户数据列表
           this.total = response.data.total  //获取用户列表总数
@@ -519,6 +540,7 @@
             createArticle(this.temp).then(() => {
               this.tableData.unshift(this.temp)  //将temp中的数据添加至tableData中
               this.dialogFormVisible = false  //对话框消失
+              this.listQuery.page=1;  //分页停留在第一页（为了显示新增的数据结果）
               this.listQuery.sort = '-id';
               this.getList();  //新增完成后更新页面显示
               this.$notify({
@@ -574,13 +596,12 @@
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          let index=-1;
-          this.tableData.forEach((user,idx)=>{
-            if(user.id==row.id)
-              index=idx  //通过判断id字段，获取要删除数据的索引值
+          fetchDeleteUser({id:row.id}).then(response => {
+            console.log(row.id);
+            this.getList();  //删除完成后更新页面显示
+//            this.tableData = response.data.list  //获取总的用户数据列表
+//            this.total = response.data.total  //获取用户列表总数
           })
-          this.tableData.splice(index,1);   //删除要删除的数据
-//          this.getList();  //删除完成后更新页面显示
           this.$message({
             type: 'success',
             message: '删除成功!'
@@ -614,6 +635,7 @@
       handleResetSearch() {
 //        this.selectProductCateValue = [];
         this.listQuery = Object.assign({}, defaultListQuery);
+        this.timeValue = '';
         this.handleFilter();  //清空搜索条件后，马上以空的搜索条件搜索
       },
       //导出按钮的逻辑

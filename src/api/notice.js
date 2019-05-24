@@ -50,7 +50,7 @@ export function updateNoticeOne(query) {
 
 export function updateStatusOne(id, status) {
   return request({
-    url: `/admin/notice/updateOne?noticeId=${id}&noticeStatus=${status}`,
+    url: `/admin/notice/updateStatus?noticeId=${id}&noticeStatus=${status}`,
     method: 'get',
     headers: { 'content-Type': 'application/x-www.form-urlencoded' }
   })
