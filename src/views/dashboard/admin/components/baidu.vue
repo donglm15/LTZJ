@@ -60,10 +60,6 @@ export default {
     }
   },
   methods: {
-
-    /** *
-       * 地图点击事件。
-       */
     getClickInfo(e) {
       this.center.lng = e.point.lng
       this.center.lat = e.point.lat
@@ -77,5 +73,3 @@ export default {
   }
 }
 </script>
-<style>
-</style>
