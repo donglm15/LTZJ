@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b9563030-ab17-419b-bb58-5a1745363960" name="Default" comment="">
+    <list default="true" id="b9563030-ab17-419b-bb58-5a1745363960" name="Default" comment="analysis 5.24-2">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/LTZJ.iws" afterPath="$PROJECT_DIR$/LTZJ.iws" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/dashboard/admin/components/Timeline.vue" afterPath="$PROJECT_DIR$/src/views/dashboard/admin/components/Timeline.vue" />
     </list>
     <ignored path="$PROJECT_DIR$/node_modules/" />
     <ignored path="$PROJECT_DIR$/out/" />
@@ -38,8 +39,18 @@
       <file leaf-file-name="PanelGroup.vue" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/views/analysis/components/PanelGroup.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="216">
-              <caret line="14" column="13" lean-forward="true" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+            <state relative-caret-position="459">
+              <caret line="23" column="16" lean-forward="true" selection-start-line="23" selection-start-column="16" selection-end-line="23" selection-end-column="16" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="OneChart.vue" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/views/dashboard/admin/components/OneChart.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-4336">
+              <caret line="17" column="16" lean-forward="true" selection-start-line="17" selection-start-column="16" selection-end-line="17" selection-end-column="16" />
               <folding />
             </state>
           </provider>
@@ -156,12 +167,6 @@
               <item name="LTZJ" type="b2602c69:ProjectViewProjectNode" />
               <item name="LTZJ" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="api" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="LTZJ" type="b2602c69:ProjectViewProjectNode" />
-              <item name="LTZJ" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="views" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -169,14 +174,23 @@
               <item name="LTZJ" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="analysis" type="462c0819:PsiDirectoryNode" />
+              <item name="dashboard" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="LTZJ" type="b2602c69:ProjectViewProjectNode" />
               <item name="LTZJ" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="analysis" type="462c0819:PsiDirectoryNode" />
+              <item name="dashboard" type="462c0819:PsiDirectoryNode" />
+              <item name="admin" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="LTZJ" type="b2602c69:ProjectViewProjectNode" />
+              <item name="LTZJ" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="dashboard" type="462c0819:PsiDirectoryNode" />
+              <item name="admin" type="462c0819:PsiDirectoryNode" />
               <item name="components" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
@@ -196,6 +210,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\work1\LTZJ\src\views\dashboard\admin\components" />
       <recent name="E:\work1\LTZJ\src\views\analysis\components" />
       <recent name="E:\work1\LTZJ\src\views\analysis" />
     </key>
@@ -317,7 +332,7 @@
       <workItem from="1558487606503" duration="9375000" />
       <workItem from="1558617151450" duration="658000" />
       <workItem from="1558660629272" duration="303000" />
-      <workItem from="1558675781494" duration="2658000" />
+      <workItem from="1558675781494" duration="3148000" />
     </task>
     <task id="LOCAL-00001" summary="analysis 5.22">
       <created>1558529934252</created>
@@ -340,11 +355,18 @@
       <option name="project" value="LOCAL" />
       <updated>1558677185516</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="analysis 5.24-2">
+      <created>1558678886669</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1558678886669</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="46270000" />
+    <option name="totallyTimeSpent" value="46760000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-11" y="-11" width="1942" height="1042" extended-state="6" />
@@ -362,7 +384,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.30111524" sideWeight="0.47462204" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1938445" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22840172" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -390,7 +412,8 @@
     <MESSAGE value="Merge branch 'master' of https://github.com/donglm15/LTZJ&#10;&#10;# Conflicts:&#10;#&#9;LTZJ.iws" />
     <MESSAGE value="analysis 5.24" />
     <MESSAGE value="analysis 5.24-1" />
-    <option name="LAST_COMMIT_MESSAGE" value="analysis 5.24-1" />
+    <MESSAGE value="analysis 5.24-2" />
+    <option name="LAST_COMMIT_MESSAGE" value="analysis 5.24-2" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -399,13 +422,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/views/analysis/components/DailyMapChart.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/layout/components/AppMain.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -666,13 +682,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/dashboard/admin/components/OneChart.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="629">
-          <caret line="17" column="51" lean-forward="false" selection-start-line="17" selection-start-column="51" selection-end-line="17" selection-end-column="51" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/views/dashboard/admin/index.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2214">
@@ -750,10 +759,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/dashboard/admin/components/OneChart.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-4336">
+          <caret line="17" column="16" lean-forward="true" selection-start-line="17" selection-start-column="16" selection-end-line="17" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/dashboard/admin/components/Timeline.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1215">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/views/analysis/components/PanelGroup.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="14" column="13" lean-forward="true" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+        <state relative-caret-position="459">
+          <caret line="23" column="16" lean-forward="true" selection-start-line="23" selection-start-column="16" selection-end-line="23" selection-end-column="16" />
           <folding />
         </state>
       </provider>
