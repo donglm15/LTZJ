@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function fetchNoticeBack(query) {
   return request({
-    url: 'http://localhost:8080/notice/list',
+    url: '/admin/notice/list',
     method: 'get',
     params: query
   })
@@ -10,7 +10,7 @@ export function fetchNoticeBack(query) {
 
 export function publishNoticeBack(query) {
   return request({
-    url: 'http://localhost:8080/notice/publish',
+    url: '/admin/notice/publish',
     method: 'get',
     params: query
   })
@@ -18,21 +18,21 @@ export function publishNoticeBack(query) {
 
 export function deleteNoticeOne(id) {
   return request({
-    url: `http://localhost:8080/notice/delete?noticeId=${id}`,
+    url: `/admin/notice/delete?noticeId=${id}`,
     method: 'get'
   })
 }
 
 export function getOneNotice(id) {
   return request({
-    url: `http://localhost:8080/notice/getOneNotice?noticeId=${id}`,
+    url: `/admin/notice/getOneNotice?noticeId=${id}`,
     method: 'get'
   })
 }
 
 export function insertNoticeOne(query) {
   return request({
-    url: `http://localhost:8080/notice/insert`,
+    url: `/admin/notice/insert`,
     method: 'post',
     data: query,
     headers: { 'content-Type': 'application/json' }
@@ -41,7 +41,7 @@ export function insertNoticeOne(query) {
 
 export function updateNoticeOne(query) {
   return request({
-    url: `http://localhost:8080/notice/update`,
+    url: `/admin/notice/update`,
     method: 'post',
     data: query,
     headers: { 'content-Type': 'application/json' }
@@ -50,8 +50,16 @@ export function updateNoticeOne(query) {
 
 export function updateStatusOne(id, status) {
   return request({
-    url: `http://localhost:8080/notice/updateOne?noticeId=${id}&noticeStatus=${status}`,
+    url: `/admin/notice/updateStatus?noticeId=${id}&noticeStatus=${status}`,
     method: 'get',
     headers: { 'content-Type': 'application/x-www.form-urlencoded' }
   })
 }
+
+export function noticeStatistics(first, second) {
+  return request({
+    url: `/admin/notice/noticeStatistics?noticeFirst=${first}&noticeSecond=${second}`,
+    method: 'get'
+  })
+}
+

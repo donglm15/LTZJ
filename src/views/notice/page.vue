@@ -144,7 +144,9 @@ export default {
       fetchNoticeBack(this.listQuery).then(response => {
         this.tableData = response.data.list
         this.total = response.data.total
-        this.listLoading = false
+        setTimeout(() => {
+          this.listLoading = false
+        }, 1 * 500)
       })
     },
     handleModifyStatus(row, status) {
