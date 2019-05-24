@@ -90,7 +90,8 @@
       <el-table-column prop="department" :label="$t('Announcement.department')" align="center" width="110" />
       <el-table-column prop="meetingDate" :label="$t('Announcement.meetingDate')" align="center" width="140">
         <template slot-scope="scope">
-          <span>{{ scope.row.meetingDate | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
+          <!--<span>{{ scope.row.meetingDate | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>-->
+          <span>{{ scope.row.meetingDate }}</span>
         </template>
       </el-table-column>
       <!--<el-table-column prop="meetingPosition" :label="$t('Announcement.meetingPosition')" align="center" width="110">-->
@@ -299,16 +300,16 @@ export default {
   },
 
   // 监听时间置空
-  //  watch: {
-  //    'announcementDate': {
-  //      handler(val, oldVar) {
-  //        if (val == null) {
-  //          this.announcementDate = ''
-  //        }
-  //      }
-  //    }
-  //
-  //  },
+  watch: {
+    'announcementDate': {
+      handler(val, oldVar) {
+        if (val == null) {
+          this.announcementDate = ''
+        }
+      }
+    }
+
+  },
   created() {
     this.ss = Object.assign({}, this.$route.query)
     console.log(this.ss)
