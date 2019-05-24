@@ -162,7 +162,7 @@
   </div>
 </template>
 <script>
-import { fetchAnnouncementList, delayMeeting, meetingPlace } from '@/api/announcement'
+import { fetchAnnouncementList, delayMeeting, meetingPlace, deleteAnnouncement } from '@/api/announcement'
 import { parseTime } from '@/utils'// 导出
 import Pagination from '@/components/Pagination'
 
@@ -392,11 +392,13 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        let index = -1
-        this.pageData.forEach((news, idx) => {
-          if (news.id === row.id) { index = idx }
-        })
-        this.pageData.splice(index, 1)
+        //        let index = -1
+        //        this.pageData.forEach((news, idx) => {
+        //          if (news.id === row.id) { index = idx }
+        //        })
+        //        this.pageData.splice(index, 1)
+        deleteAnnouncement({ id: row.id })
+        this.getList()
 
         this.$message({
           type: 'success',

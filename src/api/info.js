@@ -10,7 +10,7 @@ export function fetchInfoList(query) {
 
 export function fetchInfoChart(query) {
   return request({
-    url: '/info/chart',
+    url: '/admin/info/allInfo',
     method: 'get',
     params: query
   })
