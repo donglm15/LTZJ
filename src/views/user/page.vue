@@ -61,7 +61,8 @@
           <!--时间搜索-->
           <el-form-item label="时间搜索：">
             <el-date-picker
-              v-model="listQuery.timeValue"
+              v-model="timeValue"
+              value-format="yyyy-MM-dd HH:mm:ss"
               :picker-options="pickerOptions"
               type="datetimerange"
               start-placeholder="开始日期"
@@ -346,6 +347,7 @@
         operates,  //批量操作的选项
         multipleSelection: [],  //勾选，全选的表格项
 //        list: null,
+        timeValue:'',
         total:0,   //用户列表条数的总数
         listQuery: {  //查询项
           page: 1,  //当前页码
@@ -357,7 +359,9 @@
           Organization:undefined,  //组织机构
           employeeNumber:undefined,  //员工号
           phone:undefined,  //电话
-          timeValue: '',  //选取的时间（时间搜索）
+          startDateTime:undefined,
+          endDateTime:undefined,
+//          timeValue: '',  //选取的时间（时间搜索）
         },
         dialogFormVisible: false,  //编辑对话框是否显示
         dialogStatus: '',  //设置对话框的标题时使用
@@ -461,6 +465,11 @@
       getList() {
         //从后端获取用户数据
 //        this.listLoading = true
+
+        this.listQuery.startDateTime= this.timeValue[0];
+          this.listQuery.endDateTime = this.timeValue[1];
+//        this.listQuery.startDateTime = this.listQuery.startDateTime.toString();
+          console.log(this.listQuery)
         fetchUserList(this.listQuery).then(response => {
           this.tableData = response.data.list  //获取总的用户数据列表
           this.total = response.data.total  //获取用户列表总数
