@@ -81,52 +81,43 @@ export default {
           this.Ymax = parseInt(this.publishData1[i] / 5) * 5 + 5
         }
       }
-    })
-    noticeStatistics('YEAR(noticeDate)', 'noticeStatus').then(response => {
-      this.data = response.data.items
-      for (let i = 0; i < this.data.length; i++) {
-        for (let j = 0; ; j++) {
-          if (this.dateXAxis[j] === this.data[i].noticeFirst) {
-            if (this.data[i].noticeSecond === 'published') {
-              this.dateData2[j] = this.data[i].count
-            } else {
-              this.dateData1[j] = this.data[i].count
-            }
-            break
-          }
-          if (j >= this.dateXAxis.length) {
-            this.dateXAxis[j] = this.data[i].noticeFirst
-            if (this.data[i].noticeSecond === 'published') {
-              this.dateData2[j] = this.data[i].count
-            } else {
-              this.dateData1[j] = this.data[i].count
-            }
-            break
-          }
-        }
-      }
-      for (let i = 0; i < this.dateXAxis.length; i++) {
-        this.dateData1[i] += this.dateData2[i]
-        if (this.dateData1[i] > this.Ymax2) {
-          this.Ymax2 = parseInt(this.dateData1[i] / 5) * 5 + 5
-        }
-      }
-    })
-    setTimeout(() => {
+
       const optionData = {
         title: {
           text: '公告统计表',
           subtext: '各部门公告发布情况',
-          left: 'center'
+          left: 'center',
+          textStyle: {
+            color: '#fff',
+            fontSize: 28
+          },
+          subtextStyle: {
+            color: '#fff',
+            fontSize: 16
+          }
         },
         xAxis: {
-          data: this.publishXAxis
+          data: this.publishXAxis,
+          axisLabel: {
+            show: true,
+            textStyle: {
+              color: '#fff',
+              fontSize: 20
+            }
+          }
         },
         yAxis: {
           min: 0,
           max: this.Ymax,
           interval: 5,
-          gridIndex: 0
+          gridIndex: 0,
+          axisLabel: {
+            show: true,
+            textStyle: {
+              color: '#fff',
+              fontSize: 20
+            }
+          }
         },
         toolbox: {
           show: true,
@@ -145,17 +136,19 @@ export default {
           formatter: null,
           axisPointer: {
             type: 'shadow'
-          }
+          },
+          textStyle: { color: 'yellow', decoration: 'none', fontFamily: 'Verdana, sans-serif', fontSize: 20, fontStyle: 'italic', fontWeight: 'bold' }
         },
-        series: [{ name: '总计', type: 'bar', data: this.publishData1 }, { name: '发布', type: 'bar', data: this.publishData2 }],
+        series: [{ name: '总计', type: 'bar', data: this.publishData1 }, { name: '发布', type: 'bar', data: this.publishData2, color: 'orange' }],
         legend: {
           show: true,
           data: [{ name: '总计', icon: 'cricle' }, { name: '发布', icon: 'cricle' }],
-          left: 'right'
+          left: 'right',
+          textStyle: { color: '#fff', decoration: 'none', fontFamily: 'Verdana, sans-serif', fontSize: 16, fontStyle: 'italic' }
         }
       }
       this.chart.setOption(optionData)
-    }, 500)
+    })
   },
   methods: {
     chooseNotice() {
@@ -168,10 +161,21 @@ export default {
           title: {
             text: '公告统计表',
             subtext: '各部门公告发布情况',
-            left: 'center'
+            left: 'center',
+            textStyle: {
+              color: '#fff',
+              fontSize: 28
+            }
           },
           xAxis: {
-            data: this.publishXAxis
+            data: this.publishXAxis,
+            axisLabel: {
+              show: true,
+              textStyle: {
+                color: '#fff',
+                fontSize: 20
+              }
+            }
           },
           yAxis: {
             min: 0,
@@ -208,48 +212,90 @@ export default {
         this.chart.setOption(optionData)
       }
       if (this.chartChoose === 1) {
-        const optionData = {
-          title: {
-            text: '公告统计表',
-            subtext: '各年公告发布情况',
-            left: 'center'
-          },
-          xAxis: {
-            data: this.dateXAxis
-          },
-          yAxis: {
-            min: 0,
-            max: this.Ymax2,
-            interval: 5,
-            gridIndex: 0
-          },
-          toolbox: {
-            show: true,
-            orient: 'vertical',
-            left: 'right',
-            top: 'center',
-            feature: {
-              mark: { show: true },
-              dataView: { show: true, readOnly: false },
-              restore: { show: true },
-              saveAsImage: { show: true }
+        noticeStatistics('YEAR(noticeDate)', 'noticeStatus').then(response => {
+          this.data = response.data.items
+          for (let i = 0; i < this.data.length; i++) {
+            for (let j = 0; ; j++) {
+              if (this.dateXAxis[j] === this.data[i].noticeFirst) {
+                if (this.data[i].noticeSecond === 'published') {
+                  this.dateData2[j] = this.data[i].count
+                } else {
+                  this.dateData1[j] = this.data[i].count
+                }
+                break
+              }
+              if (j >= this.dateXAxis.length) {
+                this.dateXAxis[j] = this.data[i].noticeFirst
+                if (this.data[i].noticeSecond === 'published') {
+                  this.dateData2[j] = this.data[i].count
+                } else {
+                  this.dateData1[j] = this.data[i].count
+                }
+                break
+              }
             }
-          },
-          tooltip: {
-            trigger: 'axis',
-            formatter: null,
-            axisPointer: {
-              type: 'line'
-            }
-          },
-          series: [{ name: '总计', type: 'line', data: this.dateData1 }, { name: '发布', type: 'line', data: this.dateData2 }],
-          legend: {
-            show: true,
-            data: [{ name: '总计', icon: 'cricle' }, { name: '发布', icon: 'cricle' }],
-            left: 'right'
           }
-        }
-        this.chart.setOption(optionData)
+          for (let i = 0; i < this.dateXAxis.length; i++) {
+            this.dateData1[i] += this.dateData2[i]
+            if (this.dateData1[i] > this.Ymax2) {
+              this.Ymax2 = parseInt(this.dateData1[i] / 5) * 5 + 5
+            }
+          }
+
+          const optionData = {
+            title: {
+              text: '公告统计表',
+              subtext: '各年公告发布情况',
+              left: 'center',
+              textStyle: {
+                color: '#fff',
+                fontSize: 28
+              }
+            },
+            xAxis: {
+              data: this.dateXAxis,
+              axisLabel: {
+                show: true,
+                textStyle: {
+                  color: '#fff',
+                  fontSize: 20
+                }
+              }
+            },
+            yAxis: {
+              min: 0,
+              max: this.Ymax2,
+              interval: 5,
+              gridIndex: 0
+            },
+            toolbox: {
+              show: true,
+              orient: 'vertical',
+              left: 'right',
+              top: 'center',
+              feature: {
+                mark: { show: true },
+                dataView: { show: true, readOnly: false },
+                restore: { show: true },
+                saveAsImage: { show: true }
+              }
+            },
+            tooltip: {
+              trigger: 'axis',
+              formatter: null,
+              axisPointer: {
+                type: 'line'
+              }
+            },
+            series: [{ name: '总计', type: 'line', data: this.dateData1 }, { name: '发布', type: 'line', data: this.dateData2, color: 'orange' }],
+            legend: {
+              show: true,
+              data: [{ name: '总计', icon: 'cricle' }, { name: '发布', icon: 'cricle' }],
+              left: 'right'
+            }
+          }
+          this.chart.setOption(optionData)
+        })
       }
     },
     backNotice() {
