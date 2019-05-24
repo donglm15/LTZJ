@@ -138,6 +138,7 @@
     <div class="table-container">
       <!--表格区域,@selection-change:勾选，全选按钮变化时执行-->
       <el-table
+        v-loading="listLoading"
         :data="tableData"
         border
         fit
@@ -343,6 +344,7 @@
       return {
         //从后台获取的总数据
         tableData:[],
+        listLoading:false,
         //前台每页要呈现的数据
 //        pageData:[],  //分页后，每个页面要显示的数据
         positionType,  //职位类别
@@ -465,17 +467,14 @@
 //    },
     methods:{
       getList() {
+        this.listLoading = true;
+        this.listQuery.startDateTime= this.timeValue[0]; //起始时间
+        this.listQuery.endDateTime = this.timeValue[1];  //截止时间
         //从后端获取用户数据
-//        this.listLoading = true
-
-        this.listQuery.startDateTime= this.timeValue[0];
-          this.listQuery.endDateTime = this.timeValue[1];
-//        this.listQuery.startDateTime = this.listQuery.startDateTime.toString();
-          console.log(this.listQuery)
         fetchUserList(this.listQuery).then(response => {
           this.tableData = response.data.list  //获取总的用户数据列表
           this.total = response.data.total  //获取用户列表总数
-
+          this.listLoading = false;
           // 模拟后端响应的延时
 //          setTimeout(() => {
 //            this.listLoading = false
