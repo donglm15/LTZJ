@@ -15,7 +15,7 @@ export default {
   mounted() {
     this.chart = echarts.init(this.$refs.chart)
     const option = {
-      backgroundColor: 'rgb(255, 255, 255)', // 背景色
+      // backgroundColor: 'rgb(255, 255, 255)', // 背景色
       tooltip: {
         trigger: 'item',
         formatter: '{b}点<br>{c}M ({d}%)'

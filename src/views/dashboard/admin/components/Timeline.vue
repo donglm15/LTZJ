@@ -1,18 +1,20 @@
 <template>
   <div class="block">
     <el-timeline>
-      <el-timeline-item v-for="(item,index) of data" :key="index" :timestamp="item.startTime" placement="top">
-        <el-badge :value="item.tag">
-          <el-card style="width: 450px">
-            <el-row>
-              <el-col>
-                <h4>{{ item.title }}</h4>
+      <el-timeline-item v-for="(item,index) of data" :key="index" :timestamp="item.startTime" placement="top" @click.native="detail(index)">
+        <el-badge :value="item.people">
+          <el-card style="width: 400px">
+            <el-row type="flex" align="middle">
+              <el-col :span="20">
+                <div style="font-weight: bold" :class="{classB:item.people>=200, classL:item.people<=20, classF:item.people<=100 && item.people>20, classR:item.people<200&&item.people>100}">
+                  {{ item.title }}
+                </div>
               </el-col>
-              <el-col>
-                <el-tag>{{ item.tag }}</el-tag>
+              <el-col :span="4">
+                <el-tag :type="item.people>=200? 'danger': (item.people <= 20 ? 'info' : (item.people<=100? 'success':'warning'))">{{ item.tag }}</el-tag>
               </el-col>
             </el-row>
-            <p>{{ item.address }}</p>
+            <p :class="{classB:item.people>=200, classL:item.people<=20, classF:item.people<=100 && item.people>20, classR:item.people<200&&item.people>100}">活动地址：{{ item.address }}</p>
           </el-card>
         </el-badge>
       </el-timeline-item>
@@ -32,7 +34,8 @@ export default {
     return {
       listQuery: {
         limit: 4,
-        page: 1
+        page: 1,
+        type: 1
       },
       data: []
     }
@@ -57,8 +60,33 @@ export default {
           }
         })
       })
+    },
+    detail(idx) {
+      console.log(this.data[idx])
+      this.$router.push({
+        path: '/activity/activityDetail',
+        query: this.data[idx]
+      })
     }
   }
 }
 </script>
+
+<style >
+  .classB{
+    color: #F56C6C;
+  }
+  .classL{
+    color: #909399;
+  }
+  .classF{
+    color: #67C23A;
+  }
+  .classR{
+    color: #E6A23C;
+  }
+  .el-timeline-item__timestamp{
+    color: white!important;
+  }
+</style>
 
