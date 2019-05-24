@@ -15,7 +15,13 @@ export function delayMeeting(data) {
     data
   })
 }
-
+export function deleteAnnouncement(query) {
+  return request({
+    url: '/admin/announcement/delete',
+    method: 'get',
+    params: query
+  })
+}
 // 取消
 export function cancelMeeting(data) {
   return request({

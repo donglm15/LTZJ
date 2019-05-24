@@ -132,12 +132,12 @@ export default {
     height: 60%;
   }
   .unclick{
-    border: 1px solid #bfcbd9;
+    border: 2px solid #bfcbd9;
     color: #bfcbd9;
   }
   .clicked{
-    border: 1px solid #37474f;
-    color: #37474f;
+    border: 2px solid #ffc500;
+    color: #ffc500;
   }
 
 </style>
