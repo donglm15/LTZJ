@@ -32,7 +32,7 @@ export default [
 
   // 后台分页
   {
-    url: '/meeting/list',
+    url: 'http://localhost:8080/meeting/list',
     type: 'get',
     // 后台分页
     response: config => {
@@ -40,8 +40,7 @@ export default [
 
       let mockList = List.filter(item => {
         if (meetingName && item.meetingName.indexOf(meetingName) < 0) return false
-        if (meetingPosition && item.meetingPosition.indexOf(meetingPosition) < 0) return false
-        if (peopleNum && item.peopleNum < peopleNum) return false
+        // if (peopleNum && item.peopleNum < peopleNum) return false
         return true
       })
 
@@ -62,7 +61,17 @@ export default [
   },
 
   {
-    url: '/meeting/update',
+    url: 'http://localhost:8080/meeting/delete',
+    type: 'get',
+    response: _ => {
+      return {
+        code: 20000,
+        data: 'success'
+      }
+    }
+  },
+  {
+    url: 'http://localhost:8080/meeting/update',
     type: 'post',
     response: _ => {
       return {
@@ -72,7 +81,7 @@ export default [
     }
   },
   {
-    url: '/meeting/create',
+    url: 'http://localhost:8080/meeting/create',
     type: 'post',
     response: _ => {
       return {

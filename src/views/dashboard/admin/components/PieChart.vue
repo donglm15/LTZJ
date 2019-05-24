@@ -98,7 +98,7 @@ export default {
           legend: {
             left: 'center',
             bottom: '10',
-            width: '450px',
+            width: '360px',
             textStyle: {
               color: '#90979c'
             },

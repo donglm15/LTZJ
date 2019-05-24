@@ -79,7 +79,6 @@ export default {
         'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1557484053673&di=4343d194f22f5bc077b07977bd0871cb&imgtype=0&src=http%3A%2F%2Fwx4.sinaimg.cn%2Flarge%2F007ihk0Jgy1g2rj09o18nj30o30dktju.jpg',
         'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1557483655667&di=0f521aa6981111580ed6d394cc78c34d&imgtype=0&src=http%3A%2F%2Fres.zohi.tv%2Fa%2F10001%2F201904%2F44e671c1dce04cf634862571f7f6a5f3.jpeg',
         'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1557483677422&di=dc18188aebe6f4174c805b55e3bbb684&imgtype=0&src=http%3A%2F%2Fn.sinaimg.cn%2Ftranslate%2F253%2Fw640h413%2F20190419%2FjYZe-hvvuiyn2053343.jpg'
-
       ]
     }
   },

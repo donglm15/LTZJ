@@ -28,8 +28,16 @@
       <el-table-column prop="meetingName" :label="$t('meeting.meetingName')" align="center" />
       <el-table-column prop="meetingPosition" sortable :label="$t('meeting.meetingPosition')" align="center" width="200" />
       <el-table-column prop="peopleNum" sortable :label="$t('meeting.peopleNum')" align="center" width="120" />
-      <el-table-column prop="ifMore.typeName" sortable :label="$t('meeting.ifMore')" align="center" width="120" />
-      <el-table-column prop="ifOpen.openName" sortable :label="$t('meeting.ifOpen')" align="center" width="120" />
+      <el-table-column prop="ifMore" sortable :label="$t('meeting.ifMore')" align="center" width="120">
+        <template slot-scope="scope">
+          <span>{{ scope.row.ifMore | statusFilter }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column prop="ifOpen" sortable :label="$t('meeting.ifOpen')" align="center" width="120">
+        <template slot-scope="scope">
+          <span>{{ scope.row.ifOpen | openFilter }}</span>
+        </template>
+      </el-table-column>
       <!--按钮-->
       <el-table-column :label="$t('table.actions')" align="center" class-name="small-padding fixed-width" width="160">
         <template slot-scope="{row}">
@@ -58,12 +66,12 @@
         </el-form-item>
         <el-form-item :label="$t('ifMore')" prop="ifMore">
           <el-select v-model="temp.ifMore" value-key="id" class="filter-item" placeholder="Please select">
-            <el-option v-for="item in ifMore" :key="item.id" :label="item.typeName" :value="item" />
+            <el-option v-for="item in ifMore" :key="item.id" :label="item.typeName" :value="item.id" />
           </el-select>
         </el-form-item>
         <el-form-item :label="$t('ifOpen')" prop="ifOpen">
           <el-select v-model="temp.ifOpen" value-key="id" class="filter-item" placeholder="Please select">
-            <el-option v-for="m in ifOpen" :key="m.id" :label="m.openName" :value="m" />
+            <el-option v-for="m in ifOpen" :key="m.id" :label="m.openName" :value="m.id" />
           </el-select>
         </el-form-item>
 
@@ -80,20 +88,28 @@
   </div>
 </template>
 <script>
-import { fetchMeetingList, updateMeeting, createMeeting } from '@/api/meeting'
+import { fetchMeetingList, deleteMeeting, updateMeeting, createMeeting } from '@/api/meeting'
 // import { parseTime } from '@/utils'//导出
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
 
 // 不变化的业务字典数据，可以定义为全局变量,否则应该放在data里
 const ifMore = [
-  { id: 1, typeName: '是' }, { id: 2, typeName: '否' }
+  { id: 0, typeName: '否' }, { id: 1, typeName: '是' }
 ]
 const ifOpen = [
-  { id: 1, openName: '启用' }, { id: 2, openName: '未启用' }
+  { id: 0, openName: '未启用' }, { id: 1, openName: '启用' }
 ]
 
 export default {
   components: { Pagination },
+  filters: {
+    statusFilter(status) {
+      return status === 1 ? '是' : '否'
+    },
+    openFilter(open) {
+      return open === 1 ? '启用' : '未启用'
+    }
+  },
   data() {
     return {
       // 从后台获取的总数据
@@ -120,8 +136,8 @@ export default {
         meetingName: '',
         meetingPosition: '',
         peopleNum: '',
-        ifMore: '',
-        ifOpen: {}
+        ifMore: 1,
+        ifOpen: 1
       },
 
       dialogFormVisible: false, // 关闭弹窗
@@ -143,59 +159,16 @@ export default {
 
     }
   },
-  // 前台分页
-  //  mounted(){
-  //    //显示加载框
-  //    this.listLoading=true;
-  //    //首次挂载新闻列表组件时获得的所有数据
-  //    fetchMeetingList({}).then(response=>{
-  //      console.log(response);
-  //      this.tableData=response.data.items;
-  //      //获得表格数据总量
-  //      this.total=response.data.total;
-  //
-  //      //前端分页  获取第一页
-  // //      this.getList();
-  //
-  //      //关闭加载框
-  //      this.listLoading=false
-  //    })
-  //  },
-  created() {
+  mounted() {
     this.getList()
   },
   methods: {
-    // 获得每页要显示的数据
-    // 前端分页
-    //    getList(){
-    //
-    //      let {page,limit,meetingName,sort,meetingPosition,peopleNum}=this.listQuery;
-    //
-    //      //前台  过滤查询结果集（先过滤，再分页）
-    //      let filterData=this.tableData.filter(item=>{
-    //        //console.log(item.peopleNum)
-    //        this.listQuery.page=1;
-    //        if(meetingName && item.meetingName.indexOf(meetingName)<0) return false
-    //        if(meetingPosition && item.meetingPosition.indexOf(meetingPosition)<0) return false
-    //        if(peopleNum && item.peopleNum < peopleNum) return false
-    //        return true
-    //      })
-    //
-    //      //排序
-    //      if(sort=='-id')
-    //        filterData=filterData.reverse();
-    //
-    //      //从总数据中过滤出当前页要显示的数据集
-    //      this.pageData= filterData.filter((item,index)=>
-    //        index<page*limit && index>=limit*(page-1)
-    //      )
-    //    },
     // 后台分页
     getList() {
       this.listLoading = true
       fetchMeetingList(this.listQuery).then(response => {
         console.log(response.data)
-        this.pageData = response.data.items
+        this.pageData = response.data.list
         this.total = response.data.total
 
         // Just to simulate the time of the request
@@ -211,11 +184,9 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        let index = -1
-        this.pageData.forEach((news, idx) => {
-          if (news.id == row.id) { index = idx }//eslint-disable-line
-        })
-        this.pageData.splice(index, 1)
+        deleteMeeting({ id: row.id })
+        this.getList()
+        this.index = -1
 
         this.$message({
           type: 'success',
@@ -232,7 +203,6 @@ export default {
     // 修改
     handleUpdate(row) {
       this.temp = Object.assign({}, row) // copy obj
-      //      this.temp.date = new Date(this.temp.date)
       this.dialogStatus = 'update'
       this.dialogFormVisible = true// 开启弹窗
       this.$nextTick(() => {
@@ -244,13 +214,7 @@ export default {
         if (valid) {
           const tempData = Object.assign({}, this.temp)
           updateMeeting(tempData).then(() => { // updateMeeting定义在api/meeting.js和moke/meeting.js,后在本页import进来
-            for (const v of this.pageData) {
-              if (v.id === this.temp.id) {
-                const index = this.pageData.indexOf(v)
-                this.pageData.splice(index, 1, this.temp)
-                break
-              }
-            }
+            this.getList()
             this.dialogFormVisible = false // 关闭弹窗
             this.$notify({
               title: '成功',
@@ -268,8 +232,8 @@ export default {
         meetingName: '',
         meetingPosition: '',
         peopleNum: '',
-        ifMore: {},
-        ifOpen: {}
+        ifMore: 1,
+        ifOpen: 1
       }
     },
     // 新增
@@ -284,10 +248,11 @@ export default {
     createData() {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
-          this.temp.id = parseInt(Math.random() * 100) + 1024 // mock a id
-          this.temp.author = 'vue-element-admin'
+          //          this.temp.id = parseInt(Math.random() * 100) + 1024 // mock a id
           createMeeting(this.temp).then(() => {
-            this.pageData.unshift(this.temp)
+            //            this.pageData.unshift(this.temp)
+            this.getList()
+            console.log(this.temp)
             this.dialogFormVisible = false
             this.$notify({
               title: '成功',
@@ -299,31 +264,6 @@ export default {
         }
       })
     }
-
-    // 导出
-    //    handleDownload() {
-    //      this.downloadLoading = true
-    //      import('@/vendor/Export2Excel').then(excel => {
-    //        const tHeader = ['timestamp', 'title', 'type', 'importance', 'status']
-    //        const filterVal = ['timestamp', 'title', 'type', 'importance', 'status']
-    //        const data = this.formatJson(filterVal, this.list)
-    //        excel.export_json_to_excel({
-    //          header: tHeader,
-    //          data,
-    //          filename: 'table-list'
-    //        })
-    //        this.downloadLoading = false
-    //      })
-    //    },
-    //    formatJson(filterVal, jsonData) {
-    //      return jsonData.map(v => filterVal.map(j => {
-    //        if (j === 'timestamp') {
-    //          return parseTime(v[j])
-    //        } else {
-    //          return v[j]
-    //        }
-    //      }))
-    //    }
 
   }
 }
