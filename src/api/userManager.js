@@ -23,3 +23,11 @@ export function updateArticle(data) { // 更新数据（编辑）
     data
   })
 }
+
+export function fetchDeleteUser(query) { // 由id值删除数据
+  return request({
+    url: '/admin/userManager/delete',
+    method: 'get',
+    params: query
+  })
+}
