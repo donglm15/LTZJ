@@ -33,7 +33,7 @@ export default {
   },
   data() {
     return {
-      chartChoose: -1,
+      chartChoose: 0,
       chart: null,
       data: null,
       Ymax: 0,
@@ -50,7 +50,8 @@ export default {
   computed: {
     ...mapState(['notice'])
   },
-  created() {
+  mounted() {
+    this.chart = echarts.init(document.getElementById(this.id))
     noticeStatistics('noticePublish', 'noticeStatus').then(response => {
       this.data = response.data.items
       for (let i = 0; i < this.data.length; i++) {
@@ -111,10 +112,50 @@ export default {
         }
       }
     })
-  },
-  mounted() {
-    this.chart = echarts.init(document.getElementById(this.id))
-    this.chooseNotice()
+    setTimeout(() => {
+      const optionData = {
+        title: {
+          text: '公告统计表',
+          subtext: '各部门公告发布情况',
+          left: 'center'
+        },
+        xAxis: {
+          data: this.publishXAxis
+        },
+        yAxis: {
+          min: 0,
+          max: this.Ymax,
+          interval: 5,
+          gridIndex: 0
+        },
+        toolbox: {
+          show: true,
+          orient: 'vertical',
+          left: 'right',
+          top: 'center',
+          feature: {
+            mark: { show: true },
+            dataView: { show: true, readOnly: false },
+            restore: { show: true },
+            saveAsImage: { show: true }
+          }
+        },
+        tooltip: {
+          trigger: 'axis',
+          formatter: null,
+          axisPointer: {
+            type: 'shadow'
+          }
+        },
+        series: [{ name: '总计', type: 'bar', data: this.publishData1 }, { name: '发布', type: 'bar', data: this.publishData2 }],
+        legend: {
+          show: true,
+          data: [{ name: '总计', icon: 'cricle' }, { name: '发布', icon: 'cricle' }],
+          left: 'right'
+        }
+      }
+      this.chart.setOption(optionData)
+    }, 500)
   },
   methods: {
     chooseNotice() {
