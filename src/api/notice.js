@@ -63,3 +63,10 @@ export function noticeStatistics(first, second) {
   })
 }
 
+export function downloadOneNotice(id) {
+  return request({
+    url: `/admin/notice/getOneNotice?noticeId=${id}`,
+    method: 'get',
+    responseType: 'blob'
+  })
+}

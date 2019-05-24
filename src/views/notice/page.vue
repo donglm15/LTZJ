@@ -183,7 +183,7 @@ export default {
       this.$router.push({ path: '/notice/noticeEst', query: { id: row.noticeId, pageNext: this.listQuery.page }})
     },
     noticeChart() {
-      this.$router.push({ path: '/notice/noticeCharts' })
+      this.$router.push({ path: '/notice/noticeCharts', query: { pageNext: this.listQuery.page }})
     },
     handleDelete(row) {
       this.$confirm('此操作将永久删除该公告, 是否继续?', '提示', {

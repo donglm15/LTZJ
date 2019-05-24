@@ -33,6 +33,7 @@ export default {
   },
   data() {
     return {
+      page: 0,
       chartChoose: 0,
       chart: null,
       data: null,
@@ -51,6 +52,7 @@ export default {
     ...mapState(['notice'])
   },
   mounted() {
+    this.page = this.$route.query.pageNext
     this.chart = echarts.init(document.getElementById(this.id))
     noticeStatistics('noticePublish', 'noticeStatus').then(response => {
       this.data = response.data.items
@@ -299,7 +301,7 @@ export default {
       }
     },
     backNotice() {
-      this.$router.push({ path: '/notice/page' })
+      this.$router.push({ path: '/notice/page', query: { page: this.page }})
     }
   }
 }

@@ -349,7 +349,8 @@ export const asyncRoutes = [
         meta: {
           title: 'noticeDetails'
           // roles: ['admin'] // or you can only set roles in sub nav
-        }
+        },
+        hidden: true
       },
       // 公告图表
       {
