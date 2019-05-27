@@ -188,7 +188,7 @@ export default {
     getList() {
       this.listLoading = true
       fetchList(this.listQuery).then(response => {
-        this.list = response.data.list
+        this.list = response.data.items
         this.total = response.data.total
         console.log(this.list)
 

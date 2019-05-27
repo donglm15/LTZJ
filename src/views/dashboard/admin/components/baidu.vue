@@ -13,7 +13,7 @@
               :zoom="zoom"
               :scroll-wheel-zoom="true"
             >
-              <bm-view style="width:100%; height:600px;" />
+              <bm-view style="width:100%; height:350px;" />
               <bm-marker :position="{lng: center.lng, lat: center.lat}" :dragging="true" animation="BMAP_ANIMATION_BOUNCE" />
             </baidu-map>
           </div>
@@ -35,7 +35,7 @@ export default {
     value: Boolean,
     mapHeight: {
       type: Number,
-      default: 610
+      default: 357
     }
   },
   data() {
@@ -47,8 +47,8 @@ export default {
         width: '100%',
         height: this.mapHeight + 'px'
       },
-      center: { lng: 119.597267, lat: 25.886438 },
-      zoom: 15
+      center: { lng: 119.257411, lat: 26.079674 },
+      zoom: 16
     }
   },
   watch: {
