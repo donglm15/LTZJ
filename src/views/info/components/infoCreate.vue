@@ -131,7 +131,7 @@ export default {
               duration: 2000
             })
             this.loading = false
-            //            this.$router.push({ path: 'page'})
+            this.$router.push({ path: 'page' })
           })
         } else {
           console.log('error submit!!')
