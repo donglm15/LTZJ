@@ -16,6 +16,14 @@ export function fetchInfoChart(query) {
   })
 }
 
+export function fetchTopInfo(query) {
+  return request({
+    url: '/admin/info/topInfo',
+    method: 'get',
+    params: query
+  })
+}
+
 export function updateInfo(query) {
   return request({
     url: '/admin/info/updateByEdit',

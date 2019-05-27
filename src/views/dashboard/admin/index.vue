@@ -1,8 +1,8 @@
 <template>
   <div class="dashboard-editor-container">
-    <el-carousel :interval="3000" type="card" height="300px">
+    <el-carousel :interval="2000" type="card" height="300px">
       <el-carousel-item v-for="url in urls" :key="url">
-        <img :src="url" style="width: 100%; height: 100%">
+        <img :src="url.url" style="width: 100%; height: 100%" @click="getInfo(url.link)">
       </el-carousel-item>
     </el-carousel>
 
@@ -37,6 +37,7 @@
 </template>
 
 <script>
+import { fetchTopInfo } from '@/api/info'
 import OneChart from './components/OneChart'
 import PieChart from './components/PieChart'
 import BarChart from './components/BarChart'
@@ -74,15 +75,23 @@ export default {
   data() {
     return {
       lineChartData: lineChartData.newVisitis,
-      urls: [
-        'http://www.cnr.cn/jingji/gundong/20190507/W020190507333935627790.jpg',
-        'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1557484053673&di=4343d194f22f5bc077b07977bd0871cb&imgtype=0&src=http%3A%2F%2Fwx4.sinaimg.cn%2Flarge%2F007ihk0Jgy1g2rj09o18nj30o30dktju.jpg',
-        'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1557483655667&di=0f521aa6981111580ed6d394cc78c34d&imgtype=0&src=http%3A%2F%2Fres.zohi.tv%2Fa%2F10001%2F201904%2F44e671c1dce04cf634862571f7f6a5f3.jpeg',
-        'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1557483677422&di=dc18188aebe6f4174c805b55e3bbb684&imgtype=0&src=http%3A%2F%2Fn.sinaimg.cn%2Ftranslate%2F253%2Fw640h413%2F20190419%2FjYZe-hvvuiyn2053343.jpg'
-      ]
+      urls: []
     }
   },
+  mounted() {
+    fetchTopInfo({}).then(response => {
+      const tableData = response.data.items
+      tableData.forEach(info => {
+        if (info.imgUrl.match(/^img/)) { info.imgUrl = '/admin/' + info.imgUrl }
+        this.urls.push({ url: info.imgUrl, link: '/info/infoDetail?id=' + info.id })
+      })
+      console.log(this.urls)
+    })
+  },
   methods: {
+    getInfo(link) {
+      this.$router.push(link)
+    },
     handleSetLineChartData(type) {
       this.lineChartData = lineChartData[type]
     }
