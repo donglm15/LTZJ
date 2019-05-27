@@ -250,7 +250,6 @@ export default {
           this.temp.author = '刘华'
           this.temp.membertypeid = this.temp.memberType.id
           createMember(this.temp).then(() => {
-            //            this.list.unshift(this.temp)
             this.getList()
             this.dialogFormVisible = false
             this.$notify({
@@ -273,12 +272,10 @@ export default {
       this.tableData[this.tempId]
       this.getList()
       this.$router.push({ name: 'memberDetail', params: { id: row.id, row: row }})
-      //        this.$router.push({name:'memberChart',params:{id:row.id,row:row}});
     },
 
     handleUpdate(row) {
       this.temp = Object.assign({}, row)
-      //      console.log(this.temp)
       this.temp.timestamp = new Date(this.temp.timestamp)
       this.dialogStatus = 'update'
       this.dialogFormVisible = true
@@ -291,17 +288,9 @@ export default {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
           const tempData = Object.assign({}, this.temp)
-          //          tempData.timestamp = +new Date(tempData.timestamp)
           tempData.membertypeid = tempData.memberType.id
 
           updateMember(tempData).then(() => {
-            //      updateMember({ id: this.temp.id, title: this.temp.title, content: this.temp.content, membertypeid: this.temp.memberType.id }).then(() => {
-            //            for (const v of this.list) {
-            //              if (v.id === this.temp.id) {
-            //                const index = this.list.indexOf(v)
-            //                this.list.splice(index, 1, this.temp)
-            //                break
-
             this.getList()
             this.dialogFormVisible = false
             this.$notify({
