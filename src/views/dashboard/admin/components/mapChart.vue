@@ -44,12 +44,12 @@ export default {
         data: ['福建']
       },
       title: {
-        text: '福建新增用户分布',
+        text: '新增用户分布',
         //        subtext: '福建新增用户分布',
         left: 'center',
         top: 'top',
         textStyle: {
-          color: '#fff'
+          color: '#000'
         },
         subtextStyle: {
           color: '#fff'

@@ -103,7 +103,7 @@ export default {
 
   .chart-wrapper {
     background: #fff;
-    padding: 16px 16px 0;
+    /*padding: 16px 16px 0;*/
     margin-bottom: 32px;
   }
 
