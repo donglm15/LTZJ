@@ -7,9 +7,7 @@
     </el-carousel>
 
     <el-row :gutter="8">
-      <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 12}" :xl="{span: 12}" style="margin-bottom:30px;">
-        <baidu />
-      </el-col>
+      <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 12}" :xl="{span: 12}" style="margin-bottom:30px;" />
       <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 12}" :xl="{span: 12}" style="padding-right:8px;margin-bottom:30px;">
         <Timeline />
       </el-col>
@@ -18,7 +16,7 @@
     <el-row :gutter="32">
       <el-col :xs="24" :sm="24" :lg="8">
         <div class="chart-wrapper">
-          <one-chart />
+          <map-chart />
         </div>
       </el-col>
       <el-col :xs="24" :sm="24" :lg="8">
@@ -28,7 +26,7 @@
       </el-col>
       <el-col :xs="24" :sm="24" :lg="8">
         <div class="chart-wrapper">
-          <bar-chart />
+          <bai-map />
         </div>
       </el-col>
     </el-row>
@@ -38,11 +36,10 @@
 
 <script>
 import { fetchTopInfo } from '@/api/info'
-import OneChart from './components/OneChart'
 import PieChart from './components/PieChart'
-import BarChart from './components/BarChart'
 import Timeline from './components/Timeline.vue'
-import Baidu from './components/baidu.vue'
+import BaiMap from './components/baidu.vue'
+import MapChart from './components/mapChart.vue'
 
 const lineChartData = {
   newVisitis: {
@@ -66,11 +63,10 @@ const lineChartData = {
 export default {
   name: 'DashboardAdmin',
   components: {
-    OneChart,
     PieChart,
-    BarChart,
     Timeline,
-    Baidu
+    MapChart,
+    BaiMap
   },
   data() {
     return {
