@@ -3,7 +3,7 @@
     <div class="filter-container">
       <el-input v-model="listQuery.title" :placeholder="$t('table.title')" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
       <el-select v-model="listQuery.type" :placeholder="$t('table.type')" clearable class="filter-item" style="width: 130px">
-        <el-option v-for="item in calendarTypeOptions" :key="item.key" :label="item.display_name+'('+item.key+')'" :value="item.key" /></el-select>
+        <el-option v-for="item in calendarTypeOptions" :key="item.id" :label="item.typename+'('+item.id+')'" :value="item.id" /></el-select>
       <el-select v-model="listQuery.sort" style="width: 140px" class="filter-item" @change="handleFilter">
         <el-option v-for="item in sortOptions" :key="item.key" :label="item.label" :value="item.key" />
       </el-select>
@@ -29,7 +29,7 @@
       <el-table-column :label="$t('table.title')" width="180px" align="center">
         <template slot-scope="{row}">
           <span class="link-type">{{ row.title }}</span>
-          <el-tag>{{ row.type | typeFilter }}</el-tag>
+          <el-tag>{{ row.memberType.typename }}</el-tag>
         </template>
       </el-table-column>
 
@@ -65,17 +65,17 @@
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
 
-        <el-form-item :label="$t('table.id')" prop="id">
-          <el-input v-model="temp.id" />
-        </el-form-item>
+        <!--<el-form-item :label="$t('table.id')" prop="id">-->
+        <!--<el-input v-model="temp.id" />-->
+        <!--</el-form-item>-->
 
-        <el-form-item :label="$t('table.type')" prop="type">
-          <el-select v-model="temp.type" class="filter-item" placeholder="Please select">
-            <el-option v-for="item in calendarTypeOptions" :key="item.key" :label="item.display_name" :value="item.key" />
+        <el-form-item :label="$t('table.type')" prop="memberType">
+          <el-select v-model="temp.memberType" value-key="id" class="filter-item" placeholder="Please select">
+            <el-option v-for="item in calendarTypeOptions" :key="item.id" :label="item.typename" :value="item" />
           </el-select>
         </el-form-item>
         <el-form-item :label="$t('table.date')" prop="timestamp">
-          <el-date-picker v-model="temp.timestamp" type="date" placeholder="Please pick a date" />
+          <el-date-picker v-model="temp.date" type="date" placeholder="Please pick a date" />
         </el-form-item>
         <el-form-item :label="$t('table.title')" prop="title">
           <el-input v-model="temp.title" />
@@ -105,10 +105,10 @@ import Pagination from '@/components/Pagination'
 import MemberDetail from './components/memberDetail'    //eslint-disable-line
 
 const calendarTypeOptions = [
-  { key: '1', display_name: '经验交流' },
-  { key: '2', display_name: '基层动态' },
-  { key: '3', display_name: '主题党日' },
-  { key: '4', display_name: '党员自学' }
+  { id: '1', typename: '经验交流' },
+  { id: '2', typename: '基层动态' },
+  { id: '3', typename: '主题党日' },
+  { id: '4', typename: '党员自学' }
 ]
 
 const calendarTypeKeyValue = calendarTypeOptions.reduce((acc, cur) => {
@@ -161,9 +161,11 @@ export default {
       showReviewer: false,
       temp: {
         id: undefined,
+        date: '',
         timestamp: new Date(),
         title: '',
-        type: ''
+        membertypeid: '',
+        memberType: ''
       },
       dialogFormVisible: false,
       dialogStatus: '',
@@ -188,7 +190,7 @@ export default {
     getList() {
       this.listLoading = true
       fetchList(this.listQuery).then(response => {
-        this.list = response.data.items
+        this.list = response.data.list
         this.total = response.data.total
         console.log(this.list)
 
@@ -244,10 +246,12 @@ export default {
     createData() {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
-          this.temp.id = parseInt(Math.random() * 100)
-          //          this.temp.author = '刘华'
+          //          this.temp.id = parseInt(Math.random() * 100)
+          this.temp.author = '刘华'
+          this.temp.membertypeid = this.temp.memberType.id
           createMember(this.temp).then(() => {
-            this.list.unshift(this.temp)
+            //            this.list.unshift(this.temp)
+            this.getList()
             this.dialogFormVisible = false
             this.$notify({
               title: '成功',
@@ -274,6 +278,7 @@ export default {
 
     handleUpdate(row) {
       this.temp = Object.assign({}, row)
+      //      console.log(this.temp)
       this.temp.timestamp = new Date(this.temp.timestamp)
       this.dialogStatus = 'update'
       this.dialogFormVisible = true
@@ -286,16 +291,18 @@ export default {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
           const tempData = Object.assign({}, this.temp)
-          tempData.timestamp = +new Date(tempData.timestamp)
+          //          tempData.timestamp = +new Date(tempData.timestamp)
+          tempData.membertypeid = tempData.memberType.id
+
           updateMember(tempData).then(() => {
             //      updateMember({ id: this.temp.id, title: this.temp.title, content: this.temp.content, membertypeid: this.temp.memberType.id }).then(() => {
-            for (const v of this.list) {
-              if (v.id === this.temp.id) {
-                const index = this.list.indexOf(v)
-                this.list.splice(index, 1, this.temp)
-                break
-              }
-            }
+            //            for (const v of this.list) {
+            //              if (v.id === this.temp.id) {
+            //                const index = this.list.indexOf(v)
+            //                this.list.splice(index, 1, this.temp)
+            //                break
+
+            this.getList()
             this.dialogFormVisible = false
             this.$notify({
               title: '成功',
@@ -329,6 +336,7 @@ export default {
         this.list.splice(index, 1)// 通过splice 删除数据
         console.log(row.id)
         deleteMember(row.id).then(() => {
+          this.getList()
           this.$message({
             type: 'danger',
             message: '删除成功!'
