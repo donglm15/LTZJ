@@ -3,7 +3,7 @@
     <h2>{{ infoData.title }}</h2>
     <span>浏览量{{ infoData.read }} | 点赞{{ infoData.like }} | 收藏{{ infoData.favorite }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;发布时间{{ infoData.date }}</span>
     <br>
-    <img :src="infoData.imgUrl">
+    <img :src="infoData.imgUrl" style="max-width: 100%">
     <p v-html="infoData.content">{{ infoData.content }}</p>
 
     <div>
@@ -14,10 +14,12 @@
 </template>
 
 <script>
+import { getInfoById, updateLikeFavo } from '@/api/info'
 export default {
   data() {
     return {
-      infoData: this.$route.query,
+      infoData: {},
+      infoId: this.$route.query.id,
       likeFlag: false,
       likeImg: require('@/assets/info_image/like1.png'),
       likeP: '点赞',
@@ -26,7 +28,17 @@ export default {
       favoP: '收藏'
     }
   },
+  mounted() {
+    this.getPage()
+  },
   methods: {
+    getPage() {
+      getInfoById(this.infoId).then(response => {
+        this.infoData = response.data
+        //        this.infoData.imgUrl = 'http://localhost:8080/' + this.infoData.imgUrl
+        if (this.infoData.imgUrl.match(/^img/)) { this.infoData.imgUrl = '/admin/' + this.infoData.imgUrl }
+      })
+    },
     likeOver() {
       this.likeFlag = true
       this.likeImg = require('@/assets/info_image/like2.png')
@@ -39,12 +51,16 @@ export default {
     },
     likeClick() {
       if (this.likeP === '点赞') {
-        this.likeP = '已赞'
-        this.likeOver()
-        this.infoData.like += 1
+        updateLikeFavo({ id: this.infoId, likeFlag: true, flag: true }).then(() => {
+          this.likeP = '已赞'
+          this.likeOver()
+          this.getPage()
+        })
       } else {
-        this.likeP = '点赞'
-        this.infoData.like -= 1
+        updateLikeFavo({ id: this.infoId, likeFlag: true, flag: false }).then(() => {
+          this.likeP = '点赞'
+          this.getPage()
+        })
       }
     },
     favoOver() {
@@ -59,12 +75,16 @@ export default {
     },
     favoClick() {
       if (this.favoP === '收藏') {
-        this.favoP = '已收藏'
-        this.favoOver()
-        this.infoData.favorite += 1
+        updateLikeFavo({ id: this.infoId, likeFlag: false, flag: true }).then(() => {
+          this.favoP = '已收藏'
+          this.favoOver()
+          this.getPage()
+        })
       } else {
-        this.favoP = '收藏'
-        this.infoData.favorite -= 1
+        updateLikeFavo({ id: this.infoId, likeFlag: false, flag: false }).then(() => {
+          this.favoP = '收藏'
+          this.getPage()
+        })
       }
     }
   }
@@ -82,7 +102,7 @@ export default {
   }
   .detailDiv span{
     font-weight: 100;
-    color: #999999;
+    color: #bfcbd9;
   }
   .detailDiv>img{
     margin: 10px 0;
@@ -112,12 +132,12 @@ export default {
     height: 60%;
   }
   .unclick{
-    border: 1px solid black;
-    color: black;
+    border: 2px solid #bfcbd9;
+    color: #bfcbd9;
   }
   .clicked{
-    border: 1px solid #00C1DE;
-    color: #00C1DE;
+    border: 2px solid #ffc500;
+    color: #ffc500;
   }
 
 </style>

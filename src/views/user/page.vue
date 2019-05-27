@@ -55,13 +55,14 @@
           <!--职位搜索-->
           <el-form-item label="职位搜索：">
             <el-select v-model="listQuery.position" :placeholder="$t('userManager.position')" clearable style="width: 80px" @change="handleFilter">
-              <el-option v-for="item in positionType" :key="item.id" :label="item.positionName" :value="item.positionName" />
+              <el-option v-for="item in positionType" :key="item.id" :label="item.positionName" :value="item.id" />
             </el-select>
           </el-form-item>
           <!--时间搜索-->
           <el-form-item label="时间搜索：">
             <el-date-picker
-              v-model="listQuery.timeValue"
+              v-model="timeValue"
+              value-format="yyyy-MM-dd HH:mm:ss"
               :picker-options="pickerOptions"
               type="datetimerange"
               start-placeholder="开始日期"
@@ -132,11 +133,22 @@
       >
         导出
       </el-button>
+      <!--批量删除按钮-->
+      <el-button
+        v-if="multipleSelectionFlag"
+        type="danger"
+        size="mini"
+        style="float: right;margin-right: 15px"
+        @click="selectedDelete"
+      >
+        批量删除
+      </el-button>
     </el-card>
 
     <div class="table-container">
       <!--表格区域,@selection-change:勾选，全选按钮变化时执行-->
       <el-table
+        v-loading="listLoading"
         :data="tableData"
         border
         fit
@@ -154,7 +166,7 @@
         <!--2.account:用户名-->
         <el-table-column :label="$t('userManager.account')" prop="account" width="90px" align="center" />
         <!--3.userName:姓名-->
-        <el-table-column :label="$t('userManager.userName')" prop="userName" align="center" min-width="90px">
+        <el-table-column :label="$t('userManager.userName')" prop="userName" align="center" min-width="70px">
           <template slot-scope="scope">
             <span class="link-type" @click.stop="handleUpdate(scope.row)">{{ scope.row.userName }}</span>
           </template>
@@ -172,13 +184,13 @@
         <!--7.phone:电话-->
         <el-table-column :label="$t('userManager.phone')" prop="phone" align="center" width="120px" />
         <!--8.lastLoginTime:最后登录时间-->
-        <el-table-column :label="$t('userManager.lastLoginTime')" prop="lastLoginTime" sortable align="center" width="140">
+        <el-table-column :label="$t('userManager.lastLoginTime')" prop="lastLoginTime" sortable align="center" width="160">
           <template slot-scope="scope">
             <span>{{ scope.row.lastLoginTime | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
           </template>
         </el-table-column>
         <!--9.operate:操作-->
-        <el-table-column :label="$t('userManager.operate')" prop="operate" align="center" width="155" class-name="small-padding fixed-width">
+        <el-table-column :label="$t('userManager.operate')" prop="operate" align="center" width="160" class-name="small-padding fixed-width">
           <template slot-scope="scope">
             <!--查看详情-->
             <!--<el-button size="mini" type="success" @click="handleClick(scope.row)">-->
@@ -202,28 +214,28 @@
     </div>
 
     <!--批量操作区域（底部左侧）-->
-    <div class="batch-operate-container">
-      <el-select
-        v-model="operateType"
-        size="small"
-        placeholder="批量操作"
-      >
-        <el-option
-          v-for="item in operates"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-        />
-      </el-select>
-      <el-button
-        style="margin-left: 20px"
-        type="primary"
-        size="small"
-        @click="handleBatchOperate()"
-      >
-        确定
-      </el-button>
-    </div>
+    <!--<div class="batch-operate-container">-->
+    <!--<el-select-->
+    <!--v-model="operateType"-->
+    <!--size="small"-->
+    <!--placeholder="批量操作"-->
+    <!--&gt;-->
+    <!--<el-option-->
+    <!--v-for="item in operates"-->
+    <!--:key="item.value"-->
+    <!--:label="item.label"-->
+    <!--:value="item.value"-->
+    <!--/>-->
+    <!--</el-select>-->
+    <!--<el-button-->
+    <!--style="margin-left: 20px"-->
+    <!--type="primary"-->
+    <!--size="small"-->
+    <!--@click="handleBatchOperate()"-->
+    <!--&gt;-->
+    <!--确定-->
+    <!--</el-button>-->
+    <!--</div>-->
 
     <!--分页组件-->
     <div class="pagination-container">
@@ -247,9 +259,9 @@
           <el-input v-model="temp.Organization" />
         </el-form-item>
         <!--职位-->
-        <el-form-item :label="$t('userManager.position')" prop="position.positionName">
-          <el-select v-model="temp.position.positionName" class="filter-item" placeholder="请选择职位">
-            <el-option v-for="item in positionType" :key="item.id" :label="item.positionName" :value="item.positionName" />
+        <el-form-item :label="$t('userManager.position')" prop="position.id">
+          <el-select v-model="temp.position.id" class="filter-item" placeholder="请选择职位">
+            <el-option v-for="item in positionType" :key="item.id" :label="item.positionName" :value="item.id" />
           </el-select>
         </el-form-item>
         <!--员工号-->
@@ -293,7 +305,7 @@
 <script>
 /* eslint-disable */
   // eslint-disable-next-line
-  import {fetchUserList, updateArticle, createArticle} from '@/api/userManager'   //引入获取用户列表等函数
+  import {fetchUserList, updateArticle, createArticle, fetchDeleteUser} from '@/api/userManager'   //引入获取用户列表等函数
   import { parseTime } from '@/utils'  //引入设置时间格式的工具
   import Pagination from '@/components/Pagination'  //分页子组件
   //不变化的业务字典数据，可以定义为全局变量
@@ -313,7 +325,9 @@
     Organization: null,  //组织机构
     employeeNumber: null,  //员工号
     phone:null,  //电话
-    timeValue: '',  //选取的时间（时间搜索）
+    startDateTime:null,
+    endDateTime:null,
+//    timeValue: '',  //选取的时间（时间搜索）
   };
   //批量操作的选择项
   const operates = [
@@ -340,12 +354,14 @@
       return {
         //从后台获取的总数据
         tableData:[],
+        listLoading:false,
         //前台每页要呈现的数据
 //        pageData:[],  //分页后，每个页面要显示的数据
         positionType,  //职位类别
         operates,  //批量操作的选项
         multipleSelection: [],  //勾选，全选的表格项
 //        list: null,
+        timeValue:'',
         total:0,   //用户列表条数的总数
         listQuery: {  //查询项
           page: 1,  //当前页码
@@ -357,10 +373,13 @@
           Organization:undefined,  //组织机构
           employeeNumber:undefined,  //员工号
           phone:undefined,  //电话
-          timeValue: '',  //选取的时间（时间搜索）
+          startDateTime:undefined,
+          endDateTime:undefined,
+//          timeValue: '',  //选取的时间（时间搜索）
         },
         dialogFormVisible: false,  //编辑对话框是否显示
         dialogStatus: '',  //设置对话框的标题时使用
+        multipleSelectionFlag:false, //批量删除按钮是否显示
         temp: {   //编辑或新增时，临时存放数据的对象temp
           position:{id:'',positionName:''},  //职位(一个含有id,positionName的对象)
           lastLoginTime: new Date(), //最后登录时间
@@ -369,7 +388,7 @@
           Organization: '', //组织机构
           employeeNumber: '', //员工号
           phone: '', //电话
-          id: undefined,  //序号
+//          id: undefined,  //序号
         },
         textMap: {  //对话框的标题
           update: '编辑',
@@ -392,6 +411,14 @@
         operateType: null,  //批量操作选取的操作类别
         pickerOptions: {  //快速选择时间选项
           shortcuts: [{
+            text: '最近3天',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 3);
+              picker.$emit('pick', [start, end]);
+            }
+          }, {
             text: '最近一周',
             onClick(picker) {
               const end = new Date();
@@ -415,14 +442,6 @@
               start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
               picker.$emit('pick', [start, end]);
             }
-          }, {
-            text: '最近十年',
-            onClick(picker) {
-              const end = new Date();
-              const start = new Date();
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 3650);
-              picker.$emit('pick', [start, end]);
-            }
           }]
         },
       }
@@ -433,6 +452,16 @@
       typeFilter(position){  //用户职位过滤器,根据职位字符串，改变tag种类
         return position == '组长' ? 'danger' : (position == '主办' ? 'warning' : 'success')
       }
+//      typeFilter(status){
+//        const meetingStatus = {
+//          助理: 'success',
+//          草稿: 'info',
+//          主办: 'warning',
+//          组长: 'danger'
+//        }
+//        return meetingStatus[status]
+//      }
+
     },
     created() {  //创建完Vue组件页面后
       this.getList()
@@ -449,12 +478,14 @@
 //    },
     methods:{
       getList() {
+        this.listLoading = true;
+        this.listQuery.startDateTime= this.timeValue[0]; //起始时间
+        this.listQuery.endDateTime = this.timeValue[1];  //截止时间
         //从后端获取用户数据
-//        this.listLoading = true
         fetchUserList(this.listQuery).then(response => {
-          this.tableData = response.data.items  //获取总的用户数据列表
+          this.tableData = response.data.list  //获取总的用户数据列表
           this.total = response.data.total  //获取用户列表总数
-
+          this.listLoading = false;
           // 模拟后端响应的延时
 //          setTimeout(() => {
 //            this.listLoading = false
@@ -491,7 +522,7 @@
       },
       resetTemp() {  //重置（清空）temp(新增数据时使用)
         this.temp = {
-          id: undefined,  //序号
+//          id: undefined,  //序号
           account: '',  //用户名
           userName: '', //姓名
           Organization: '', //组织机构
@@ -514,12 +545,14 @@
       createData() {
         this.$refs['dataForm'].validate((valid) => {
           if (valid) {
-            this.temp.id = parseInt(Math.random() * 100) + 1024 // mock a id (随机生成一个id序号)
+//            this.temp.id = parseInt(Math.random() * 100) + 1024 // mock a id (随机生成一个id序号)
 //            this.temp.author = 'vue-element-admin'
             createArticle(this.temp).then(() => {
               this.tableData.unshift(this.temp)  //将temp中的数据添加至tableData中
               this.dialogFormVisible = false  //对话框消失
-//              this.getList();  //新增完成后更新页面显示
+              this.listQuery.page=1;  //分页停留在第一页（为了显示新增的数据结果）
+              this.listQuery.sort = '-id';
+              this.getList();  //新增完成后更新页面显示
               this.$notify({
                 title: '成功',
                 message: '创建成功',
@@ -555,7 +588,7 @@
                 }
               }
               this.dialogFormVisible = false; //对话框消失
-//              this.getList();  //编辑完成后更新页面显示
+              this.getList();  //编辑完成后更新页面显示
               this.$notify({
                 title: '成功',
                 message: '更新成功',
@@ -573,13 +606,12 @@
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          let index=-1;
-          this.tableData.forEach((user,idx)=>{
-            if(user.id==row.id)
-              index=idx  //通过判断id字段，获取要删除数据的索引值
+          fetchDeleteUser({id:row.id}).then(response => {
+            console.log(row.id);
+            this.getList();  //删除完成后更新页面显示
+//            this.tableData = response.data.list  //获取总的用户数据列表
+//            this.total = response.data.total  //获取用户列表总数
           })
-          this.tableData.splice(index,1);   //删除要删除的数据
-//          this.getList();  //删除完成后更新页面显示
           this.$message({
             type: 'success',
             message: '删除成功!'
@@ -613,6 +645,7 @@
       handleResetSearch() {
 //        this.selectProductCateValue = [];
         this.listQuery = Object.assign({}, defaultListQuery);
+        this.timeValue = '';
         this.handleFilter();  //清空搜索条件后，马上以空的搜索条件搜索
       },
       //导出按钮的逻辑
@@ -646,6 +679,11 @@
       //勾选，全选按钮变化时执行的逻辑
       handleSelectionChange(val) {
         this.multipleSelection = val;
+        this.multipleSelectionFlag = true; //显示批量删除按钮
+        if (this.multipleSelection.length === 0 || this.multipleSelection==null||this.multipleSelection.length<1) {
+          // 如不进行判断则勾选完毕后批量删除按钮还是会在
+          this.multipleSelectionFlag = false; //批量删除按钮消失
+        }
       },
       //批量操作中点击确定按钮的逻辑
       handleBatchOperate() {
@@ -659,7 +697,7 @@
         }
         if(this.multipleSelection==null||this.multipleSelection.length<1){
           this.$message({
-            message: '请选择要操作的商品',
+            message: '请选择要操作的用户数据',
             type: 'warning',
             duration: 1000
           });
@@ -672,6 +710,7 @@
         }).then(() => {
           let ids=[];
           for(let i=0;i<this.multipleSelection.length;i++){
+            //数组ids，获取所选取的用户数据的id [1,2,3] 删除id为1,2,3的数据
             ids.push(this.multipleSelection[i].id);
           }
           switch (this.operateType) {
@@ -703,13 +742,16 @@
 
         //ids:数组（所选表格项的id值数组）
         for (let i=0;i<ids.length;i++){  //循环所选中的表格项
-          this.tableData.forEach((user,idx)=>{  //循环此页码面的表格数据
-            if(user.id==ids[i]){   //若表格数据id与选中的id一致
-              this.tableData.splice(idx,1);   //删除要删除的数据
-            }
+          fetchDeleteUser({id:ids[i]}).then(response => {
+//            this.getList();  //删除完成后更新页面显示
           })
+//          this.tableData.forEach((user,idx)=>{  //循环此页码面的表格数据
+//            if(user.id==ids[i]){   //若表格数据id与选中的id一致
+//              this.tableData.splice(idx,1);   //删除要删除的数据
+//            }
+//          })
         }
-//          this.getList();  //删除完成后更新页面显示
+          this.getList();  //删除完成后更新页面显示
           this.$message({
             type: 'success',
             message: '删除成功!'
@@ -768,6 +810,31 @@
         this.$message({
           type: 'success',
           message: '设置职位为助理成功!'
+        });
+      },
+      //顶部批量删除按钮
+      selectedDelete(){
+        this.$confirm('是否要批量删除所选用户数据?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          let ids=[];
+          for(let i=0;i<this.multipleSelection.length;i++){
+            //数组ids，获取所选取的用户数据的id [1,2,3] 删除id为1,2,3的数据
+            ids.push(this.multipleSelection[i].id);
+          }
+          //ids:数组（所选表格项的id值数组）
+          for (let i=0;i<ids.length;i++){  //循环所选中的表格项
+            fetchDeleteUser({id:ids[i]}).then(response => {
+            this.getList();  //删除完成后更新页面显示
+            })
+          }
+          this.getList();  //删除完成后更新页面显示
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          });
         });
       },
 

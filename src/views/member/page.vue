@@ -3,7 +3,7 @@
     <div class="filter-container">
       <el-input v-model="listQuery.title" :placeholder="$t('table.title')" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
       <el-select v-model="listQuery.type" :placeholder="$t('table.type')" clearable class="filter-item" style="width: 130px">
-        <el-option v-for="item in calendarTypeOptions" :key="item.key" :label="item.display_name+'('+item.key+')'" :value="item.key" /></el-select>
+        <el-option v-for="item in calendarTypeOptions" :key="item.id" :label="item.typename+'('+item.id+')'" :value="item.id" /></el-select>
       <el-select v-model="listQuery.sort" style="width: 140px" class="filter-item" @change="handleFilter">
         <el-option v-for="item in sortOptions" :key="item.key" :label="item.label" :value="item.key" />
       </el-select>
@@ -23,22 +23,17 @@
       </el-table-column>
       <el-table-column :label="$t('table.date')" width="150px" align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.timestamp | parseTime('{y}-{m}-{d}') }}</span>
+          <span>{{ scope.row.date | parseTime('{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
       <el-table-column :label="$t('table.title')" width="180px" align="center">
         <template slot-scope="{row}">
           <span class="link-type">{{ row.title }}</span>
-          <el-tag>{{ row.type | typeFilter }}</el-tag>
+          <el-tag>{{ row.memberType.typename }}</el-tag>
         </template>
       </el-table-column>
 
-      <!--<el-table-column :label="$t('table.content')" min-width="150px" align="center">-->
-      <!--<template slot-scope="scope">-->
-      <!--</template>-->
-      <!--</el-table-column>-->
-
-      <el-table-column show-overflow-tooltip="true" prop="content" :label="$t('table.content')" align="center">
+      <el-table-column prop="content" :label="$t('table.content')" align="center">
         <!--<span class="link-type">{{row.content | ellipsis}}</span>-->
       </el-table-column>
 
@@ -47,14 +42,9 @@
           <span>{{ scope.row.author }}</span>
         </template>
       </el-table-column>
-      <!--<el-table-column v-if="showReviewer" :label="$t('table.reviewer')" width="110px" align="center">-->
-      <!--<template slot-scope="scope">-->
-      <!--<span style="color:red;">{{ scope.row.reviewer }}</span>-->
-      <!--</template>-->
-      <!--</el-table-column>-->
       <el-table-column :label="$t('table.readings')" align="center" width="95">
         <template slot-scope="{row}">
-          <span v-if="row.pageviews" class="link-type">{{ row.pageviews }}</span>
+          <span v-if="row.readings" class="link-type">{{ row.readings }}</span>
           <span v-else>0</span>
         </template>
       </el-table-column>
@@ -74,13 +64,18 @@
 
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
-        <el-form-item :label="$t('table.type')" prop="type">
-          <el-select v-model="temp.type" class="filter-item" placeholder="Please select">
-            <el-option v-for="item in calendarTypeOptions" :key="item.key" :label="item.display_name" :value="item.key" />
+
+        <!--<el-form-item :label="$t('table.id')" prop="id">-->
+        <!--<el-input v-model="temp.id" />-->
+        <!--</el-form-item>-->
+
+        <el-form-item :label="$t('table.type')" prop="memberType">
+          <el-select v-model="temp.memberType" value-key="id" class="filter-item" placeholder="Please select">
+            <el-option v-for="item in calendarTypeOptions" :key="item.id" :label="item.typename" :value="item" />
           </el-select>
         </el-form-item>
         <el-form-item :label="$t('table.date')" prop="timestamp">
-          <el-date-picker v-model="temp.timestamp" type="datetime" placeholder="Please pick a date" />
+          <el-date-picker v-model="temp.date" type="date" placeholder="Please pick a date" />
         </el-form-item>
         <el-form-item :label="$t('table.title')" prop="title">
           <el-input v-model="temp.title" />
@@ -103,17 +98,17 @@
 </template>
 
 <script>
-import { fetchList, createMember, updateMember } from '@/api/member'
+import { fetchList, createMember, updateMember, deleteMember } from '@/api/member'
 import waves from '@/directive/waves'
 import { parseTime } from '@/utils'  //eslint-disable-line
 import Pagination from '@/components/Pagination'
 import MemberDetail from './components/memberDetail'    //eslint-disable-line
 
 const calendarTypeOptions = [
-  { key: '1', display_name: '经验交流' },
-  { key: '2', display_name: '基层动态' },
-  { key: '3', display_name: '主题党日' },
-  { key: '4', display_name: '党员自学' }
+  { id: '1', typename: '经验交流' },
+  { id: '2', typename: '基层动态' },
+  { id: '3', typename: '主题党日' },
+  { id: '4', typename: '党员自学' }
 ]
 
 const calendarTypeKeyValue = calendarTypeOptions.reduce((acc, cur) => {
@@ -166,9 +161,11 @@ export default {
       showReviewer: false,
       temp: {
         id: undefined,
+        date: '',
         timestamp: new Date(),
         title: '',
-        type: ''
+        membertypeid: '',
+        memberType: ''
       },
       dialogFormVisible: false,
       dialogStatus: '',
@@ -180,7 +177,7 @@ export default {
       pvData: [],
       rules: {
         type: [{ required: true, message: 'type is required', trigger: 'change' }],
-        timestamp: [{ type: 'date', required: true, message: 'timestamp is required', trigger: 'change' }],
+        date: [{ type: 'date', required: true, message: 'timestamp is required', trigger: 'change' }],
         title: [{ required: true, message: 'title is required', trigger: 'blur' }]
       },
       downloadLoading: false
@@ -193,8 +190,9 @@ export default {
     getList() {
       this.listLoading = true
       fetchList(this.listQuery).then(response => {
-        this.list = response.data.items
+        this.list = response.data.list
         this.total = response.data.total
+        console.log(this.list)
 
         setTimeout(() => {
           this.listLoading = false
@@ -248,10 +246,11 @@ export default {
     createData() {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
-          this.temp.id = parseInt(Math.random() * 100)
+          //          this.temp.id = parseInt(Math.random() * 100)
           this.temp.author = '刘华'
+          this.temp.membertypeid = this.temp.memberType.id
           createMember(this.temp).then(() => {
-            this.list.unshift(this.temp)
+            this.getList()
             this.dialogFormVisible = false
             this.$notify({
               title: '成功',
@@ -273,7 +272,6 @@ export default {
       this.tableData[this.tempId]
       this.getList()
       this.$router.push({ name: 'memberDetail', params: { id: row.id, row: row }})
-      //        this.$router.push({name:'memberChart',params:{id:row.id,row:row}});
     },
 
     handleUpdate(row) {
@@ -290,15 +288,10 @@ export default {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
           const tempData = Object.assign({}, this.temp)
-          tempData.timestamp = +new Date(tempData.timestamp)
+          tempData.membertypeid = tempData.memberType.id
+
           updateMember(tempData).then(() => {
-            for (const v of this.list) {
-              if (v.id === this.temp.id) {
-                const index = this.list.indexOf(v)
-                this.list.splice(index, 1, this.temp)
-                break
-              }
-            }
+            this.getList()
             this.dialogFormVisible = false
             this.$notify({
               title: '成功',
@@ -310,54 +303,42 @@ export default {
         }
       })
     },
+    //    handleDelete(row) {
+    //      this.$notify({
+    //        title: '成功',
+    //        message: '删除成功',
+    //        type: 'warning',
+    //        duration: 2000
+    //      })
+    //      event.stopPropagation()
+    //      const index = this.list.indexOf(row)
+    //      this.list.splice(index, 1)
+    //      event.stopPropagation()
+    //    }
     handleDelete(row) {
-      this.$notify({
-        title: '成功',
-        message: '删除成功',
-        type: 'warning',
-        duration: 2000
+      this.$confirm('此操作将永久删除该数据, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'dander'
+      }).then(() => {
+        const index = this.list.indexOf(row)// 找到要删除数据在list中的位置
+        this.list.splice(index, 1)// 通过splice 删除数据
+        console.log(row.id)
+        deleteMember(row.id).then(() => {
+          this.getList()
+          this.$message({
+            type: 'danger',
+            message: '删除成功!'
+          })
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'success',
+          message: '已取消删除'
+        })
       })
       event.stopPropagation()
-      const index = this.list.indexOf(row)
-      this.list.splice(index, 1)
-      event.stopPropagation()
     }
-
-    //      handleDelete(row) {
-    //        this.$confirm('此操作将永久删除该数据, 是否继续?', '提示', {
-    //          confirmButtonText: '确定',
-    //          cancelButtonText: '取消',
-    //          type: 'warning'
-    //        }).then(() => {
-    //          let index=-1;
-    //          this.tableData.forEach((member,idx)=>{
-    //            if(member.id==row.id){
-    //              index=idx;
-    //            }
-    // //            event.stopPropagation();
-    //          })
-    //          this.tableData.splice(index,1);
-    //          this.getList();
-    //
-    //          this.$message({
-    //            type: 'success',
-    //            message: '删除成功!'
-    //          });
-    //        }).catch(() => {
-    //          this.$message({
-    //            type: 'info',
-    //            message: '已取消删除'
-    //          });
-    //        });
-    //        event.stopPropagation();
-    //      },
-
-    //      handleFetchPv(pv) {
-    //        fetchPv(pv).then(response => {
-    //          this.pvData = response.data.pvData
-    //          this.dialogPvVisible = true
-    //        })
-    //      }
   }
 }
 </script>

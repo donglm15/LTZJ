@@ -43,14 +43,23 @@ export default {
   .el-tabs__item{
     font-size: 20px;
   }
-  /*.el-tabs__item:hover{*/
-    /*color: red;*/
-    /*cursor: pointer;*/
-  /*}*/
-  /*.el-tabs__item.is-active{*/
-    /*color: red;*/
-  /*}*/
-  /*.el-tabs__active-bar{*/
-    /*background-color: red;*/
-  /*}*/
+  .el-tabs__item:hover{
+    color: #69CFFF;
+    cursor: pointer;
+  }
+  .el-tabs__item.is-active{
+    color: #69CFFF;
+  }
+  .el-tabs__active-bar{
+    background-color: #69CFFF;
+  }
+  .el-tabs__item{
+    color: #e1f5fe;
+  }
+  .el-pagination__total{
+    color: #e1f5fe;
+  }
+  .el-pagination__jump{
+    color: #e1f5fe;
+  }
 </style>

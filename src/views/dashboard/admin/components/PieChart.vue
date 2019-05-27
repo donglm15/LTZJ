@@ -1,27 +1,12 @@
 <template>
-  <div :class="className" :style="{height:height,width:width}" />
+  <div class="chart-container" />
 </template>
 <script>
 import echarts from 'echarts'
-require('echarts/theme/macarons') // echarts theme
+require('echarts/theme/macarons')
 import { fetchActivityList } from '@/api/activity'
 
 export default {
-  props: {
-    className: {
-      type: String,
-      default: 'chart'
-    },
-    width: {
-      type: String,
-      default: '100%'
-    },
-    height: {
-      type: String,
-      default: '400px'
-    }
-  },
-
   data() {
     return {
       chart: null,
@@ -54,7 +39,7 @@ export default {
   methods: {
     getList() {
       fetchActivityList(this.listQuery).then(response => {
-        this.tableData = response.data.items
+        this.tableData = response.data.list
         this.tableData.forEach(value => {
           if (value.prize.match('爱奇艺')) {
             this.ss1++
@@ -98,28 +83,28 @@ export default {
           legend: {
             left: 'center',
             bottom: '10',
-            width: '450px',
+            width: '350px',
             textStyle: {
               color: '#90979c'
             },
-            data: ['爱奇艺视频卡', '流量包', '话费', '中石油加油卡', '腾讯视频卡', '京东E卡', '微信红包']
+            data: ['冰淇淋129', '大冰神卡', '小冰神卡', '腾讯天王卡', '腾讯地王卡', '米粉卡', '冰淇淋99']
           },
           calculable: true,
           series: [
             {
-              name: '奖品分布图',
+              name: '每月销量分布图',
               type: 'pie',
               roseType: 'radius',
-              radius: [15, 95],
-              center: ['50%', '38%'],
+              radius: ['10%', '50%'],
+              center: ['50%', '40%'],
               data: [
-                { value: this.ss1, name: '爱奇艺视频卡' },
-                { value: this.ss2, name: '流量包' },
-                { value: this.ss3, name: '话费' },
-                { value: this.ss6, name: '中石油加油卡' },
-                { value: this.ss7, name: '京东E卡' },
-                { value: this.ss5, name: '微信红包' },
-                { value: this.ss4, name: '腾讯视频卡' }
+                { value: this.ss1, name: '冰淇淋129' },
+                { value: this.ss2, name: '大冰神卡' },
+                { value: this.ss3, name: '小冰神卡' },
+                { value: this.ss6, name: '腾讯天王卡' },
+                { value: this.ss7, name: '米粉卡' },
+                { value: this.ss5, name: '冰淇淋99' },
+                { value: this.ss4, name: '腾讯地王卡' }
               ],
 
               animationEasing: 'cubicInOut',
@@ -134,4 +119,9 @@ export default {
 }
 </script>
 <style>
+  .chart-container{
+    position: relative;
+    width: 100%;
+    height: 400px;
+  }
 </style>

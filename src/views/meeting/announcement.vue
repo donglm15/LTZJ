@@ -13,7 +13,7 @@
           <!--会议状态-->
           <el-form-item :label="$t('Announcement.meetingStatus')" prop="meetingStatus">
             <el-select v-model="listQuery.meetingStatus" value-key="id" placeholder="请选择" style="width: 230px;" @change="getList">
-              <el-option v-for="s in meetingStatus" :key="s.id" :label="s.statusName" :value="s.statusName" />
+              <el-option v-for="s in meetingStatus" :key="s.id" :label="s.statusName" :value="s.id" />
             </el-select>
           </el-form-item>
           <!--会议类型-->
@@ -24,8 +24,8 @@
           <!--</el-form-item>-->
           <!--会议地点-->
           <el-form-item :label="$t('Announcement.meetingPosition')" prop="meetingPosition">
-            <el-select v-model="listQuery.meetingPosition" value-key="id" placeholder="请选择" style="width: 230px;" @change="getList">
-              <el-option v-for="p in meetingPosition" :key="p.id" :label="p.positionName" :value="p.positionName" />
+            <el-select v-model="listQuery.meetingPosition" placeholder="请选择" style="width: 230px;" @change="getList">
+              <el-option v-for="(p,index) in meetingPosition" :key="index" :label="p" :value="p" />
             </el-select>
           </el-form-item>
           <!--招开部门-->
@@ -38,7 +38,7 @@
           </el-form-item>
           <el-form-item label="开会日期" prop="meetingDate">
             <el-date-picker
-              v-model="listQuery.meetingDate"
+              v-model="announcementDate"
               prop="meetingDate"
               type="daterange"
               align="right"
@@ -90,29 +90,31 @@
       <el-table-column prop="department" :label="$t('Announcement.department')" align="center" width="110" />
       <el-table-column prop="meetingDate" :label="$t('Announcement.meetingDate')" align="center" width="140">
         <template slot-scope="scope">
-          <span>{{ scope.row.meetingDate | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
+          <!--<span>{{ scope.row.meetingDate | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>-->
+          <span>{{ scope.row.meetingDate }}</span>
         </template>
       </el-table-column>
+      <!--<el-table-column prop="meetingPosition" :label="$t('Announcement.meetingPosition')" align="center" width="110">-->
+      <!--<template slot-scope="scope">-->
+      <!--{{ scope.row.meetingPosition.positionName }}-->
+      <!--</template>-->
+      <!--</el-table-column>-->
+      <!--<el-table-column prop="meetingStatus" :label="$t('Announcement.meetingStatus')" align="center" width="100">-->
+      <!--<template slot-scope="scope">-->
+      <!--<el-tag :type="scope.row.meetingStatus.statusName | statusFilter">{{ scope.row.meetingStatus.statusName | typeFilter }}</el-tag>-->
+      <!--</template>-->
+      <!--</el-table-column>-->
       <el-table-column prop="meetingPosition" :label="$t('Announcement.meetingPosition')" align="center" width="110">
+        <!--<template slot-scope="scope">-->
+        <!--{{ scope.row.meetingPosition.positionName }}-->
+        <!--</template>-->
+      </el-table-column>
+      <el-table-column prop="announcementMeetingStatus.meetingStatus" :label="$t('Announcement.meetingStatus')" align="center" width="100">
         <template slot-scope="scope">
-          {{ scope.row.meetingPosition.positionName }}
+          <el-tag :type="scope.row.announcementMeetingStatus.meetingStatus| statusFilter">{{ scope.row.announcementMeetingStatus.meetingStatus }}</el-tag>
+          <!--{{ scope.row.announcementMeetingStatus.meetingStatus}}-->
         </template>
       </el-table-column>
-      <el-table-column prop="meetingStatus" :label="$t('Announcement.meetingStatus')" align="center" width="100">
-        <template slot-scope="scope">
-          <el-tag :type="scope.row.meetingStatus.statusName | statusFilter">{{ scope.row.meetingStatus.statusName | typeFilter }}</el-tag>
-        </template>
-      </el-table-column>
-      <!--<el-table-column label="延迟" align="center" width="50">-->
-      <!--<template slot-scope="{row}">-->
-      <!--<el-button type="text" size="small" @click.stop="handleUpdate(row)">延迟</el-button>-->
-      <!--</template>-->
-      <!--</el-table-column>-->
-      <!--<el-table-column label="取消" align="center" width="50">-->
-      <!--<template slot-scope="{row}">-->
-      <!--<el-button type="text" size="small" @click.stop="cancelData(row)">取消</el-button>-->
-      <!--</template>-->
-      <!--</el-table-column>-->
       <!--按钮-->
       <el-table-column :label="$t('table.actions')" align="center" class-name="small-padding fixed-width" width="180">
         <template slot-scope="{row}">
@@ -161,19 +163,19 @@
   </div>
 </template>
 <script>
-import { fetchAnnouncementList, delayMeeting } from '@/api/announcement'
+import { fetchAnnouncementList, delayMeeting, meetingPlace, deleteAnnouncement } from '@/api/announcement'
 import { parseTime } from '@/utils'// 导出
 import Pagination from '@/components/Pagination'
 
 // 不变化的业务字典数据，可以定义为全局变量,否则应该放在data里
-const meetingPosition = [
-  { id: 1, positionName: '7楼会议室' },
-  { id: 2, positionName: '8楼会议室' },
-  { id: 3, positionName: '9楼会议室' },
-  { id: 4, positionName: '10楼会议室' },
-  { id: 5, positionName: '11楼会议室' },
-  { id: 6, positionName: '15楼会议室' }
-]
+// const meetingPosition = [
+//  { id: 1, positionName: '7楼会议室' },
+//  { id: 2, positionName: '8楼会议室' },
+//  { id: 3, positionName: '9楼会议室' },
+//  { id: 4, positionName: '10楼会议室' },
+//  { id: 5, positionName: '11楼会议室' },
+//  { id: 6, positionName: '15楼会议室' }
+// ]
 const meetingStatus = [
   { id: 1, statusName: '草稿' },
   { id: 2, statusName: '已通知' },
@@ -217,10 +219,12 @@ export default {
         meetingTheme: undefined,
         department: undefined,
         meetingPosition: undefined,
-        meetingDate: '',
+        startDateTime: undefined,
+        endDateTime: undefined,
         meetingStatus: undefined
       },
-      meetingPosition,
+      announcementDate: '',
+      meetingPosition: undefined,
       meetingStatus,
       // 给延迟赋值
       temp: {
@@ -297,10 +301,10 @@ export default {
 
   // 监听时间置空
   watch: {
-    'listQuery.meetingDate': {
+    'announcementDate': {
       handler(val, oldVar) {
         if (val == null) {
-          this.listQuery.meetingDate = ''
+          this.announcementDate = ''
         }
       }
     }
@@ -309,12 +313,14 @@ export default {
   created() {
     this.ss = Object.assign({}, this.$route.query)
     console.log(this.ss)
+    this.getPlace()
     this.getList()
   },
   methods: {
     // 重置
     resetForm(listQuery) {
       this.$refs[listQuery].resetFields()
+      this.announcementDate = ''
     },
     handleAdd(row) {
       this.$router.push(
@@ -338,31 +344,53 @@ export default {
 
     // 后台分页
     getList() {
-      console.log(this.listQuery.meetingDate)
-      //        this.listLoading = true
-      if (this.ss.meetingPosition) {
-        fetchAnnouncementList(this.listQuery).then(response => {
-          //            console.log(response.data)
-          this.pageData = response.data.items
-          this.total = response.data.total
-          this.pageData.unshift(this.ss)
-          // Just to simulate the time of the request
-          //            setTimeout(() => {
-          //              this.listLoading = false
-          //            }, 1.5 * 1000)
-        })
-      } else {
-        fetchAnnouncementList(this.listQuery).then(response => {
-          console.log(response.data)
-          this.pageData = response.data.items
-          this.total = response.data.total
-          // this.pageData.unshift(this.ss)
-          // Just to simulate the time of the request
-          //            setTimeout(() => {
-          //              this.listLoading = false
-          //            }, 1.5 * 1000)
-        })
-      }
+      //      console.log(this.listQuery.meetingDate)
+      this.listLoading = true
+      //      if (this.ss.meetingPosition) {
+      //        fetchAnnouncementList(this.listQuery).then(response => {
+      //          //            console.log(response.data)
+      //          this.pageData = response.data.list
+      //          this.total = response.data.total
+      //          this.pageData.unshift(this.ss)
+      //          // Just to simulate the time of the request
+      //          //            setTimeout(() => {
+      //          //              this.listLoading = false
+      //          //            }, 1.5 * 1000)
+      //        })
+      //      } else {
+      //        fetchAnnouncementList(this.listQuery).then(response => {
+      //          console.log(response.data)
+      //          this.pageData = response.data.items
+      //          this.total = response.data.total
+      //          // this.pageData.unshift(this.ss)
+      //          // Just to simulate the time of the request
+      //          //            setTimeout(() => {
+      //          //              this.listLoading = false
+      //          //            }, 1.5 * 1000)
+      //        })
+      //      }
+
+      this.listQuery.startDateTime = this.announcementDate[0]
+      this.listQuery.endDateTime = this.announcementDate[1]
+      fetchAnnouncementList(this.listQuery).then(response => {
+        //            console.log(response.data)
+        this.pageData = response.data.list
+        this.total = response.data.total
+        //          this.pageData.unshift(this.ss)
+        // Just to simulate the time of the request
+        //        setTimeout(() => {
+        //          this.listLoading = false
+        //        }, 1.5 * 1000)
+        this.listLoading = false
+      })
+    },
+    // 获取会议地址
+    getPlace() {
+      meetingPlace().then(response => {
+        console.log(response.data.items)
+        this.meetingPosition = response.data.items
+        this.total = response.data.total
+      })
     },
     // 删除
     del(row) {
@@ -371,11 +399,13 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        let index = -1
-        this.pageData.forEach((news, idx) => {
-          if (news.id === row.id) { index = idx }
-        })
-        this.pageData.splice(index, 1)
+        //        let index = -1
+        //        this.pageData.forEach((news, idx) => {
+        //          if (news.id === row.id) { index = idx }
+        //        })
+        //        this.pageData.splice(index, 1)
+        deleteAnnouncement({ id: row.id })
+        this.getList()
 
         this.$message({
           type: 'success',
@@ -388,7 +418,6 @@ export default {
         })
       })
     },
-
     // 延期
     handleUpdate(row) {
       this.temp = Object.assign({}, row) // copy obj
@@ -466,7 +495,6 @@ export default {
       checkArr.forEach(function(item) {
         params.push(item._id) // 添加所有需要删除数据的id到一个数组，post提交过去
       })
-
       //  $http即是axios，可以在main.js里面设置 Vue.prototype.$http = axios;
       this.$http.post('/fashion/multiDelete', params).then(function(res) {
         if (res.data.status === '1') {

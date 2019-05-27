@@ -44,12 +44,12 @@ export default {
         data: ['福建']
       },
       title: {
-        text: '福建“冰激凌”用户分布',
-        subtext: '福建“冰激凌”用户分布（单位:万）',
+        text: '新增用户分布',
+        //        subtext: '福建新增用户分布',
         left: 'center',
         top: 'top',
         textStyle: {
-          color: '#fff'
+          color: '#000'
         },
         subtextStyle: {
           color: '#fff'
@@ -64,7 +64,7 @@ export default {
         type: 'continuous', // 连续
         calculable: true, // 是否可拖拽计算
         realtime: false, // 是否实时计算
-        text: ['人口', '万'],
+        text: ['人口', '个'],
         left: 'left',
         bottom: 20,
         textStyle: {
@@ -77,7 +77,7 @@ export default {
       tooltip: {
         trigger: 'item',
         formatter(params) {
-          return params.seriesName + '<br/>' + params.name + ' : ' + params.value + '万'
+          return params.seriesName + '<br/>' + params.name + ' : ' + params.value
         }
       },
       // 配置工具箱
@@ -105,7 +105,7 @@ export default {
         // 分比对不同维度分析的数据进行呈现方式的配置
         {
           // 系列名--分析的数据维度
-          name: '用户数量',
+          name: '新增用户数量',
           type: 'map',
           mapType: '福建',
           // 是否响应鼠标缩放
@@ -138,6 +138,6 @@ export default {
   .chart-container{
     position: relative;
     width: 100%;
-    height: calc(100vh - 84px);
+    height: 400px;
   }
 </style>
