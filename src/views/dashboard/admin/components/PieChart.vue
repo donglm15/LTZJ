@@ -3,7 +3,7 @@
 </template>
 <script>
 import echarts from 'echarts'
-require('echarts/theme/macarons') // echarts theme
+require('echarts/theme/macarons')
 import { fetchActivityList } from '@/api/activity'
 
 export default {
