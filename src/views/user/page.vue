@@ -186,7 +186,7 @@
         <!--8.lastLoginTime:最后登录时间-->
         <el-table-column :label="$t('userManager.lastLoginTime')" prop="lastLoginTime" sortable align="center" width="160">
           <template slot-scope="scope">
-            <span>{{ scope.row.lastLoginTime }}</span>
+            <span>{{ scope.row.lastLoginTime | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
           </template>
         </el-table-column>
         <!--9.operate:操作-->
