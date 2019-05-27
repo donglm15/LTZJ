@@ -2,7 +2,7 @@
   <div>
     <el-card class="box-card">
       <el-row>
-        <el-col :span="4"><i class="el-icon-back" @click="back()">返回</i></el-col>
+        <el-col :span="4"><i class="el-icon-edit" @click="back()">&nbsp;&nbsp;返回</i></el-col>
         <el-col :span="6" :offset="12">
           <ul>
             <li>
@@ -24,7 +24,7 @@
           <svg-icon v-for="o in (this.$route.params.importance)" :key="o" icon-class="star" class="meta-item__icon" />
         </p>
         <el-row>
-          <el-col :span="10">岗位序列：{{ this.$route.params.type }}</el-col>
+          <el-col :span="10">岗位序列：{{ this.$route.params.typeName }}</el-col>
           <el-col :span="6" :offset="8">
             <el-button type="primary" icon="el-icon-apply">
               申请
@@ -40,8 +40,8 @@
         <el-card class="box-card-left">
           <h3>{{ this.$route.params.employName }}</h3>
           <p>公司福利：{{ this.$route.params.welfare }}</p>
-          <p style="line-height: 40px">职位描述：{{ this.$route.params.remark }}</p>
-          <p>截止时间：{{ this.$route.params.display_time }}</p>
+          <p style="line-height: 40px">职位描述：{{ this.$route.params.content }}</p>
+          <p>截止时间：{{ this.$route.params.endDate| parseTime('{y}-{m}-{d} {h}:{i}') }}</p>
           <p>工作地点：{{ this.$route.params.jobPlace }}</p>
           <div width="800" :closable="false" :mask-closable="false" @on-cancel="cancel">
             <baidu-map
@@ -80,7 +80,7 @@
       </el-col>
       <el-col :span="8">
         <el-card class="box-card-right">
-          <img src="http://5b0988e595225.cdn.sohucs.com/images/20190113/728ef8b5aafc48559db22598289262f4.jpeg" class="image">
+          <img :src="this.$route.params.urlImg" class="image">
           <div style="padding: 14px;">
             <p>{{ this.$route.params.employName }}</p>
             <p>公司地点：{{ this.$route.params.jobPlace }}</p>

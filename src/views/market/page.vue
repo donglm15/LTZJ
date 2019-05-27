@@ -5,8 +5,8 @@
       <el-select v-model="listQuery.importance" :placeholder="$t('table.importantly')" clearable style="width: 90px" class="filter-item">
         <el-option v-for="item in importanceOptions" :key="item" :label="item" :value="item" />
       </el-select>
-      <el-select v-model="listQuery.type" :placeholder="$t('table.jobSort')" clearable class="filter-item" style="width: 130px">
-        <el-option v-for="item in calendarTypeOptions" :key="item.key" :label="item.display_name" :value="item.key" />
+      <el-select v-model="listQuery.marketType" :placeholder="$t('table.jobSort')" clearable class="filter-item" style="width: 130px">
+        <el-option v-for="item in calendarTypeOptions" :key="item.id" :label="item.typeName" :value="item.id" />
       </el-select>
       <el-select v-model="listQuery.sort" style="width: 140px" class="filter-item" @change="handleFilter">
         <el-option v-for="item in sortOptions" :key="item.key" :label="item.label" :value="item.key" />
@@ -42,13 +42,13 @@
       </el-table-column>
       <el-table-column :label="$t('table.jobName')" align="center" min-width="150px">
         <template slot-scope="{row}">
-          <span class="link-type" @click="handleUpdate(row)">{{ row.title }}</span><br>
-          <el-tag>{{ row.type | typeFilter }}</el-tag>
+          <span class="link-type">{{ row.title }}</span><br>
+          <el-tag :type="row.marketType.typeName | typeFilter">{{ row.marketType.typeName }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column :label="$t('table.endTime')" width="150px" align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.timestamp | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
+          <span>{{ scope.row.endDate | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
         </template>
       </el-table-column>
       <el-table-column :label="$t('table.employName')" width="120px" align="center">
@@ -73,8 +73,8 @@
       </el-table-column>
       <el-table-column :label="$t('table.status')" class-name="status-col" width="120">
         <template slot-scope="{row}">
-          <el-tag :type="row.status | statusFilter">
-            {{ row.status }}
+          <el-tag :type="row.marketStatus.status | statusFilter">
+            {{ row.marketStatus.status }}
           </el-tag>
         </template>
       </el-table-column>
@@ -83,13 +83,13 @@
           <el-button type="primary" size="mini" @click.stop="handleUpdate(row)">
             {{ $t('table.edit') }}
           </el-button>
-          <el-button v-if="row.status!='published'" size="mini" type="success" @click.stop="handleModifyStatus(row,'published')">
+          <el-button v-if="row.marketStatus.status !='published'" disabled size="mini" type="success" @click.stop="handleModifyStatus(row,'published')">
             {{ $t('table.publish') }}
           </el-button>
-          <el-button v-if="row.status!='draft'" size="mini" @click.stop="handleModifyStatus(row,'draft')">
+          <el-button v-if="row.marketStatus.status !='draft'" disabled size="mini" @click.stop="handleModifyStatus(row,'draft')">
             {{ $t('table.draft') }}
           </el-button>
-          <el-button v-if="row.status!='deleted'" size="mini" type="danger" @click.stop="handleModifyStatus(row,'deleted')">
+          <el-button v-if="row.marketStatus.status !='deleted'" size="mini" type="danger" @click.stop="handleDelete(row)">
             {{ $t('table.delete') }}
           </el-button>
         </template>
@@ -100,13 +100,10 @@
 
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="120px" style="width: 400px; margin-left:50px;">
-        <el-form-item :label="$t('table.jobSort')" prop="type">
-          <el-select v-model="temp.type" class="filter-item" placeholder="Please select">
-            <el-option v-for="item in calendarTypeOptions" :key="item.key" :label="item.display_name" :value="item.key" />
+        <el-form-item :label="$t('table.jobSort')">
+          <el-select v-model="temp.marketType" class="filter-item" placeholder="Please select">
+            <el-option v-for="item in calendarTypeOptions" :key="item.id" :label="item.typeName" :value="item.typeName" />
           </el-select>
-        </el-form-item>
-        <el-form-item :label="$t('table.endTime')" prop="timestamp">
-          <el-date-picker v-model="temp.timestamp" type="datetime" placeholder="Please pick a date" />
         </el-form-item>
         <el-form-item :label="$t('table.jobName')" prop="title">
           <el-input v-model="temp.title" />
@@ -117,16 +114,17 @@
         <el-form-item :label="$t('table.jobPlace')" prop="jobPlace">
           <el-input v-model="temp.jobPlace" />
         </el-form-item>
-        <el-form-item :label="$t('table.status')">
-          <el-select v-model="temp.status" class="filter-item" placeholder="Please select">
-            <el-option v-for="item in statusOptions" :key="item" :label="item" :value="item" />
-          </el-select>
+        <el-form-item :label="$t('table.reviewer')" prop="reviewer">
+          <el-input v-model="temp.reviewer" />
         </el-form-item>
-        <el-form-item :label="$t('table.importance')">
+        <el-form-item :label="$t('table.importantly')" prop="importance">
           <el-rate v-model="temp.importance" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :max="5" style="margin-top:8px;" />
         </el-form-item>
-        <el-form-item :label="$t('table.jobDetail')">
-          <el-input v-model="temp.remark" :autosize="{ minRows: 2, maxRows: 4}" type="textarea" placeholder="Please input" />
+        <el-form-item :label="$t('table.endTime')" prop="endData">
+          <el-date-picker v-model="temp.endDate" type="datetime" placeholder="Please pick a date" />
+        </el-form-item>
+        <el-form-item :label="$t('table.jobDetail')" prop="content">
+          <el-input v-model="temp.content" :autosize="{ minRows: 2, maxRows: 4}" type="textarea" placeholder="Please input" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -139,52 +137,49 @@
       </div>
     </el-dialog>
 
-    <el-dialog :visible.sync="dialogPvVisible" title="Reading statistics">
-      <el-table :data="pvData" border fit highlight-current-row style="width: 100%">
-        <el-table-column prop="key" label="Channel" />
-        <el-table-column prop="pv" label="Pv" />
-      </el-table>
-      <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogPvVisible = false">{{ $t('table.confirm') }}</el-button>
-      </span>
-    </el-dialog>
   </div>
 </template>
 
 <script>
-import { fetchList, fetchPv, createMarket, updateMarket } from '@/api/market'
+import { fetchList, deleteMarket, createMarket, updateMarket } from '@/api/market'
 import waves from '@/directive/waves' // waves directive
-import { parseTime } from '@/utils'
+import { parseTime } from '@/utils'// 导出
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
 
 const calendarTypeOptions = [
-  { key: '管理序列', display_name: '管理序列' },
-  { key: '技术序列', display_name: '技术序列' },
-  { key: '支撑序列', display_name: '支撑序列' },
-  { key: '市场序列', display_name: '市场序列' }
+  { id: '1', typeName: '管理序列' },
+  { id: '2', typeName: '技术序列' },
+  { id: '3', typeName: '支撑序列' },
+  { id: '4', typeName: '市场序列' }
 ]
 
-// arr to obj, such as { CN : "China", US : "USA" }
-const calendarTypeKeyValue = calendarTypeOptions.reduce((acc, cur) => {
-  acc[cur.key] = cur.display_name
-  return acc
-}, {})
+const types = {
+  '管理序列': 1,
+  '技术序列': 2,
+  '支撑序列': 3,
+  '市场序列': 4
+}
 
 export default {
   name: 'Table',
   components: { Pagination },
   directives: { waves },
   filters: {
-    statusFilter(status) {
+    statusFilter(marketStatus) {
       const statusMap = {
         published: 'success',
-        draft: 'info',
-        deleted: 'danger'
+        draft: 'danger'
       }
-      return statusMap[status]
+      return statusMap[marketStatus]
     },
-    typeFilter(type) {
-      return calendarTypeKeyValue[type]
+    typeFilter(marketType) {
+      const typeMap = {
+        管理序列: 'success',
+        技术序列: 'warning',
+        支撑序列: 'primary',
+        市场序列: 'danger'
+      }
+      return typeMap[marketType]
     }
   },
   data() {
@@ -195,10 +190,10 @@ export default {
       listLoading: true,
       listQuery: {
         page: 1,
-        limit: 20,
+        limit: 10,
         importance: undefined,
         title: undefined,
-        type: undefined,
+        marketType: undefined,
         sort: '+id'
       },
       importanceOptions: [1, 2, 3, 4, 5],
@@ -207,13 +202,14 @@ export default {
       statusOptions: ['published', 'draft', 'deleted'],
       showReviewer: false,
       temp: {
-        id: undefined,
-        importance: 1,
-        remark: '',
-        timestamp: new Date(),
+        importance: '',
+        content: '',
+        endDate: new Date(),
         title: '',
-        type: '',
-        status: 'published'
+        marketType: { id: '', typeName: '' },
+        reviewer: '',
+        jobPlace: '',
+        employName: ''
       },
       dialogFormVisible: false,
       dialogStatus: '',
@@ -224,8 +220,7 @@ export default {
       dialogPvVisible: false,
       pvData: [],
       rules: {
-        type: [{ required: true, message: 'type is required', trigger: 'change' }],
-        timestamp: [{ type: 'date', required: true, message: 'timestamp is required', trigger: 'change' }],
+        marketType: [{ required: true, message: 'marketType is required', trigger: 'change' }],
         title: [{ required: true, message: 'title is required', trigger: 'blur' }],
         employName: [{ required: true, message: 'employName is required', trigger: 'blur' }],
         jobPlace: [{ required: true, message: 'jobPlace is required', trigger: 'blur' }]
@@ -233,16 +228,15 @@ export default {
       downloadLoading: false
     }
   },
-  created() {
+  mounted() {
     this.getList()
   },
   methods: {
     getList() {
       this.listLoading = true
       fetchList(this.listQuery).then(response => {
-        this.list = response.data.items
+        this.list = response.data.list
         this.total = response.data.total
-
         // Just to simulate the time of the request
         setTimeout(() => {
           this.listLoading = false
@@ -253,12 +247,12 @@ export default {
       this.listQuery.page = 1
       this.getList()
     },
-    handleModifyStatus(row, status) {
+    handleModifyStatus(row, marketStatus) {
       this.$message({
         message: '操作成功',
         type: 'success'
       })
-      row.status = status
+      row.marketStatus = marketStatus
     },
     sortChange(data) {
       const { prop, order } = data
@@ -276,13 +270,14 @@ export default {
     },
     resetTemp() {
       this.temp = {
-        id: undefined,
-        importance: 1,
-        remark: '',
-        timestamp: new Date(),
+        importance: '',
+        content: '',
+        endDate: new Date(),
         title: '',
-        status: 'published',
-        type: ''
+        marketType: null,
+        reviewer: '',
+        jobPlace: '',
+        employName: ''
       }
     },
     handleCreate() {
@@ -296,9 +291,12 @@ export default {
     createData() {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
-          this.temp.id = parseInt(Math.random() * 100) + 1024 // mock a id
-          createMarket(this.temp).then(() => {
-            this.list.unshift(this.temp)
+          const formData = Object.assign({}, this.temp)
+          formData.marketType = { id: types[this.temp.marketType], typeName: this.temp.marketType }
+          console.log(formData)
+          createMarket(formData).then(() => {
+            //            this.list.unshift(this.temp)
+            this.getList()
             this.dialogFormVisible = false
             this.$notify({
               title: '成功',
@@ -311,8 +309,10 @@ export default {
       })
     },
     handleUpdate(row) {
+      console.log(row)
       this.temp = Object.assign({}, row) // copy obj
-      this.temp.timestamp = new Date(this.temp.timestamp)
+      this.temp.marketType = row.marketType.typeName
+      //      this.temp.timestamp = new Date(this.temp.timestamp)
       this.dialogStatus = 'update'
       this.dialogFormVisible = true
       this.$nextTick(() => {
@@ -323,15 +323,17 @@ export default {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
           const tempData = Object.assign({}, this.temp)
-          tempData.timestamp = +new Date(tempData.timestamp) // change Thu Nov 30 2017 16:41:05 GMT+0800 (CST) to 1512031311464
+          tempData.marketType = { id: types[this.temp.marketType], typeName: this.temp.marketType }
+          //          tempData.timestamp = +new Date(tempData.timestamp) // change Thu Nov 30 2017 16:41:05 GMT+0800 (CST) to 1512031311464
           updateMarket(tempData).then(() => {
             for (const v of this.list) {
-              if (v.id === this.temp.id) {
+              if (v.id === tempData.id) {
                 const index = this.list.indexOf(v)
-                this.list.splice(index, 1, this.temp)
+                this.list.splice(index, 1, tempData)
                 break
               }
             }
+            this.getList()
             this.dialogFormVisible = false
             this.$notify({
               title: '成功',
@@ -344,26 +346,22 @@ export default {
       })
     },
     handleDelete(row) {
-      const index = this.list.indexOf(row)
-      this.list.splice(index, 1)
-      this.$notify({
-        title: '成功',
-        message: '删除成功',
-        type: 'success',
-        duration: 2000
-      })
-    },
-    handleFetchPv(pv) {
-      fetchPv(pv).then(response => {
-        this.pvData = response.data.pvData
-        this.dialogPvVisible = true
+      console.log(row)
+      deleteMarket(row.id).then(() => {
+        this.getList()
+        this.$notify({
+          title: '成功',
+          message: '删除成功',
+          type: 'success',
+          duration: 2000
+        })
       })
     },
     handleDownload() {
       this.downloadLoading = true
         import('@/vendor/Export2Excel').then(excel => {
-          const tHeader = ['timestamp', 'title', 'type', 'importance', 'status']
-          const filterVal = ['timestamp', 'title', 'type', 'importance', 'status']
+          const tHeader = ['endDate', 'title', 'marketType', 'importance', 'sort']
+          const filterVal = ['endDate', 'title', 'marketType', 'importance', 'sort']
           const data = this.formatJson(filterVal, this.list)
           excel.export_json_to_excel({
             header: tHeader,
@@ -375,7 +373,7 @@ export default {
     },
     formatJson(filterVal, jsonData) {
       return jsonData.map(v => filterVal.map(j => {
-        if (j === 'timestamp') {
+        if (j === 'filterVal') {
           return parseTime(v[j])
         } else {
           return v[j]
@@ -384,20 +382,23 @@ export default {
     },
     openDetails(row) {
       console.log(row)
+      console.log(row.salary)
+
       this.$router.push({ name: 'PageDetail', params: {
-        display_time: row.display_time,
+        endDate: row.endDate,
         title: row.title,
-        remark: row.remark,
+        content: row.content,
         importance: row.importance,
         employName: row.employName,
-        type: row.type,
+        typeName: row.marketType.typeName,
         salary: row.salary,
         education: row.education,
         experience: row.experience,
         recruitment: row.recruitment,
         jobPlace: row.jobPlace,
         welfare: row.welfare,
-        company: row.company
+        company: row.company,
+        urlImg: row.urlImg
       }})
     }
   }
