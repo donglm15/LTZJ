@@ -47,7 +47,6 @@ export default {
     getActivity() {
       fetchActivityList(this.listQuery).then((response) => {
         this.data = response.data.list
-        console.log(this.data)
         this.data.forEach(value => {
           if (value.people >= 200) {
             value.tag = '爆'

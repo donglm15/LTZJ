@@ -1,7 +1,7 @@
 <template>
   <div class="dashboard-editor-container">
     <el-carousel :interval="2000" type="card" height="300px">
-      <el-carousel-item v-for="url in urls" :key="url">
+      <el-carousel-item v-for="url in urls" :key="url.url">
         <img :src="url.url" style="width: 100%; height: 100%" @click="getInfo(url.link)">
       </el-carousel-item>
     </el-carousel>
@@ -81,7 +81,6 @@ export default {
         if (info.imgUrl.match(/^img/)) { info.imgUrl = '/admin/' + info.imgUrl }
         this.urls.push({ url: info.imgUrl, link: '/info/infoDetail?id=' + info.id })
       })
-      console.log(this.urls)
     })
   },
   methods: {
