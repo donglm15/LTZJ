@@ -85,9 +85,9 @@
     <el-table v-loading="listLoading" :data="pageData" border style="width: 100%;text-align: center" @selection-change="handleSelectionChange">
       <el-table-column type="selection" align="center" width="50" />
       <el-table-column prop="id" sortable :label="$t('meeting.id')" align="center" width="80" />
-      <el-table-column prop="meetingID" :label="$t('Announcement.meetingID')" align="center" width="100" />
+      <el-table-column prop="meetingID" :label="$t('Announcement.meetingID')" align="center" width="120" />
       <el-table-column prop="meetingTheme" :label="$t('Announcement.meetingTheme')" align="center" />
-      <el-table-column prop="department" :label="$t('Announcement.department')" align="center" width="110" />
+      <el-table-column prop="department" :label="$t('Announcement.department')" align="center" width="90" />
       <el-table-column prop="meetingDate" :label="$t('Announcement.meetingDate')" align="center" width="140">
         <template slot-scope="scope">
           <!--<span>{{ scope.row.meetingDate | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>-->
@@ -104,12 +104,12 @@
       <!--<el-tag :type="scope.row.meetingStatus.statusName | statusFilter">{{ scope.row.meetingStatus.statusName | typeFilter }}</el-tag>-->
       <!--</template>-->
       <!--</el-table-column>-->
-      <el-table-column prop="meetingPosition" :label="$t('Announcement.meetingPosition')" align="center" width="110">
+      <el-table-column prop="meetingPosition" :label="$t('Announcement.meetingPosition')" align="center" width="90">
         <!--<template slot-scope="scope">-->
         <!--{{ scope.row.meetingPosition.positionName }}-->
         <!--</template>-->
       </el-table-column>
-      <el-table-column prop="announcementMeetingStatus.meetingStatus" :label="$t('Announcement.meetingStatus')" align="center" width="100">
+      <el-table-column prop="announcementMeetingStatus.meetingStatus" :label="$t('Announcement.meetingStatus')" align="center" width="90">
         <template slot-scope="scope">
           <el-tag :type="scope.row.announcementMeetingStatus.meetingStatus| statusFilter">{{ scope.row.announcementMeetingStatus.meetingStatus }}</el-tag>
           <!--{{ scope.row.announcementMeetingStatus.meetingStatus}}-->
@@ -120,6 +120,9 @@
         <template slot-scope="{row}">
           <el-button type="text" plain size="mini" style="width: 46px;" @click.stop="handleUpdate(row)">延迟</el-button>
           <el-button type="text" plain size="mini" style="width: 46px;" @click.stop="cancelData(row)">取消</el-button>
+          <!--<el-button type="text" plain size="mini" style="width: 46px;" @click.stop="dialogStatus==='delay'?handleUpdate(row):cancelData(row)">-->
+          <!--{{ $t('table.confirm') }}-->
+          <!--</el-button>-->
           <el-button v-if="row.status!='deleted'" size="mini" type="danger" style="width: 46px;" @click.stop="del(row)">
             {{ $t('table.delete') }}
           </el-button>
@@ -128,14 +131,6 @@
     </el-table>
     <!--底部分页-->
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
-    <!--//批量删除弹框-->
-    <!--<el-dialog :visible.sync="multiDeleteVisible" title="提示" width="30%">-->
-    <!--<span>确定要删除吗</span>-->
-    <!--<span slot="footer">-->
-    <!--<el-button type="primary" @click="multiDelete">确 定</el-button>-->
-    <!--<el-button @click="dialogVisible = false">取 消</el-button>-->
-    <!--</span>-->
-    <!--</el-dialog>-->
     <!--编辑新增弹框-->
     <el-dialog title="会议延期" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="85px" style="width: 230px;margin-left:50px;text-align: center">
@@ -150,7 +145,7 @@
           <el-date-picker v-model="temp.meetingDate" readonly type="datetime" placeholder="Please pick a date" style="width: 230px;" />
         </el-form-item>
         <el-form-item label="推迟到" prop="delayDate" required>
-          <el-date-picker v-model="temp.delayDate" type="datetime" placeholder="Please pick a date" style="width: 230px;" />
+          <el-date-picker v-model="temp.delayDate" type="datetime" value-format="yyyy-MM-dd HH:mm" placeholder="Please pick a date" style="width: 230px;" />
         </el-form-item>
       </el-form>
       <div style="margin-left: 50px" class="dialog-footer">
@@ -164,7 +159,7 @@
 </template>
 <script>
 import { fetchAnnouncementList, delayMeeting, meetingPlace, deleteAnnouncement } from '@/api/announcement'
-import { parseTime } from '@/utils'// 导出
+import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination'
 
 // 不变化的业务字典数据，可以定义为全局变量,否则应该放在data里
@@ -204,6 +199,7 @@ export default {
       multipleSelectionFlag: false,
       multiDeleteVisible: false,
       multipleSelection: [],
+      //      dialogStatus: '',
 
       ss: '',
       readonly: true,
@@ -293,7 +289,7 @@ export default {
       },
 
       rules: {
-        delayDate: [{ type: 'date', required: true, message: 'date is required', trigger: 'change' }]
+        delayDate: [{ type: 'string', required: true, message: 'date is required', trigger: 'change' }]
       }
 
     }
@@ -421,7 +417,8 @@ export default {
     // 延期
     handleUpdate(row) {
       this.temp = Object.assign({}, row) // copy obj
-      this.dialogFormVisible = true// 开启弹窗
+      //      this.dialogStatus = 'delay'
+      this.dialogFormVisible = true // 开启弹窗
       this.$nextTick(() => {
         this.$refs['dataForm'].clearValidate()
       })
@@ -430,19 +427,20 @@ export default {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
           const tempData = Object.assign({}, this.temp)
-
+          tempData.meetingStatusid = 3
           delayMeeting(tempData).then(() => { // updateMeeting定义在api/meeting.js和moke/meeting.js,后在本页import进来
-            for (const v of this.pageData) {
-              if (v.id === this.temp.id) {
-                const index = this.pageData.indexOf(v)
-                this.temp.meetingDate = this.temp.delayDate
-
-                this.temp.meetingStatus = this.meetingStatus[2]
-                this.pageData.splice(index, 1, this.temp)
-
-                break
-              }
-            }
+            //            for (const v of this.pageData) {
+            //              if (v.id === this.temp.id) {
+            //                const index = this.pageData.indexOf(v)
+            //                this.temp.meetingDate = this.temp.delayDate
+            //
+            //                this.temp.meetingStatus = this.meetingStatus[2]
+            //                this.pageData.splice(index, 1, this.temp)
+            //
+            //                break
+            //              }
+            //            }
+            this.getList()
             this.dialogFormVisible = false // 关闭弹窗
             this.$notify({
               title: '成功',
@@ -460,16 +458,24 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        let index = -1
-        this.pageData.forEach((news, idx) => {
-          if (news.id === row.id) { index = idx }
-        })
-        //          console.log(this.pageData,index)
-        this.pageData[index].meetingStatus = this.meetingStatus[3]
-
-        this.$message({
-          type: 'success',
-          message: '已取消!'
+        //        let index = -1
+        //        this.pageData.forEach((news, idx) => {
+        //          if (news.id === row.id) { index = idx }
+        //        })
+        //        //          console.log(this.pageData,index)
+        //        this.pageData[index].meetingStatus = this.meetingStatus[3]
+        this.temp = Object.assign({}, row)
+        const tempData = Object.assign({}, this.temp)
+        //        cancelMeeting({ id: row.id });
+        tempData.meetingStatusid = 4
+        tempData.delayDate = tempData.meetingDate
+        console.log(tempData)
+        delayMeeting(tempData).then(() => {
+          this.getList()
+          this.$message({
+            type: 'success',
+            message: '已成功取消会议!'
+          })
         })
       }).catch(() => {
         this.$message({
@@ -506,65 +512,66 @@ export default {
         self.getFashionList(1, 1, 5)
       })
     },
+    //    popDelete() {
+    //      this.$confirm('是否要进行该批量操作?', '提示', {
+    //        confirmButtonText: '确定',
+    //        cancelButtonText: '取消',
+    //        type: 'warning'
+    //      }).then(() => {
+    //        const ids = []
+    //        for (let i = 0; i < this.multipleSelection.length; i++) {
+    //          ids.push(this.multipleSelection[i].id)
+    //        }
+    //        this.batchDelete(ids) // 批量删除
+    //      })
+    //    },
+    // 顶部批量删除按钮
     popDelete() {
-      this.$confirm('是否要进行该批量操作?', '提示', {
+      this.$confirm('是否要批量删除所选通知会议数据?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
         const ids = []
         for (let i = 0; i < this.multipleSelection.length; i++) {
+          // 数组ids，获取所选取的用户数据的id [1,2,3] 删除id为1,2,3的数据
           ids.push(this.multipleSelection[i].id)
         }
-        this.batchDelete(ids) // 批量删除
+        // ids:数组（所选表格项的id值数组）
+        for (let i = 0; i < ids.length; i++) { // 循环所选中的表格项
+          deleteAnnouncement({ id: ids[i] }).then(response => {
+            this.getList() // 删除完成后更新页面显示
+          })
+        }
+        this.getList() // 删除完成后更新页面显示
+        this.$message({
+          type: 'success',
+          message: '批量删除成功!'
+        })
       })
     },
     // 批量删除方法
-    batchDelete(ids) {
-      // ids:数组（所选表格项的id值数组）
-      for (let i = 0; i < ids.length; i++) { // 循环所选中的表格项
-        this.pageData.forEach((user, idx) => { // 循环此页码面的表格数据
-          if (user.id === ids[i]) { // 若表格数据id与选中的id一致
-            this.pageData.splice(idx, 1) // 删除要删除的数据
-          }
-        })
-      }
-      this.$message({
-        type: 'success',
-        message: '删除成功!'
-      })
-    },
-
-    // 导出
-    //    handleDownload() {
-    //      this.downloadLoading = true
-    //      import('@/vendor/Export2Excel').then(excel => {
-    //        const tHeader = ['timestamp', 'title', 'type', 'importance', 'status']
-    //        const filterVal = ['timestamp', 'title', 'type', 'importance', 'status']
-    //        const data = this.formatJson(filterVal, this.list)
-    //        excel.export_json_to_excel({
-    //          header: tHeader,
-    //          data,
-    //          filename: 'table-list'
+    //    batchDelete(ids) {
+    //      // ids:数组（所选表格项的id值数组）
+    //      for (let i = 0; i < ids.length; i++) { // 循环所选中的表格项
+    //        this.pageData.forEach((user, idx) => { // 循环此页码面的表格数据
+    //          if (user.id === ids[i]) { // 若表格数据id与选中的id一致
+    //            this.pageData.splice(idx, 1) // 删除要删除的数据
+    //          }
     //        })
-    //        this.downloadLoading = false
+    //      }
+    //      this.$message({
+    //        type: 'success',
+    //        message: '删除成功!'
     //      })
     //    },
-    //    formatJson(filterVal, jsonData) {
-    //      return jsonData.map(v => filterVal.map(j => {
-    //        if (j === 'timestamp') {
-    //          return parseTime(v[j])
-    //        } else {
-    //          return v[j]
-    //        }
-    //      }))
-    //    }
+
     // 导出按钮的逻辑
     handleDownload() {
       this.downloadLoading = true
       import('@/vendor/Export2Excel').then(excel => {
         const tHeader = ['编号', '会议通知ID', '会议主题', '招开部门', '开会时间', '会议地点', '会议状态']
-        const filterVal = ['id', 'meetingID', 'meetingTheme', 'department', 'meetingDate', 'meetingPosition', 'meetingStatus']
+        const filterVal = ['id', 'meetingID', 'meetingTheme', 'department', 'meetingDate', 'meetingPosition', 'announcementMeetingStatus']
         const data = this.formatJson(filterVal, this.pageData)
 
         excel.export_json_to_excel({
@@ -578,13 +585,11 @@ export default {
     // 导出时的时间及职位的数据转换
     formatJson(filterVal, jsonData) {
       return jsonData.map(v => filterVal.map(j => {
-        if (j === 'meetingStatus') {
+        if (j === 'announcementMeetingStatus') {
           //          console.log(v[j])
-          return v[j].statusName
+          return v[j].meetingStatus
         } else if (j === 'meetingDate') {
           return parseTime(v[j])
-        } else if (j === 'meetingPosition') {
-          return v[j].positionName
         } else {
           return v[j]
         }

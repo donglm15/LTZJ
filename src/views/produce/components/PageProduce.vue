@@ -1,21 +1,18 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-input v-model="listQuery.NameProduct" :placeholder="$t('table.NameProduct')" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
-      <el-select v-model="listQuery.importance" :placeholder="$t('table.importance')" clearable style="width: 130px" class="filter-item">
-        <el-option v-for="item in importanceOptions" :key="item" :label="item" :value="item" />
+      <el-input v-model="listQuery.produce_name" :placeholder="$t('table.produce_name')" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
+      <el-select v-model="listQuery.produce_importance" :placeholder="$t('table.produce_importance')" clearable style="width: 130px" class="filter-item">
+        <el-option v-for="(item,i) in importanceOptions" :key="i" :label="item" :value="item" />
       </el-select>
-      <el-select v-model="listQuery.type" :placeholder="$t('table.type')" clearable class="filter-item" style="width: 130px">
+      <el-select v-model="listQuery.produce_type" :placeholder="$t('table.produce_type')" clearable class="filter-item" style="width: 130px">
         <el-option v-for="item in calendarTypeOptions" :key="item.key" :label="item.display_name+'('+item.key+')'" :value="item.key" />
       </el-select>
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
         {{ $t('table.search') }}
       </el-button>
       <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
-        {{ $t('table.add') }}
-      </el-button>
-      <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">
-        {{ $t('table.export') }}
+        创建
       </el-button>
     </div>
 
@@ -30,46 +27,46 @@
       @sort-change="sortChange"
     >
       //序号
-      <el-table-column :label="$t('table.id')" prop="id" sortable="custom" align="center" width="80">
+      <el-table-column :label="$t('table.produce_id')" prop="produce_id" sortable="custom" align="center" width="80">
         <template slot-scope="scope">
-          <span>{{ scope.row.id }}</span>
+          <span>{{ scope.row.produce_id }}</span>
         </template>
       </el-table-column>
       //时间
-      <el-table-column :label="$t('table.date')" prop="date" sortable="custom" width="150px" align="center">
+      <el-table-column :label="$t('table.produce_datatime')" prop="produce_datatime" sortable="custom" width="150px" align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.datetime | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
+          <span>{{ scope.row.produce_datatime | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
         </template>
       </el-table-column>
       //产品名称
-      <el-table-column :label="$t('table.NameProduct')" min-width="150px">
+      <el-table-column :label="$t('table.produce_name')" min-width="150px">
         <template slot-scope="{row}">
-          <span class="link-type" @click="handleUpdate(row)">{{ row.NameProduct }}</span>
-          <el-tag>{{ row.type | typeFilter }}</el-tag>
+          <span class="link-type" @click="handleUpdate(row)">{{ row.produce_name }}</span>
+          <el-tag>{{ row.produce_type | typeFilter }}</el-tag>
         </template>
       </el-table-column>
       //项目组名称
-      <el-table-column :label="$t('table.TeamProduct')" width="80px" align="center">
+      <el-table-column :label="$t('table.produce_team_name')" width="80px" align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.TeamProduct }}</span>
+          <span>{{ scope.row.produce_team_name }}</span>
         </template>
       </el-table-column>
       //重要性
-      <el-table-column :label="$t('table.importance')" sortable class-name="status-col" width="100px">
+      <el-table-column :label="$t('table.produce_importance')" sortable class-name="status-col" width="120px">
         <template slot-scope="scope">
-          <svg-icon v-for="n in +scope.row.importance" :key="n" icon-class="star" class="meta-item__icon" />
+          <svg-icon v-for="n in +scope.row.produce_importance" :key="n" icon-class="star" class="meta-item__icon" />
         </template>
       </el-table-column>
-      //编辑、发布、草稿、删除
-      <el-table-column :label="$t('table.actions')" align="center" width="260" class-name="small-padding fixed-width">
+      //详情、编辑、删除
+      <el-table-column :label="$t('table.actions')" align="center" width="350" class-name="small-padding fixed-width">
         <template slot-scope="{row}">
-          <el-button type="primary" prop="id" size="small" @click="detailsProduct(row)">
+          <el-button type="primary" prop="produce_id" size="small" @click="detailsProduct(row)">
             {{ $t('table.detailsproduct') }}
           </el-button>
           <el-button type="primary" size="small" @click="handleUpdate(row)">
             {{ $t('table.edit') }}
           </el-button>
-          <el-button size="small" type="danger" @click="delNews(row,'list')">
+          <el-button size="small" type="danger" @click="delProduce(row,'list')">
             {{ $t('table.delete') }}
           </el-button>
         </template>
@@ -79,20 +76,20 @@
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
 
     <el-dialog :name-product="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
-      <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
-        <el-form-item :label="$t('table.type')" prop="type">
-          <el-select v-model="temp.type" class="filter-item" placeholder="Please select">
+      <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="100px" style="width: 400px; margin-left:60px;">
+        <el-form-item :label="$t('table.produce_type')" prop="produce_type">
+          <el-select v-model="temp.produce_type" class="filter-item" placeholder="Please select">
             <el-option v-for="item in calendarTypeOptions" :key="item.key" :label="item.display_name" :value="item.key" />
           </el-select>
         </el-form-item>
-        <el-form-item :label="$t('table.date')" prop="datetime">
-          <el-date-picker v-model="temp.datetime" type="datetime" placeholder="Please pick a date" />
+        <el-form-item :label="$t('table.produce_datatime')" prop="produce_datatime">
+          <el-date-picker v-model="temp.produce_datatime" type="datetime" value-format="yyyy-MM-dd HH:mm:ss" placeholder="Please pick a date" />
         </el-form-item>
-        <el-form-item :label="$t('table.NameProduct')" prop="NameProduct">
-          <el-input v-model="temp.NameProduct" />
+        <el-form-item :label="$t('table.produce_name')" prop="produce_name">
+          <el-input v-model="temp.produce_name" />
         </el-form-item>
-        <el-form-item :label="$t('table.importance')">
-          <el-rate v-model="temp.importance" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :max="5" style="margin-top:8px;" />
+        <el-form-item :label="$t('table.produce_importance')">
+          <el-rate v-model="temp.produce_importance" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :max="5" style="margin-top:8px;" />
         </el-form-item>
         <el-form-item :label="$t('table.remark')">
           <el-input v-model="temp.remark" :autosize="{ minRows: 2, maxRows: 4}" type="textarea" placeholder="Please input" />
@@ -121,7 +118,7 @@
 </template>
 
 <script>
-import { fetchList, fetchPv, createArticle, updateArticle } from '@/api/PageProduce'
+import { fetchPageProduceList, deleteNoticeOne, insertPageProduceOne, updatePageProduceOne } from '@/api/PageProduce'
 import waves from '@/directive/waves' // waves directive
 import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
@@ -152,8 +149,8 @@ export default {
       }
       return statusMap[status]
     },
-    typeFilter(type) {
-      return calendarTypeKeyValue[type]
+    typeFilter(produce_type) {
+      return calendarTypeKeyValue[produce_type]
     }
   },
   data() {
@@ -165,9 +162,9 @@ export default {
       listQuery: {
         page: 1,
         limit: 20,
-        importance: undefined,
-        NameProduct: undefined,
-        type: undefined,
+        produce_importance: undefined,
+        produce_name: undefined,
+        produce_type: undefined,
         sort: '+id'
       },
       importanceOptions: [1, 2, 3, 4, 5],
@@ -176,12 +173,12 @@ export default {
       statusOptions: ['published', 'draft', 'deleted'],
       showReviewer: false,
       temp: {
-        id: undefined,
-        importance: 1,
+        produce_id: '',
+        produce_importance: 1,
         remark: '',
-        datetime: new Date(),
-        NameProduct: '',
-        type: '',
+        produce_datatime: '',
+        produce_name: '',
+        produce_type: '',
         status: 'published'
       },
       dialogFormVisible: false,
@@ -193,9 +190,9 @@ export default {
       dialogPvVisible: false,
       pvData: [],
       rules: {
-        type: [{ required: true, message: 'type is required', trigger: 'change' }],
-        datetime: [{ type: 'date', required: true, message: 'datetime is required', trigger: 'change' }],
-        NameProduct: [{ required: true, message: 'NameProduct is required', trigger: 'blur' }]
+        produce_type: [{ required: true, message: 'produce_type is required', trigger: 'change' }],
+        produce_datatime: [{ required: true, message: 'produce_datatime is required', trigger: 'change' }],
+        produce_name: [{ required: true, message: 'produce_name is required', trigger: 'blur' }]
       },
       downloadLoading: false
     }
@@ -204,7 +201,7 @@ export default {
     this.getList()
   },
   methods: {
-    delNews(row) {
+    delProduce(row) {
       this.$confirm('是否删除此产品?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -212,9 +209,8 @@ export default {
       }).then(() => {
         let index = -1
         this.list.forEach((list, idx) => {
-          if (list.id == row.id) { index = idx }})//eslint-disable-line
+          if (list.produce_id == row.produce_id) { index = idx }})//eslint-disable-line
         this.list.splice(index, 1)
-
         this.$message({
           type: 'success',
           message: '删除成功!'
@@ -226,9 +222,14 @@ export default {
         })
       })
     },
+
+    handleFilter() {
+      this.listQuery.page = 1
+      this.getList()
+    },
     getList() {
       this.listLoading = true
-      fetchList(this.listQuery).then(response => {
+      fetchPageProduceList(this.listQuery).then(response => {
         this.list = response.data.items
         this.total = response.data.total
 
@@ -238,10 +239,7 @@ export default {
         }, 1.5 * 1000)
       })
     },
-    handleFilter() {
-      this.listQuery.page = 1
-      this.getList()
-    },
+
     handleModifyStatus(row, status) {
       this.$message({
         message: '操作成功',
@@ -251,7 +249,7 @@ export default {
     },
     sortChange(data) {
       const { prop, order } = data
-      if (prop === 'id') {
+      if (prop === 'produce_id') {
         this.sortByID(order)
       }
     },
@@ -265,13 +263,13 @@ export default {
     },
     resetTemp() {
       this.temp = {
-        id: undefined,
-        importance: 1,
+        produce_id: '',
+        produce_importance: 1,
         remark: '',
-        datetime: new Date(),
-        NameProduct: '',
+        produce_datatime: '',
+        produce_name: '',
         status: 'published',
-        type: ''
+        produce_type: ''
       }
     },
     handleCreate() {
@@ -285,13 +283,11 @@ export default {
     createData() {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
-          this.temp.id = parseInt(Math.random() * 100) + 1024 // mock a id
-          this.temp.TeamProduct = 'vue-element-admin'
-          createArticle(this.temp).then(() => {
-            this.list.unshift(this.temp)
+          insertPageProduceOne(this.temp).then(() => {
+            this.fetchPageProduceList()
             this.dialogFormVisible = false
             this.$notify({
-              NameProduct: '成功',
+              produce_name: '成功',
               message: '创建成功',
               type: 'success',
               duration: 2000
@@ -305,7 +301,6 @@ export default {
     },
     handleUpdate(row) {
       this.temp = Object.assign({}, row) // copy obj
-      this.temp.datetime = new Date(this.temp.datetime)
       this.dialogStatus = 'update'
       this.dialogFormVisible = true
       this.$nextTick(() => {
@@ -316,10 +311,10 @@ export default {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
           const tempData = Object.assign({}, this.temp)
-          tempData.datetime = +new Date(tempData.datetime) // change Thu Nov 30 2017 16:41:05 GMT+0800 (CST) to 1512031311464
-          updateArticle(tempData).then(() => {
+          console.log(tempData)
+          updatePageProduceOne(tempData).then(() => {
             for (const v of this.list) {
-              if (v.id === this.temp.id) {
+              if (v.produce_id === this.temp.produce_id) {
                 const index = this.list.indexOf(v)
                 this.list.splice(index, 1, this.temp)
                 break
@@ -327,7 +322,7 @@ export default {
             }
             this.dialogFormVisible = false
             this.$notify({
-              NameProduct: '成功',
+              produce_name: '成功',
               message: '更新成功',
               type: 'success',
               duration: 2000
@@ -338,7 +333,7 @@ export default {
     },
     handleDelete(row) {
       this.$notify({
-        NameProduct: '成功',
+        produce_name: '成功',
         message: '删除成功',
         type: 'success',
         duration: 2000
@@ -347,7 +342,7 @@ export default {
       this.list.splice(index, 1)
     },
     handleFetchPv(pv) {
-      fetchPv(pv).then(response => {
+      deleteNoticeOne(pv).then(response => {
         this.pvData = response.data.pvData
         this.dialogPvVisible = true
       })
@@ -355,8 +350,8 @@ export default {
     handleDownload() {
       this.downloadLoading = true
         import('@/vendor/Export2Excel').then(excel => {
-          const tHeader = ['datetime', 'NameProduct', 'type', 'importance', 'status']
-          const filterVal = ['datetime', 'NameProduct', 'type', 'importance', 'status']
+          const tHeader = ['produce_datatime', 'produce_name', 'produce_type', 'produce_importance', 'status']
+          const filterVal = ['produce_datatime', 'produce_name', 'produce_type', 'produce_importance', 'status']
           const data = this.formatJson(filterVal, this.list)
           excel.export_json_to_excel({
             header: tHeader,
@@ -368,7 +363,7 @@ export default {
     },
     formatJson(filterVal, jsonData) {
       return jsonData.map(v => filterVal.map(j => {
-        if (j == 'datetime') {//eslint-disable-line
+        if (j == 'produce_datatime') {//eslint-disable-line
           return parseTime(v[j])
         } else {
           return v[j]

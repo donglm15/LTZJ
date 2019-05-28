@@ -1,41 +1,38 @@
 import request from '@/utils/request'
 
-export function fetchList(query) {
+export function fetchPageProduceList(query) {
   return request({
-    url: '/PageProduce/list',
+    url: '/admin/pageProduce/list',
     method: 'get',
     params: query
   })
 }
 
-export function fetchArticle(id) {
+export function deleteNoticeOne(id) {
   return request({
-    url: '/PageProduce/detail',
-    method: 'get',
-    params: { id }
+    url: `/admin/pageProduce/delete?produce_id=${id}`,
+    method: 'get'
   })
 }
-
-export function fetchPv(pv) {
+export function insertPageProduceOne(query) {
   return request({
-    url: '/PageProduce/pv',
-    method: 'get',
-    params: { pv }
-  })
-}
-
-export function createArticle(data) {
-  return request({
-    url: '/PageProduce/create',
+    url: '/admin/pageProduce/insert',
     method: 'post',
-    data
+    data: query,
+    headers: { 'content-Type': 'application/json' }
   })
 }
-
-export function updateArticle(data) {
+export function updatePageProduceOne(query) {
   return request({
-    url: '/PageProduce/update',
+    url: '/admin/pageProduce/update',
     method: 'post',
-    data
+    data: query,
+    headers: { 'content-Type': 'application/json' }
   })
 }
+// export function getOnePageProduce(id) {
+//   return request({
+//     url: `/admin/pageProduce/getOnePageProduce?produce_id=${id}`,
+//     method: 'get'
+//   })
+// }
