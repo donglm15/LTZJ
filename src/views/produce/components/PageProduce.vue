@@ -118,7 +118,7 @@
 </template>
 
 <script>
-import { fetchPageProduceList, deleteNoticeOne, insertPageProduceOne, updatePageProduceOne } from '@/api/pageProduce'
+import { fetchPageProduceList, deleteNoticeOne, insertPageProduceOne, updatePageProduceOne } from '@/api/PageProduce'
 import waves from '@/directive/waves' // waves directive
 import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
