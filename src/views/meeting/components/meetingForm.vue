@@ -43,9 +43,10 @@
                     </td>
                     <td>
                       <el-form-item label="" prop="meetingType" style="margin-bottom: 0;">
-                        <el-select v-model="form.meetingType" value-key="id" placeholder="请选择" style="width: 100%;">
-                          <el-option v-for="idx in meetingType" :key="idx.id" :label="idx.typeName" :value="idx" />
-                        </el-select>
+                        <!--<el-select v-model="form.meetingType" value-key="id" placeholder="请选择" style="width: 100%;">-->
+                        <!--<el-option v-for="idx in meetingType" :key="idx.id" :label="idx.typeName" :value="idx" />-->
+                        <!--</el-select>-->
+                        <el-input v-model="form.meetingType" placeholder="保存时自动生成" />
                       </el-form-item>
                     </td>
                     <td>
@@ -55,9 +56,14 @@
                       </el-form-item>
                     </td>
                     <td>
+                      <!--<el-form-item label="" prop="meetingPosition" required style="margin-bottom: 0;">-->
+                      <!--<el-select v-model="form.meetingPosition" value-key="id" placeholder="请选择" style="width: 100%;">-->
+                      <!--<el-option v-for="p in meetingPosition" :key="p.id" :label="p.positionName" :value="p" />-->
+                      <!--</el-select>-->
+                      <!--</el-form-item>-->
                       <el-form-item label="" prop="meetingPosition" required style="margin-bottom: 0;">
-                        <el-select v-model="form.meetingPosition" value-key="id" placeholder="请选择" style="width: 100%;">
-                          <el-option v-for="p in meetingPosition" :key="p.id" :label="p.positionName" :value="p" />
+                        <el-select v-model="form.meetingPosition" placeholder="请选择" style="width: 100%;">
+                          <el-option v-for="(p,index) in meetingPosition" :key="index" :label="p" :value="p" />
                         </el-select>
                       </el-form-item>
                     </td>
@@ -89,14 +95,14 @@
                     <td>
                       <!--会议状态-->
                       <!--<span class="c-red" style="visibility: hidden;">*</span>-->
-                      <el-form-item :label="$t('Announcement.meetingStatus')" required style="margin-bottom: 0;">
+                      <el-form-item :label="$t('Announcement.meetingStatus')" style="margin-bottom: 0;">
                         <span class="c-red">*</span>
                       </el-form-item>
                     </td>
                     <td>
-                      <el-form-item label="" prop="meetingStatus" required style="margin-bottom: 0;">
-                        <el-select v-model="form.meetingStatus" value-key="id" placeholder="请选择" style="width: 100%;">
-                          <el-option v-for="s in meetingStatus" :key="s.id" :label="s.statusName" :value="s" />
+                      <el-form-item label="" prop="announcementMeetingStatus.id" required style="margin-bottom: 0;">
+                        <el-select v-model="form.announcementMeetingStatus.id" value-key="id" placeholder="请选择" style="width: 100%;">
+                          <el-option v-for="s in announcementMeetingStatus" :key="s.id" :label="s.statusName" :value="s.id" />
                         </el-select>
                       </el-form-item>
                     </td>
@@ -107,11 +113,11 @@
                       <!--参会人员-->
                       <!--<span class="c-red" >*</span>-->
                       <el-form-item :label="$t('Announcement.meetingPeople')" style="margin-bottom: 0;">
-                        <span class="c-red">*</span>
+                        <!--<span class="c-red">*</span>-->
                       </el-form-item>
                     </td>
                     <td colspan="5">
-                      <el-form-item label="" prop="meetingPeople" required style="margin-bottom: 0;">
+                      <el-form-item label="" prop="meetingPeople" style="margin-bottom: 0;">
                         <el-input v-model="form.meetingPeople" type="textarea" />
                       </el-form-item>
                     </td>
@@ -237,23 +243,23 @@
   </div>
 </template>
 <script>
-import { createAnnouncement } from '@/api/announcement'
-const meetingType = [
-  { id: 1, typeName: '工作汇报' },
-  { id: 2, typeName: '月度汇报' },
-  { id: 3, typeName: '季度汇报' },
-  { id: 4, typeName: '半年度汇报' },
-  { id: 5, typeName: '年终汇报' }
-]
-const meetingPosition = [
-  { id: 1, positionName: '7楼会议室' },
-  { id: 2, positionName: '8楼会议室' },
-  { id: 3, positionName: '9楼会议室' },
-  { id: 4, positionName: '10楼会议室' },
-  { id: 5, positionName: '11楼会议室' },
-  { id: 6, positionName: '15楼会议室' }
-]
-const meetingStatus = [
+import { createAnnouncement, meetingPlace } from '@/api/announcement'
+// const meetingType = [
+//  { id: 1, typeName: '工作汇报' },
+//  { id: 2, typeName: '月度汇报' },
+//  { id: 3, typeName: '季度汇报' },
+//  { id: 4, typeName: '半年度汇报' },
+//  { id: 5, typeName: '年终汇报' }
+// ]
+// const meetingPosition = [
+//  { id: 1, positionName: '7楼会议室' },
+//  { id: 2, positionName: '8楼会议室' },
+//  { id: 3, positionName: '9楼会议室' },
+//  { id: 4, positionName: '10楼会议室' },
+//  { id: 5, positionName: '11楼会议室' },
+//  { id: 6, positionName: '15楼会议室' }
+// ]
+const announcementMeetingStatus = [
   { id: 1, statusName: '草稿' },
   { id: 2, statusName: '已通知' },
   { id: 3, statusName: '延期' },
@@ -263,17 +269,17 @@ const meetingStatus = [
 export default {
   data() {
     return {
-      meetingType,
-      meetingPosition,
-      meetingStatus,
+      //      meetingType,
+      meetingPosition: undefined,
+      announcementMeetingStatus,
       checked: false,
       form: {
         meetingID: '',
-        meetingType: {},
-        meetingPosition: {},
+        meetingType: '',
+        meetingPosition: undefined,
         user: '',
         department: '',
-        meetingStatus: {},
+        announcementMeetingStatus: { id: 1 },
         meetingPeople: '',
         meetingDate: '',
         dateLong: '',
@@ -305,7 +311,9 @@ export default {
       //        }
     }
   },
-
+  created() {
+    this.getPlace()
+  },
   methods: {
     backForm(row) {
       this.$router.go(-1)
@@ -323,17 +331,26 @@ export default {
     resetForm(formName) {
       this.$refs[formName].resetFields()
     },
-
+    // 获取会议地址
+    getPlace() {
+      meetingPlace().then(response => {
+        console.log(response.data.items)
+        this.meetingPosition = response.data.items
+        this.total = response.data.total
+      })
+    },
     //
     createData() {
+      console.log(this.form.meetingDate)
       this.$refs['formName'].validate((valid) => {
         if (valid) {
-          this.form.id = parseInt(Math.random() * 100) + 1024 // mock a id
+          //          this.form.id = parseInt(Math.random() * 100) + 1024 // mock a id
           //              this.temp.author = 'vue-element-admin'
+          console.log(this.form)
           createAnnouncement(this.form).then(() => {
             this.$router.push({
-              path: '/meeting/announcement',
-              query: this.form
+              path: '/meeting/announcement'
+              //              query: this.form
             })
             this.$notify({
               title: '成功',
