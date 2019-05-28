@@ -14,17 +14,9 @@ export function deleteNoticeOne(id) {
     method: 'get'
   })
 }
-
-// export function getOnePageProduce(id) {
-//   return request({
-//     url: `/admin/pageProduce/getOnePageProduce?produce_id=${id}`,
-//     method: 'get'
-//   })
-// }
-
 export function insertPageProduceOne(query) {
   return request({
-    url: `/admin/pageProduce/insert`,
+    url: '/admin/pageProduce/insert',
     method: 'post',
     data: query,
     headers: { 'content-Type': 'application/json' }
@@ -32,10 +24,15 @@ export function insertPageProduceOne(query) {
 }
 export function updatePageProduceOne(query) {
   return request({
-    url: `/admin/pageProduce/update`,
+    url: '/admin/pageProduce/update',
     method: 'post',
     data: query,
     headers: { 'content-Type': 'application/json' }
   })
 }
-
+// export function getOnePageProduce(id) {
+//   return request({
+//     url: `/admin/pageProduce/getOnePageProduce?produce_id=${id}`,
+//     method: 'get'
+//   })
+// }
