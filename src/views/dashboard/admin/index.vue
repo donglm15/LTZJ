@@ -7,6 +7,9 @@
     </el-carousel>
 
     <el-row :gutter="8">
+      <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 12}" :xl="{span: 12}" style="padding-left:150px;margin-top:40px;">
+        <todo-list />
+      </el-col>
       <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 12}" :xl="{span: 12}" style="margin-bottom:30px;" />
       <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 12}" :xl="{span: 12}" style="padding-right:8px;margin-bottom:30px;">
         <Timeline />
@@ -40,6 +43,7 @@ import PieChart from './components/PieChart'
 import Timeline from './components/Timeline.vue'
 import BaiMap from './components/baidu.vue'
 import MapChart from './components/mapChart.vue'
+import TodoList from './components/TodoList'
 
 const lineChartData = {
   newVisitis: {
@@ -66,7 +70,8 @@ export default {
     PieChart,
     Timeline,
     MapChart,
-    BaiMap
+    BaiMap,
+    TodoList
   },
   data() {
     return {
