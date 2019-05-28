@@ -29,7 +29,7 @@ export default {
     meetingTotal: '会议图表',
     activity: '活动管理',
     PageActivity: '活动列表',
-    market: '内部人力资源市场',
+    market: '人才管理',
     PageMarket: '岗位列表',
     PageDetail: '岗位详情',
     jobMap: '工作地点',

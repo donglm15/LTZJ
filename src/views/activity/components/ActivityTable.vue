@@ -13,12 +13,12 @@
 
     <div style="margin-top: 10px">
       <el-table v-loading="listLoading" :data="tableData" border style="width: 100%;text-align: center" @row-click="handleDetail">
-        <el-table-column prop="title" label="活动名称" />
-        <el-table-column prop="people" sortable label="活动人数" width="120" align="center" />
-        <el-table-column prop="startTime" sortable label="活动开始时间" width="150" align="center" />
-        <el-table-column prop="endTime" sortable label="活动结束时间" width="150" align="center" />
+        <el-table-column prop="title" label="活动名称" align="center" />
+        <el-table-column prop="people" sortable label="活动人数" width="140" align="center" />
+        <el-table-column prop="startTime" sortable label="活动开始时间" width="180" align="center" />
+        <el-table-column prop="endTime" sortable label="活动结束时间" width="200" align="center" />
 
-        <el-table-column prop="type" label="热度" width="80" align="center">
+        <el-table-column prop="type" label="热度" width="120" align="center">
           <!--<template slot-scope="scope">-->
           <!--<el-tag :type="scope.row.hot">{{scope.row.type}}</el-tag>-->
           <!--</template>-->
@@ -27,7 +27,7 @@
           </template>
         </el-table-column>
 
-        <el-table-column label="操作" width="160">
+        <el-table-column label="操作" width="200">
           <template slot-scope="scope">
             <el-button size="mini" type="primary" @click.stop="handleUpdate(scope.row)">{{ $t('table.edit') }}</el-button>
             <el-button type="danger" size="mini" @click.stop="delActivity(scope.row)"> {{ $t('table.delete') }}</el-button>
