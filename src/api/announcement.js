@@ -10,8 +10,8 @@ export function fetchAnnouncementList(query) {
 
 export function delayMeeting(data) {
   return request({
-    url: '/announcement/delay',
-    method: 'post',
+    url: '/admin/announcement/delay',
+    method: 'put',
     data
   })
 }
@@ -25,17 +25,17 @@ export function deleteAnnouncement(query) {
 // 取消
 export function cancelMeeting(data) {
   return request({
-    url: '/announcement/cancel',
-    method: 'post',
+    url: '/admin/announcement/delay/4',
+    method: 'put',
     data
   })
 }
 // 新建
-export function createAnnouncement(data) {
+export function createAnnouncement(query) {
   return request({
-    url: '/announcement/create',
+    url: '/admin/announcement/saveOne',
     method: 'post',
-    data
+    data: query
   })
 }
 // 会议室地点
