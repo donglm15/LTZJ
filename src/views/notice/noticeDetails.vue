@@ -1,7 +1,8 @@
 <template>
   <div class="app-container">
     <el-button type="primary" style="position: relative; left: 10px; top:10px " @click="backNotice">返回</el-button>
-    <div class="createPost-container">
+    <el-button type="primary" style="position: relative; left: 10px; top:10px " @click="downloadPdf()">下载</el-button>
+    <div id="pdfDom" class="createPost-container" :style="colorT">
       <div style="text-align: center; margin-top:25px">
         <h1>{{ this.temp.noticeTitle }}</h1>
       </div>
@@ -21,6 +22,8 @@ import { getOneNotice, updateNoticeOne } from '@/api/notice'
 export default {
   data() {
     return {
+      colorT: 'color: #fff',
+      htmlTitle: '',
       page: 0,
       temp: {
         noticeId: '',
@@ -46,6 +49,7 @@ export default {
           console.log('更新点击量')
         })
         this.temp = response.data
+        this.htmlTitle = this.temp.noticeTitle
       })
       this.showFlag = true
     } else {
@@ -69,6 +73,13 @@ export default {
         '<p>信息化部，王城，18601101111，wangc3@chinaunicom.cn；</p> ' +
         '<P>集成公司，唐三，18500668866，tangs5@chinaunicom.cn；（智慧门户）</P>' +
         '<p>集成公司，陈丹，18618291236，chend121@chinaunicom.cn；（云门户）</p>'
+    },
+    downloadPdf() {
+      this.colorT = 'color:#000'
+      this.getPdf()
+      setTimeout(() => {
+        this.colorT = 'color:#fff'
+      }, 1 * 500)
     }
   }
 
