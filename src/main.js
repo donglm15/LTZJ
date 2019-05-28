@@ -20,6 +20,9 @@ import './utils/error-log' // error log
 
 import * as filters from './filters' // global filters
 
+import exportToPdf from '@/utils/exportToPdf'
+Vue.use(exportToPdf)
+
 /**
  * If you don't want to use mock-server
  * you want to use mockjs for request interception
