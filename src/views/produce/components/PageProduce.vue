@@ -12,12 +12,8 @@
         {{ $t('table.search') }}
       </el-button>
       <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
-        <!--{{ $t('table.add') }}-->
         创建
       </el-button>
-      <!--<el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">-->
-      <!--{{ $t('table.export') }}-->
-      <!--</el-button>-->
     </div>
 
     <el-table
@@ -62,7 +58,7 @@
         </template>
       </el-table-column>
       //详情、编辑、删除
-      <el-table-column :label="$t('table.actions')" align="center" width="340" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('table.actions')" align="center" width="350" class-name="small-padding fixed-width">
         <template slot-scope="{row}">
           <el-button type="primary" prop="produce_id" size="small" @click="detailsProduct(row)">
             {{ $t('table.detailsproduct') }}
