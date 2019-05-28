@@ -34,7 +34,7 @@
                     </td>
                     <td>
                       <el-form-item label="" required prop="meetingID" style="margin-bottom: 0;color: #333;">
-                        <el-input v-model="form.meetingID" required placeholder="保存时自动生成" />
+                        <el-input v-model="form.meetingID" required placeholder="可写日期如：201905281000" />
                       </el-form-item>
                     </td>
                     <td>
@@ -46,7 +46,7 @@
                         <!--<el-select v-model="form.meetingType" value-key="id" placeholder="请选择" style="width: 100%;">-->
                         <!--<el-option v-for="idx in meetingType" :key="idx.id" :label="idx.typeName" :value="idx" />-->
                         <!--</el-select>-->
-                        <el-input v-model="form.meetingType" placeholder="保存时自动生成" />
+                        <el-input v-model="form.meetingType" placeholder="请输入如：年会" />
                       </el-form-item>
                     </td>
                     <td>

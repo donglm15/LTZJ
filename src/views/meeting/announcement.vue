@@ -85,9 +85,9 @@
     <el-table v-loading="listLoading" :data="pageData" border style="width: 100%;text-align: center" @selection-change="handleSelectionChange">
       <el-table-column type="selection" align="center" width="50" />
       <el-table-column prop="id" sortable :label="$t('meeting.id')" align="center" width="80" />
-      <el-table-column prop="meetingID" :label="$t('Announcement.meetingID')" align="center" width="100" />
+      <el-table-column prop="meetingID" :label="$t('Announcement.meetingID')" align="center" width="120" />
       <el-table-column prop="meetingTheme" :label="$t('Announcement.meetingTheme')" align="center" />
-      <el-table-column prop="department" :label="$t('Announcement.department')" align="center" width="110" />
+      <el-table-column prop="department" :label="$t('Announcement.department')" align="center" width="90" />
       <el-table-column prop="meetingDate" :label="$t('Announcement.meetingDate')" align="center" width="140">
         <template slot-scope="scope">
           <!--<span>{{ scope.row.meetingDate | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>-->
@@ -104,12 +104,12 @@
       <!--<el-tag :type="scope.row.meetingStatus.statusName | statusFilter">{{ scope.row.meetingStatus.statusName | typeFilter }}</el-tag>-->
       <!--</template>-->
       <!--</el-table-column>-->
-      <el-table-column prop="meetingPosition" :label="$t('Announcement.meetingPosition')" align="center" width="110">
+      <el-table-column prop="meetingPosition" :label="$t('Announcement.meetingPosition')" align="center" width="90">
         <!--<template slot-scope="scope">-->
         <!--{{ scope.row.meetingPosition.positionName }}-->
         <!--</template>-->
       </el-table-column>
-      <el-table-column prop="announcementMeetingStatus.meetingStatus" :label="$t('Announcement.meetingStatus')" align="center" width="100">
+      <el-table-column prop="announcementMeetingStatus.meetingStatus" :label="$t('Announcement.meetingStatus')" align="center" width="90">
         <template slot-scope="scope">
           <el-tag :type="scope.row.announcementMeetingStatus.meetingStatus| statusFilter">{{ scope.row.announcementMeetingStatus.meetingStatus }}</el-tag>
           <!--{{ scope.row.announcementMeetingStatus.meetingStatus}}-->
