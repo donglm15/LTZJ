@@ -20,23 +20,23 @@ export default {
   mounted() {
     this.chart = echarts.init(this.$refs.chart)
 
-    const region = ['南平市', '宁德市', '三明市', '福州市', '莆田市', '泉州市', '漳州市', '龙岩市', '厦门市']
-    function RandomNumBoth(Min, Max) {
-      const Range = Max - Min
-      const Rand = Math.random()
-      const num = Min + Math.round(Rand * Range)// 四舍五入
-      return num
-    }
-    function data() {
-      const d = []
-      for (let i = 0; i < 9; i++) {
-        d.push({
-          name: region[i],
-          value: RandomNumBoth(60, 500)
-        })
-      }
-      return d
-    }
+    //    const region = ['南平市', '宁德市', '三明市', '福州市', '莆田市', '泉州市', '漳州市', '龙岩市', '厦门市']
+    //    function RandomNumBoth(Min, Max) {
+    //      const Range = Max - Min
+    //      const Rand = Math.random()
+    //      const num = Min + Math.round(Rand * Range)// 四舍五入
+    //      return num
+    //    }
+    //    function data() {
+    //      const d = []
+    //      for (let i = 0; i < 9; i++) {
+    //        d.push({
+    //          name: region[i],
+    //          value: RandomNumBoth(60, 500)
+    //        })
+    //      }
+    //      return d
+    //    }
     const option = {
       legend: { // 地图上面的点
         orient: 'vertical',
@@ -124,7 +124,15 @@ export default {
               }
             }
           },
-          data: data()
+          data: [{ name: '福州市', value: 472 },
+            { name: '泉州市', value: 412 },
+            { name: '厦门市', value: 366 },
+            { name: '漳州市', value: 270 },
+            { name: '莆田市', value: 258 },
+            { name: '南平市', value: 227 },
+            { name: '龙岩市', value: 157 },
+            { name: '宁德市', value: 213 },
+            { name: '三明市', value: 145 }]
         }
       ]
     }
