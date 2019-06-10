@@ -29,7 +29,7 @@ export default {
     meetingTotal: '会议图表',
     activity: '活动管理',
     PageActivity: '活动列表',
-    market: '内部人力资源市场',
+    market: '人才管理',
     PageMarket: '岗位列表',
     PageDetail: '岗位详情',
     jobMap: '工作地点',
@@ -217,9 +217,13 @@ export default {
     importantly: '优先级',
     datetime: '发布时间',
     detailsproduct: '产品详情',
-    TeamProduct: '项目组',
-    NameProduct: '产品名称',
-    ThingProduce: '产品详情'
+    produce_team_name: '项目组',
+    produce_name: '产品名称',
+    produce_details: '产品详情',
+    produce_id: '序号',
+    produce_datatime: '发布时间',
+    produce_type: '产品类型',
+    produce_importance: '产品重要性'
   },
   example: {
     warning: '创建和编辑页面是不能被 keep-alive 缓存的，因为keep-alive 的 include 目前不支持根据路由来缓存，所以目前都是基于 component name 来进行缓存的。如果你想类似的实现缓存效果，可以使用 localStorage 等浏览器缓存方案。或者不要使用 keep-alive 的 include，直接缓存所有页面。详情见'

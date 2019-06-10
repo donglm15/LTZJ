@@ -274,7 +274,7 @@
         </el-form-item>
         <!--最后登录时间-->
         <el-form-item :label="$t('userManager.lastLoginTime')" prop="lastLoginTime">
-          <el-date-picker v-model="temp.lastLoginTime" type="datetime" placeholder="请选择日期和时间" />
+          <el-date-picker v-model="temp.lastLoginTime" value-format="yyyy-MM-dd HH:mm:ss" type="datetime" placeholder="请选择日期和时间" />
         </el-form-item>
         <!--重要性-->
         <!--<el-form-item :label="$t('table.importance')">-->
@@ -396,7 +396,7 @@
         },
         rules: {  //编辑对话框中的表单中使用的rules
           //表单验证，必填的项目
-          lastLoginTime: [{ type: 'date', required: true, message: '请选择日期和时间', trigger: 'change' }],
+          lastLoginTime: [{ type: 'string', required: true, message: '请选择日期和时间', trigger: 'change' }],
           account: [{ required: true, message: '请输入用户名', trigger: 'change' }],
           userName: [{ required: true, message: '请输入姓名', trigger: 'change' }],
           Organization: [{ required: true, message: '请输入组织机构', trigger: 'blur' }],
@@ -529,7 +529,8 @@
           position: {id:1,positionName:'组长'},  //职位(一个含有id,positionName的对象,默认选择“组长”)
           employeeNumber: '', //员工号
           phone: '', //电话
-          lastLoginTime: new Date(), //最后登录时间
+          lastLoginTime: '', //最后登录时间
+//          lastLoginTime: new Date(), //最后登录时间
         }
       },
       //点击添加按钮的逻辑
@@ -548,7 +549,7 @@
 //            this.temp.id = parseInt(Math.random() * 100) + 1024 // mock a id (随机生成一个id序号)
 //            this.temp.author = 'vue-element-admin'
             createArticle(this.temp).then(() => {
-              this.tableData.unshift(this.temp)  //将temp中的数据添加至tableData中
+//              this.tableData.unshift(this.temp)  //将temp中的数据添加至tableData中
               this.dialogFormVisible = false  //对话框消失
               this.listQuery.page=1;  //分页停留在第一页（为了显示新增的数据结果）
               this.listQuery.sort = '-id';

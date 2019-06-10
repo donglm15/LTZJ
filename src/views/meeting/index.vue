@@ -89,7 +89,7 @@
 </template>
 <script>
 import { fetchMeetingList, deleteMeeting, updateMeeting, createMeeting } from '@/api/meeting'
-// import { parseTime } from '@/utils'//导出
+// import { parseTime } from '@/utils'//
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
 
 // 不变化的业务字典数据，可以定义为全局变量,否则应该放在data里
