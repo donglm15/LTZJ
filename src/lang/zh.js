@@ -10,7 +10,7 @@ export default {
     PageProduce: '产品列表',
     ChartProduce: '产品图表',
     ThingProduce: '产品详情',
-    analysis: '经营分析',
+    analysis: '经营管理',
     DailyAnalysis: '经营日报',
     DailyMap: '产品发展趋势',
     IceAnalysis: '冰激凌产品分析',

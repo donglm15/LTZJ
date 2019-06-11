@@ -6,12 +6,12 @@
       </el-carousel-item>
     </el-carousel>
 
-    <el-row :gutter="8">
-      <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 12}" :xl="{span: 12}" style="padding-left:150px;margin-top:40px;">
+    <el-row :gutter="8" class="my-wrapper">
+      <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 12}" :xl="{span: 12}" style="padding-left:50px;margin-top:40px;">
         <todo-list />
       </el-col>
       <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 12}" :xl="{span: 12}" style="margin-bottom:30px;" />
-      <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 12}" :xl="{span: 12}" style="padding-right:8px;margin-bottom:30px;">
+      <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 12}" :xl="{span: 12}" style="padding-left:40px;margin-bottom:30px;">
         <Timeline />
       </el-col>
     </el-row>
@@ -109,6 +109,10 @@ export default {
     background: #fff;
     /*padding: 16px 16px 0;*/
     margin-bottom: 32px;
+  }
+  .my-wrapper{
+    margin: 20px 0;
+    background-color: rgba(255,255,255,0.2);
   }
 
 </style>
