@@ -27,32 +27,32 @@
       @sort-change="sortChange"
     >
       //序号
-      <el-table-column :label="$t('table.produce_id')" prop="produce_id" sortable="custom" align="center" width="80">
+      <el-table-column :label="$t('table.produce_id')" prop="produce_id" sortable="custom" align="center" width="100%">
         <template slot-scope="scope">
           <span>{{ scope.row.produce_id }}</span>
         </template>
       </el-table-column>
       //时间
-      <el-table-column :label="$t('table.produce_datatime')" prop="produce_datatime" sortable="custom" width="150px" align="center">
+      <el-table-column :label="$t('table.produce_datatime')" prop="produce_datatime" sortable="custom" width="220px" align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.produce_datatime | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
         </template>
       </el-table-column>
       //产品名称
-      <el-table-column :label="$t('table.produce_name')" min-width="150px">
+      <el-table-column :label="$t('table.produce_name')" min-width="150px" align="center">
         <template slot-scope="{row}">
           <span class="link-type" @click="handleUpdate(row)">{{ row.produce_name }}</span>
           <el-tag>{{ row.produce_type | typeFilter }}</el-tag>
         </template>
       </el-table-column>
       //项目组名称
-      <el-table-column :label="$t('table.produce_team_name')" width="80px" align="center">
+      <el-table-column :label="$t('table.produce_team_name')" width="180px" align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.produce_team_name }}</span>
         </template>
       </el-table-column>
       //重要性
-      <el-table-column :label="$t('table.produce_importance')" sortable class-name="status-col" width="120px">
+      <el-table-column :label="$t('table.produce_importance')" sortable class-name="status-col" width="160px">
         <template slot-scope="scope">
           <svg-icon v-for="n in +scope.row.produce_importance" :key="n" icon-class="star" class="meta-item__icon" />
         </template>
