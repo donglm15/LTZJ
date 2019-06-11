@@ -45,7 +45,7 @@
           <span>员工简介</span>
           <el-button style="float: right; padding: 3px 0" type="text">编辑</el-button>
         </div>
-        <p>无</p>
+        <p>暂无数据，待添加</p>
       </el-card>
     </el-row>
 
@@ -56,8 +56,9 @@
         <div slot="header" class="clearfix">
           <i class="el-icon-goods" />
           <span>业务专长</span>
+          <el-button style="float: right; padding: 3px 0" type="text">编辑</el-button>
         </div>
-        <p>无</p>
+        <p>暂无数据，待添加</p>
       </el-card>
     </el-row>
 
@@ -68,8 +69,9 @@
         <div slot="header" class="clearfix">
           <i class="el-icon-share" />
           <span>参加活动</span>
+          <el-button style="float: right; padding: 3px 0" type="text">编辑</el-button>
         </div>
-        <p>无</p>
+        <p>暂无数据，待添加</p>
       </el-card>
     </el-row>
 

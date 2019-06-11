@@ -26,14 +26,14 @@
           <span>{{ scope.row.date | parseTime('{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('table.title')" width="180px" align="center">
+      <el-table-column :label="$t('table.title')" width="200px" align="center">
         <template slot-scope="{row}">
-          <span class="link-type">{{ row.title }}</span>
+          <span class="link-type">{{ row.title }}</span><br>
           <el-tag>{{ row.memberType.typename }}</el-tag>
         </template>
       </el-table-column>
 
-      <el-table-column prop="content" :label="$t('table.content')" align="center">
+      <el-table-column :show-overflow-tooltip="true" prop="content" :label="$t('table.content')" align="center">
         <!--<span class="link-type">{{row.content | ellipsis}}</span>-->
       </el-table-column>
 
