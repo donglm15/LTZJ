@@ -4,8 +4,6 @@
     <list default="true" id="b9563030-ab17-419b-bb58-5a1745363960" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/LTZJ.iws" afterPath="$PROJECT_DIR$/LTZJ.iws" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/activity/components/ActivityTable.vue" afterPath="$PROJECT_DIR$/src/views/activity/components/ActivityTable.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/info/page.vue" afterPath="$PROJECT_DIR$/src/views/info/page.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/produce/components/PageProduce.vue" afterPath="$PROJECT_DIR$/src/views/produce/components/PageProduce.vue" />
     </list>
     <ignored path="$PROJECT_DIR$/node_modules/" />
     <ignored path="$PROJECT_DIR$/out/" />
@@ -38,11 +36,31 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PageProduce.vue" pinned="false" current-in-tab="true">
+      <file leaf-file-name="PageProduce.vue" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/views/produce/components/PageProduce.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="559">
-              <caret line="48" column="71" lean-forward="false" selection-start-line="48" selection-start-column="71" selection-end-line="48" selection-end-column="71" />
+            <state relative-caret-position="377">
+              <caret line="41" column="89" lean-forward="false" selection-start-line="41" selection-start-column="75" selection-end-line="41" selection-end-column="89" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="page.vue" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/views/activity/page.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-180">
+              <caret line="12" column="47" lean-forward="true" selection-start-line="12" selection-start-column="47" selection-end-line="12" selection-end-column="47" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ActivityTable.vue" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/views/activity/components/ActivityTable.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="420">
+              <caret line="29" column="62" lean-forward="false" selection-start-line="29" selection-start-column="62" selection-end-line="29" selection-end-column="62" />
               <folding />
             </state>
           </provider>
@@ -124,9 +142,9 @@
         <option value="$PROJECT_DIR$/src/lang/zh.js" />
         <option value="$PROJECT_DIR$/src/views/meeting/index.vue" />
         <option value="$PROJECT_DIR$/src/views/meeting/announcement.vue" />
-        <option value="$PROJECT_DIR$/src/views/activity/components/ActivityTable.vue" />
         <option value="$PROJECT_DIR$/src/views/info/page.vue" />
         <option value="$PROJECT_DIR$/src/views/produce/components/PageProduce.vue" />
+        <option value="$PROJECT_DIR$/src/views/activity/components/ActivityTable.vue" />
       </list>
     </option>
   </component>
@@ -185,6 +203,21 @@
               <item name="LTZJ" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="views" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="LTZJ" type="b2602c69:ProjectViewProjectNode" />
+              <item name="LTZJ" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="activity" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="LTZJ" type="b2602c69:ProjectViewProjectNode" />
+              <item name="LTZJ" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="activity" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="LTZJ" type="b2602c69:ProjectViewProjectNode" />
@@ -367,7 +400,7 @@
       <workItem from="1559638663493" duration="70000" />
       <workItem from="1559638780383" duration="1412000" />
       <workItem from="1559788991722" duration="645000" />
-      <workItem from="1560146095667" duration="9434000" />
+      <workItem from="1560146095667" duration="9641000" />
     </task>
     <task id="LOCAL-00001" summary="analysis 5.22">
       <created>1558529934252</created>
@@ -488,11 +521,18 @@
       <option name="project" value="LOCAL" />
       <updated>1560222743838</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="样式修改2">
+      <created>1560239229570</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1560239229570</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="77667000" />
+    <option name="totallyTimeSpent" value="77874000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -573,7 +613,8 @@
     <MESSAGE value="产品管理整理提交" />
     <MESSAGE value="导航栏顺序修改，经营分析-&gt;经营管理，6.11" />
     <MESSAGE value="样式修改1" />
-    <option name="LAST_COMMIT_MESSAGE" value="样式修改1" />
+    <MESSAGE value="样式修改2" />
+    <option name="LAST_COMMIT_MESSAGE" value="样式修改2" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -905,22 +946,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/activity/page.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1145">
-          <caret line="14" column="3" lean-forward="true" selection-start-line="14" selection-start-column="3" selection-end-line="14" selection-end-column="3" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/activity/components/ActivityTable.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="9" column="81" lean-forward="true" selection-start-line="9" selection-start-column="81" selection-end-line="9" selection-end-column="81" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/router/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="92">
@@ -955,8 +980,24 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/views/produce/components/PageProduce.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="559">
-          <caret line="48" column="71" lean-forward="false" selection-start-line="48" selection-start-column="71" selection-end-line="48" selection-end-column="71" />
+        <state relative-caret-position="377">
+          <caret line="41" column="89" lean-forward="false" selection-start-line="41" selection-start-column="75" selection-end-line="41" selection-end-column="89" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/activity/page.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-180">
+          <caret line="12" column="47" lean-forward="true" selection-start-line="12" selection-start-column="47" selection-end-line="12" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/activity/components/ActivityTable.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="29" column="62" lean-forward="false" selection-start-line="29" selection-start-column="62" selection-end-line="29" selection-end-column="62" />
           <folding />
         </state>
       </provider>
