@@ -168,7 +168,7 @@
         <!--3.userName:姓名-->
         <el-table-column :label="$t('userManager.userName')" prop="userName" align="center" min-width="70px">
           <template slot-scope="scope">
-            <el-tooltip class="item" effect="dark" content="点击可查看用户详情" placement="top-start">
+            <el-tooltip class="item" effect="dark" content="点击查看用户详情" placement="top-start">
               <span class="link-type" @click.stop="handleClick(scope.row)">{{ scope.row.userName }}</span>
             </el-tooltip>
           </template>
