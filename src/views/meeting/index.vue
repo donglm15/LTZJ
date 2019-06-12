@@ -26,20 +26,20 @@
     <el-table v-loading="listLoading" :data="pageData" border style="width: 100%;text-align: center">
       <el-table-column prop="id" sortable :label="$t('meeting.id')" align="center" width="100" />
       <el-table-column prop="meetingName" :label="$t('meeting.meetingName')" align="center" />
-      <el-table-column prop="meetingPosition" sortable :label="$t('meeting.meetingPosition')" align="center" width="200" />
-      <el-table-column prop="peopleNum" sortable :label="$t('meeting.peopleNum')" align="center" width="120" />
-      <el-table-column prop="ifMore" sortable :label="$t('meeting.ifMore')" align="center" width="120">
+      <el-table-column prop="meetingPosition" sortable :label="$t('meeting.meetingPosition')" align="center" width="250" />
+      <el-table-column prop="peopleNum" sortable :label="$t('meeting.peopleNum')" align="center" width="150" />
+      <el-table-column prop="ifMore" sortable :label="$t('meeting.ifMore')" align="center" width="150">
         <template slot-scope="scope">
           <span>{{ scope.row.ifMore | statusFilter }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="ifOpen" sortable :label="$t('meeting.ifOpen')" align="center" width="120">
+      <el-table-column prop="ifOpen" sortable :label="$t('meeting.ifOpen')" align="center" width="150">
         <template slot-scope="scope">
           <span>{{ scope.row.ifOpen | openFilter }}</span>
         </template>
       </el-table-column>
       <!--按钮-->
-      <el-table-column :label="$t('table.actions')" align="center" class-name="small-padding fixed-width" width="160">
+      <el-table-column :label="$t('table.actions')" align="center" class-name="small-padding fixed-width" width="200">
         <template slot-scope="{row}">
           <el-button type="primary" size="mini" @click="handleUpdate(row)">
             {{ $t('table.edit') }}

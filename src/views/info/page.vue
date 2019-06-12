@@ -28,13 +28,13 @@
         </template>
       </el-table-column>
       <el-table-column prop="title" sortable label="标题" width="200" align="center" />
-      <el-table-column prop="infoType.typeName" sortable label="类型" width="80" align="center" />
+      <el-table-column prop="infoType.typeName" sortable label="类型" width="100" align="center" />
       <el-table-column prop="previewContent" label="正文预览" align="center">
         <template slot-scope="scope">
           <p v-html="scope.row.previewContent">{{ scope.row.previewContent }}</p>
         </template>
       </el-table-column>
-      <el-table-column prop="read" sortable label="浏览量" width="100" align="center" :filters="[{text:'火爆',value:200},{text:'热点',value:100}]" :filter-method="filterTag">
+      <el-table-column prop="read" sortable label="浏览量" width="120" align="center" :filters="[{text:'火爆',value:200},{text:'热点',value:100}]" :filter-method="filterTag">
         <template slot-scope="scope">
           <el-tag :type="scope.row.read | typeFilter">{{ scope.row.read }}</el-tag>
         </template>

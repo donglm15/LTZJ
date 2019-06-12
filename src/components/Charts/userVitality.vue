@@ -76,7 +76,7 @@ export default {
           axisPointer: { // 坐标轴指示器配置项
             type: 'cross',
             label: {
-              backgroundColor: '#fff'
+              backgroundColor: '#000'
             },
             textStyle: {
               color: '#fff'
@@ -102,7 +102,7 @@ export default {
           textStyle: {
             color: '#fff'
           },
-          data: ['老用户', '新用户', '平均值']
+          data: ['老用户', '新用户', '所有用户']
         },
         // 是否启用拖拽重计算特性，默认关闭(即值为false)
         calculable: true,
@@ -160,8 +160,8 @@ export default {
             0
           ],
           bottom: 30,
-          start: 10,
-          end: 80,
+          start: 0,
+          end: 100,
           handleIcon: 'path://M306.1,413c0,2.2-1.8,4-4,4h-59.8c-2.2,0-4-1.8-4-4V200.8c0-2.2,1.8-4,4-4h59.8c2.2,0,4,1.8,4,4V413z',
           handleSize: '110%',
           handleStyle: { // 移动方块
@@ -186,7 +186,7 @@ export default {
           barGap: '10%', // 不同系列的柱间距离
           itemStyle: { // 图形样式
             normal: {
-              color: 'rgba(97, 140, 255,1)', // 柱条的颜色
+              color: 'rgba(2, 134, 217,1)', // 柱条的颜色
               label: { // 数据标签
                 show: true,
                 textStyle: {
@@ -220,7 +220,7 @@ export default {
           stack: 'total',
           itemStyle: {
             normal: {
-              color: 'rgba(255, 165, 124,1)',
+              color: 'rgba(254, 136, 4,1)',
               barBorderRadius: 0,
               label: {
                 show: true,
@@ -250,7 +250,7 @@ export default {
             220
           ]
         }, {
-          name: '平均值',
+          name: '所有用户',
           type: 'line',
           smooth: true, // 平滑的曲线
           stack: 'total',
@@ -258,7 +258,7 @@ export default {
           symbol: 'circle', // 标记的图形
           itemStyle: {
             normal: {
-              color: 'rgba(230, 10, 23,1)', // 颜色
+              color: 'rgba(253, 247, 5,1)', // 颜色
               barBorderRadius: 0, // 圆角半径
               label: {
                 show: true,

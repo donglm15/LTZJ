@@ -63,7 +63,7 @@ export default {
       },
       yAxis: {
         min: 0,
-        max: 35,
+        max: 25,
         name: '时间（小时）',
         interval: 1,
         gridIndex: 0,
@@ -90,12 +90,14 @@ export default {
       series: [
         {
           name: '主题党日',
+          color: '#e6a700',
           type: 'bar',
           smooth: true,
           data: [3, 2, 5, 2, 7, 2, 5, 4, 5, 6, 9, 4]
         },
         {
           name: '党员自学',
+          color: '#e2e2e2',
           type: 'bar',
           smooth: true,
           data: [5, 2, 8, 6, 8, 5, 7, 6, 4, 8, 10, 6]
@@ -109,6 +111,7 @@ export default {
 
         {
           name: '基层动态',
+          color: '#f3f436',
           type: 'bar',
           smooth: true,
           data: [5, 2, 10, 13, 14, 13.5, 20, 18.5, 3, 14, 16, 19]
@@ -116,6 +119,7 @@ export default {
 
         {
           name: '平均学习时长',
+          color: 'yellow',
           type: 'line',
           //          smooth: true,
           data: [8.3, 8, 11.3, 9, 10.3, 9.17, 13, 9, 11.3, 11.3, 13.3, 10.2],

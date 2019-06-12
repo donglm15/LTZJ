@@ -176,6 +176,53 @@ export const asyncRoutes = [
       }
     ]
   },
+  // 党员管理
+  {
+    path: '/member',
+    component: Layout,
+    redirect: '/member/page',
+    alwaysShow: true, // will always show the root menu
+    name: 'member',
+    meta: {
+      title: 'member',
+      icon: 'people'
+      // roles: ['admin', 'editor'] // you can set roles in root nav
+    },
+    children: [
+      {
+        path: 'page',
+        component: () => import('@/views/member/page'),
+        name: 'PageMember',
+        meta: {
+          title: 'PageMember'
+          // roles: ['admin'] // or you can only set roles in sub nav
+        }
+      },
+      {
+        path: 'member/:id',
+        component: () => import('@/views/member/components/memberDetail'),
+        name: 'memberDetail',
+        meta: {
+          title: 'memberDetail'
+        },
+        hidden:true      //eslint-disable-line
+      },
+
+      // {
+      //   path: 'bar',
+      //   component: () => import('@/views/member/bar'),
+      //   name: 'barChart',
+      //   meta: { title: 'bar', noCache: true }
+      // },
+
+      {
+        path: 'mumChart',
+        component: () => import('@/views/member/mumChart'),
+        name: 'mumChart',
+        meta: { title: 'mumChart', noCache: true }
+      }
+    ]
+  },
   // 资讯管理
   {
     path: '/info',
@@ -224,87 +271,6 @@ export const asyncRoutes = [
           title: '资讯新增'
         }
         // hidden: true
-      }
-    ]
-  },
-  // 产品管理
-  {
-    path: '/produce',
-    component: Layout,
-    redirect: '/produce/PageProduce',
-    alwaysShow: true, // will always show the root menu
-    name: 'produce',
-    meta: {
-      title: 'produce',
-      icon: 'lock'
-    },
-    children: [
-      {
-        path: 'PageProduce',
-        component: () => import('@/views/produce/components/PageProduce'),
-        name: 'PageProduce',
-        meta: {
-          title: 'PageProduce'
-        }
-      },
-      {
-        path: 'ChartProduce',
-        component: () => import('@/views/produce/components/ChartProduce'),
-        name: 'ChartProduce',
-        meta: { title: 'ChartProduce', noCache: true }
-      },
-      {
-        path: 'ThingProduce',
-        component: () => import('@/views/produce/components/thing'),
-        name: 'ThingProduce',
-        hidden: true,
-        meta: {
-          title: 'ThingProduce'
-          //
-        }
-      }
-    ]
-  },
-  // 民主管理
-  {
-    path: '/analysis',
-    component: Layout,
-    redirect: '/analysis/daily',
-    alwaysShow: true, // will always show the root menu
-    name: 'analysis',
-    meta: {
-      title: 'analysis',
-      icon: 'eye-open'
-      // roles: ['admin', 'editor'] // you can set roles in root nav
-    },
-    children: [
-      {
-        path: 'daily',
-        component: () => import('@/views/analysis/daily'),
-        name: 'DailyAnalysis',
-        meta: {
-          title: 'DailyAnalysis'
-          // roles: ['admin'] // or you can only set roles in sub nav
-        }
-      },
-      {
-        path: 'dailyMap',
-        component: () => import('@/views/analysis/dailyMap'),
-        name: 'DailyMap',
-        hidden: true,
-        meta: {
-          title: 'DailyMap'
-          // roles: ['admin'] // or you can only set roles in sub nav
-        }
-      },
-      {
-        path: 'ice',
-        component: () => import('@/views/analysis/ice'),
-        name: 'IceAnalysis',
-        meta: {
-          title: 'IceAnalysis'
-          // roles: ['admin'] // or you can only set roles in sub nav
-        }
       }
     ]
   },
@@ -362,53 +328,6 @@ export const asyncRoutes = [
           // roles: ['admin'] // or you can only set roles in sub nav
         },
         hidden: true
-      }
-    ]
-  },
-  // 党员管理
-  {
-    path: '/member',
-    component: Layout,
-    redirect: '/member/page',
-    alwaysShow: true, // will always show the root menu
-    name: 'member',
-    meta: {
-      title: 'member',
-      icon: 'people'
-      // roles: ['admin', 'editor'] // you can set roles in root nav
-    },
-    children: [
-      {
-        path: 'page',
-        component: () => import('@/views/member/page'),
-        name: 'PageMember',
-        meta: {
-          title: 'PageMember'
-          // roles: ['admin'] // or you can only set roles in sub nav
-        }
-      },
-      {
-        path: 'member/:id',
-        component: () => import('@/views/member/components/memberDetail'),
-        name: 'memberDetail',
-        meta: {
-          title: 'memberDetail'
-        },
-        hidden:true      //eslint-disable-line
-      },
-
-      // {
-      //   path: 'bar',
-      //   component: () => import('@/views/member/bar'),
-      //   name: 'barChart',
-      //   meta: { title: 'bar', noCache: true }
-      // },
-
-      {
-        path: 'mumChart',
-        component: () => import('@/views/member/mumChart'),
-        name: 'mumChart',
-        meta: { title: 'mumChart', noCache: true }
       }
     ]
   },
@@ -504,6 +423,87 @@ export const asyncRoutes = [
         meta: {
           title: '活动图表'
           // roles: ['admin'] // or you can only set roles in sub nav
+        }
+      }
+    ]
+  },
+  // 经营管理
+  {
+    path: '/analysis',
+    component: Layout,
+    redirect: '/analysis/daily',
+    alwaysShow: true, // will always show the root menu
+    name: 'analysis',
+    meta: {
+      title: 'analysis',
+      icon: 'eye-open'
+      // roles: ['admin', 'editor'] // you can set roles in root nav
+    },
+    children: [
+      {
+        path: 'daily',
+        component: () => import('@/views/analysis/daily'),
+        name: 'DailyAnalysis',
+        meta: {
+          title: 'DailyAnalysis'
+          // roles: ['admin'] // or you can only set roles in sub nav
+        }
+      },
+      {
+        path: 'dailyMap',
+        component: () => import('@/views/analysis/dailyMap'),
+        name: 'DailyMap',
+        hidden: true,
+        meta: {
+          title: 'DailyMap'
+          // roles: ['admin'] // or you can only set roles in sub nav
+        }
+      },
+      {
+        path: 'ice',
+        component: () => import('@/views/analysis/ice'),
+        name: 'IceAnalysis',
+        meta: {
+          title: 'IceAnalysis'
+          // roles: ['admin'] // or you can only set roles in sub nav
+        }
+      }
+    ]
+  },
+  // 产品管理
+  {
+    path: '/produce',
+    component: Layout,
+    redirect: '/produce/PageProduce',
+    alwaysShow: true, // will always show the root menu
+    name: 'produce',
+    meta: {
+      title: 'produce',
+      icon: 'lock'
+    },
+    children: [
+      {
+        path: 'PageProduce',
+        component: () => import('@/views/produce/components/PageProduce'),
+        name: 'PageProduce',
+        meta: {
+          title: 'PageProduce'
+        }
+      },
+      {
+        path: 'ChartProduce',
+        component: () => import('@/views/produce/components/ChartProduce'),
+        name: 'ChartProduce',
+        meta: { title: 'ChartProduce', noCache: true }
+      },
+      {
+        path: 'ThingProduce',
+        component: () => import('@/views/produce/components/thing'),
+        name: 'ThingProduce',
+        hidden: true,
+        meta: {
+          title: 'ThingProduce'
+          //
         }
       }
     ]
