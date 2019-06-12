@@ -17,7 +17,7 @@
           <div style="padding: 10px;">
             <h2 class="userName">{{ this.$route.params.userName }}</h2>
             <div class="bottom">
-              <el-button type="success" size="mini">上传<i class="el-icon-upload el-icon--right" /></el-button>
+              <el-button type="success" size="mini">上传头像<i class="el-icon-upload el-icon--right" /></el-button>
             </div>
           </div>
         </el-col>
