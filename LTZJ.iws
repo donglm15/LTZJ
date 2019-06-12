@@ -2,17 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b9563030-ab17-419b-bb58-5a1745363960" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/views/analysis/components/LiuChart.vue" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/views/analysis/components/OneChart.vue" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/views/dashboard/admin/components/OneChart.vue" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/LTZJ.iws" afterPath="$PROJECT_DIR$/LTZJ.iws" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/analysis/components/LiuChart.vue" afterPath="$PROJECT_DIR$/src/views/analysis/components/LiuChart.vue" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/analysis/components/OneChart.vue" afterPath="$PROJECT_DIR$/src/views/analysis/components/OneChart.vue" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/analysis/components/SexChart.vue" afterPath="$PROJECT_DIR$/src/views/analysis/components/SexChart.vue" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/analysis/components/TimeChart.vue" afterPath="$PROJECT_DIR$/src/views/analysis/components/TimeChart.vue" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/analysis/components/TypeChart.vue" afterPath="$PROJECT_DIR$/src/views/analysis/components/TypeChart.vue" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/analysis/components/mapChart.vue" afterPath="$PROJECT_DIR$/src/views/analysis/components/mapChart.vue" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/analysis/ice.vue" afterPath="$PROJECT_DIR$/src/views/analysis/ice.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/dashboard/admin/components/OneChart.vue" afterPath="$PROJECT_DIR$/src/views/dashboard/admin/components/OneChart.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/dashboard/admin/components/mapChart.vue" afterPath="$PROJECT_DIR$/src/views/dashboard/admin/components/mapChart.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/dashboard/admin/index.vue" afterPath="$PROJECT_DIR$/src/views/dashboard/admin/index.vue" />
     </list>
     <ignored path="$PROJECT_DIR$/node_modules/" />
     <ignored path="$PROJECT_DIR$/out/" />
@@ -45,14 +43,14 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ice.vue" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ice.vue" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/views/analysis/ice.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="108">
-              <caret line="4" column="10" lean-forward="true" selection-start-line="4" selection-start-column="10" selection-end-line="4" selection-end-column="10" />
+            <state relative-caret-position="378">
+              <caret line="14" column="14" lean-forward="true" selection-start-line="14" selection-start-column="14" selection-end-line="14" selection-end-column="14" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="e#823#867#0" expanded="true" />
+                <element signature="e#819#863#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -61,9 +59,17 @@
       <file leaf-file-name="LiuChart.vue" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/views/analysis/components/LiuChart.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="675">
-              <caret line="69" column="21" lean-forward="false" selection-start-line="69" selection-start-column="21" selection-end-line="69" selection-end-column="21" />
-              <folding />
+            <state relative-caret-position="648">
+              <caret line="68" column="21" lean-forward="false" selection-start-line="68" selection-start-column="21" selection-end-line="68" selection-end-column="21" />
+              <folding>
+                <marker date="1560328522612" expanded="true" signature="1467:1474" ph="[...]" />
+                <marker date="1560328522612" expanded="true" signature="1467:1480" ph="{...}" />
+                <marker date="1560328522612" expanded="true" signature="1467:1517" ph="{...}" />
+                <marker date="1560328522612" expanded="true" signature="1467:1519" ph="{...}" />
+                <marker date="1560328522612" expanded="true" signature="1467:1528" ph="..." />
+                <marker date="1560328522612" expanded="true" signature="1536:1642" ph="..." />
+                <marker date="1560328522612" expanded="true" signature="1556:1634" ph="{...}" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -73,7 +79,60 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="54">
               <caret line="2" column="37" lean-forward="false" selection-start-line="2" selection-start-column="37" selection-end-line="2" selection-end-column="37" />
-              <folding />
+              <folding>
+                <marker date="1560328522600" expanded="true" signature="71:84" ph="..." />
+                <marker date="1560328522600" expanded="true" signature="217:3964" ph="{...}" />
+                <marker date="1560328522600" expanded="true" signature="228:270" ph="{...}" />
+                <marker date="1560328522600" expanded="true" signature="241:266" ph="{...}" />
+                <marker date="1560328522600" expanded="true" signature="284:3962" ph="{...}" />
+                <marker date="1560328522600" expanded="true" signature="353:3695" ph="{...}" />
+                <marker date="1560328522600" expanded="true" signature="368:579" ph="{&quot;text&quot;: '“冰激凌”用户活跃时段'...}" />
+                <marker date="1560328522600" expanded="true" signature="477:512" ph="{&quot;color&quot;: '##fff'...}" />
+                <marker date="1560328522600" expanded="true" signature="536:571" ph="{&quot;color&quot;: '##fff'...}" />
+                <marker date="1560328522600" expanded="true" signature="596:671" ph="{&quot;trigger&quot;: 'item'...}" />
+                <marker date="1560328522600" expanded="true" signature="687:3689" ph="[...]" />
+                <marker date="1560328522600" expanded="true" signature="688:1325" ph="{&quot;name&quot;: '上网时间'...}" />
+                <marker date="1560328522600" expanded="true" signature="859:926" ph="{...}" />
+                <marker date="1560328522600" expanded="true" signature="879:916" ph="{...}" />
+                <marker date="1560328522600" expanded="true" signature="943:1010" ph="{...}" />
+                <marker date="1560328522600" expanded="true" signature="963:1000" ph="{...}" />
+                <marker date="1560328522600" expanded="true" signature="1031:1317" ph="{...}" />
+                <marker date="1560328522600" expanded="true" signature="1051:1168" ph="{&quot;shadowColor&quot;: 'rgba(0, 0, 0, 0.5)'...}" />
+                <marker date="1560328522600" expanded="true" signature="1190:1307" ph="{&quot;shadowColor&quot;: 'rgba(0, 0, 0, 0.5)'...}" />
+                <marker date="1560328522600" expanded="true" signature="1333:2531" ph="{&quot;name&quot;: ''...}" />
+                <marker date="1560328522600" expanded="true" signature="1574:1704" ph="{&quot;formatter&quot;: '{value}'...}" />
+                <marker date="1560328522600" expanded="true" signature="1652:1694" ph="{&quot;color&quot;: '##63869e'...}" />
+                <marker date="1560328522600" expanded="true" signature="1724:1757" ph="{...}" />
+                <marker date="1560328522600" expanded="true" signature="1777:2075" ph="{...}" />
+                <marker date="1560328522600" expanded="true" signature="1800:2065" ph="{&quot;width&quot;: '40%'...}" />
+                <marker date="1560328522600" expanded="true" signature="1821:1931" ph="[...]" />
+                <marker date="1560328522600" expanded="true" signature="2096:2214" ph="{...}" />
+                <marker date="1560328522600" expanded="true" signature="2140:2204" ph="{&quot;color&quot;: '##ffffff'...}" />
+                <marker date="1560328522600" expanded="true" signature="2235:2410" ph="{...}" />
+                <marker date="1560328522600" expanded="true" signature="2270:2310" ph="{...}" />
+                <marker date="1560328522600" expanded="true" signature="2333:2400" ph="{&quot;color&quot;: 'red'...}" />
+                <marker date="1560328522600" expanded="true" signature="2431:2523" ph="{...}" />
+                <marker date="1560328522600" expanded="true" signature="2451:2513" ph="{&quot;color&quot;: 'green'...}" />
+                <marker date="1560328522600" expanded="true" signature="2539:3681" ph="{&quot;name&quot;: ''...}" />
+                <marker date="1560328522600" expanded="true" signature="2780:2910" ph="{&quot;formatter&quot;: '{value}'...}" />
+                <marker date="1560328522600" expanded="true" signature="2858:2900" ph="{&quot;color&quot;: '##63869e'...}" />
+                <marker date="1560328522600" expanded="true" signature="2930:2963" ph="{...}" />
+                <marker date="1560328522600" expanded="true" signature="2983:3145" ph="{...}" />
+                <marker date="1560328522600" expanded="true" signature="3006:3135" ph="{&quot;width&quot;: '10%'...}" />
+                <marker date="1560328522600" expanded="true" signature="3027:3071" ph="[...]" />
+                <marker date="1560328522600" expanded="true" signature="3166:3309" ph="{&quot;length&quot;: '92%'...}" />
+                <marker date="1560328522600" expanded="true" signature="3236:3299" ph="{&quot;color&quot;: 'grey'...}" />
+                <marker date="1560328522600" expanded="true" signature="3330:3532" ph="{...}" />
+                <marker date="1560328522600" expanded="true" signature="3388:3428" ph="{...}" />
+                <marker date="1560328522600" expanded="true" signature="3451:3522" ph="{&quot;color&quot;: '##fb5310'...}" />
+                <marker date="1560328522600" expanded="true" signature="3553:3673" ph="{...}" />
+                <marker date="1560328522600" expanded="true" signature="3573:3663" ph="{&quot;color&quot;: 'green'...}" />
+                <marker date="1560328522600" expanded="true" signature="3716:3925" ph="{...}" />
+                <marker date="1560328522600" expanded="true" signature="3782:3904" ph="{...}" />
+                <marker date="1560328522600" expanded="true" signature="3799:3895" ph="{...}" />
+                <marker date="1560328522600" expanded="true" signature="3981:4087" ph="..." />
+                <marker date="1560328522600" expanded="true" signature="4001:4079" ph="{...}" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -82,8 +141,30 @@
         <entry file="file://$PROJECT_DIR$/src/views/analysis/components/OneChart.vue">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="52">
-              <caret line="2" column="36" lean-forward="true" selection-start-line="2" selection-start-column="36" selection-end-line="2" selection-end-column="37" />
-              <folding />
+              <caret line="2" column="36" lean-forward="true" selection-start-line="2" selection-start-column="36" selection-end-line="2" selection-end-column="36" />
+              <folding>
+                <marker date="1560328522610" expanded="true" signature="5270:5403" ph="[...]" />
+                <marker date="1560328522610" expanded="true" signature="5270:6090" ph="{&quot;name&quot;: '终端品牌'...}" />
+                <marker date="1560328522610" expanded="true" signature="5270:6091" ph="[...]" />
+                <marker date="1560328522610" expanded="true" signature="5270:6097" ph="{...}" />
+                <marker date="1560328522610" expanded="true" signature="5270:6134" ph="{...}" />
+                <marker date="1560328522610" expanded="true" signature="5270:6136" ph="{...}" />
+                <marker date="1560328522610" expanded="true" signature="5270:6145" ph="..." />
+                <marker date="1560328522610" expanded="true" signature="5281:5393" ph="//..." />
+                <marker date="1560328522610" expanded="true" signature="5443:6082" ph="[...]" />
+                <marker date="1560328522610" expanded="true" signature="5444:5618" ph="{...}" />
+                <marker date="1560328522610" expanded="true" signature="5467:5608" ph="{...}" />
+                <marker date="1560328522610" expanded="true" signature="5489:5596" ph="{&quot;borderColor&quot;: '##fff'...}" />
+                <marker date="1560328522610" expanded="true" signature="5620:5839" ph="{...}" />
+                <marker date="1560328522610" expanded="true" signature="5682:5829" ph="{...}" />
+                <marker date="1560328522610" expanded="true" signature="5704:5817" ph="{...}" />
+                <marker date="1560328522610" expanded="true" signature="5841:6030" ph="{...}" />
+                <marker date="1560328522610" expanded="true" signature="5903:6020" ph="{...}" />
+                <marker date="1560328522610" expanded="true" signature="5925:6008" ph="{...}" />
+                <marker date="1560328522610" expanded="true" signature="6032:6081" ph="{...}" />
+                <marker date="1560328522610" expanded="true" signature="6153:6259" ph="..." />
+                <marker date="1560328522610" expanded="true" signature="6173:6251" ph="{...}" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -94,7 +175,36 @@
             <state relative-caret-position="378">
               <caret line="55" column="8" lean-forward="false" selection-start-line="55" selection-start-column="8" selection-end-line="57" selection-end-column="9" />
               <folding>
-                <element signature="n#style#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <marker date="1560328522592" expanded="true" signature="71:84" ph="..." />
+                <marker date="1560328522592" expanded="false" signature="127:235" ph="..." />
+                <marker date="1560328522592" expanded="true" signature="317:3377" ph="{...}" />
+                <marker date="1560328522592" expanded="true" signature="347:409" ph="{...}" />
+                <marker date="1560328522592" expanded="true" signature="360:405" ph="{...}" />
+                <marker date="1560328522592" expanded="true" signature="423:3375" ph="{...}" />
+                <marker date="1560328522592" expanded="true" signature="1060:3338" ph="{...}" />
+                <marker date="1560328522592" expanded="true" signature="1076:1166" ph="{&quot;orient&quot;: 'vertical'...}" />
+                <marker date="1560328522592" expanded="true" signature="1181:1415" ph="{&quot;text&quot;: '福建“冰激凌”用户分布'...}" />
+                <marker date="1560328522592" expanded="true" signature="1313:1348" ph="{&quot;color&quot;: '##fff'...}" />
+                <marker date="1560328522592" expanded="true" signature="1372:1407" ph="{&quot;color&quot;: '##fff'...}" />
+                <marker date="1560328522592" expanded="true" signature="1447:1871" ph="{&quot;orient&quot;: 'horizontal'...}" />
+                <marker date="1560328522592" expanded="true" signature="1754:1789" ph="{&quot;color&quot;: '##fff'...}" />
+                <marker date="1560328522592" expanded="true" signature="1808:1863" ph="{...}" />
+                <marker date="1560328522592" expanded="true" signature="1897:2057" ph="{&quot;trigger&quot;: 'item'...}" />
+                <marker date="1560328522592" expanded="true" signature="1950:2049" ph="{...}" />
+                <marker date="1560328522592" expanded="true" signature="2089:2425" ph="{&quot;orient&quot;: 'vertical'...}" />
+                <marker date="1560328522592" expanded="true" signature="2202:2417" ph="{...}" />
+                <marker date="1560328522592" expanded="true" signature="2224:2289" ph="{...}" />
+                <marker date="1560328522592" expanded="true" signature="2310:2346" ph="{...}" />
+                <marker date="1560328522592" expanded="true" signature="2371:2407" ph="{...}" />
+                <marker date="1560328522592" expanded="true" signature="2466:3332" ph="[...]" />
+                <marker date="1560328522592" expanded="true" signature="2509:3324" ph="{&quot;name&quot;: '用户数量'...}" />
+                <marker date="1560328522592" expanded="true" signature="2693:2939" ph="{...}" />
+                <marker date="1560328522592" expanded="true" signature="2741:2822" ph="{...}" />
+                <marker date="1560328522592" expanded="true" signature="2764:2808" ph="{...}" />
+                <marker date="1560328522592" expanded="true" signature="2846:2927" ph="{...}" />
+                <marker date="1560328522592" expanded="true" signature="2869:2913" ph="{...}" />
+                <marker date="1560328522592" expanded="true" signature="2957:3314" ph="[...]" />
+                <marker date="1560328522592" expanded="true" signature="3416:3494" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -106,13 +216,72 @@
             <state relative-caret-position="81">
               <caret line="3" column="8" lean-forward="true" selection-start-line="3" selection-start-column="8" selection-end-line="3" selection-end-column="8" />
               <folding>
-                <element signature="n#style#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <marker date="1560328522607" expanded="true" signature="71:84" ph="..." />
+                <marker date="1560328522607" expanded="true" signature="217:4515" ph="{...}" />
+                <marker date="1560328522607" expanded="true" signature="228:270" ph="{...}" />
+                <marker date="1560328522607" expanded="true" signature="241:266" ph="{...}" />
+                <marker date="1560328522607" expanded="true" signature="284:4513" ph="{...}" />
+                <marker date="1560328522607" expanded="true" signature="374:4029" ph="{...}" />
+                <marker date="1560328522607" expanded="true" signature="431:689" ph="{&quot;text&quot;: '冰激凌”用户不同年龄段男女人数统计'...}" />
+                <marker date="1560328522607" expanded="true" signature="534:595" ph="{&quot;color&quot;: '##fff'...}" />
+                <marker date="1560328522607" expanded="true" signature="619:681" ph="{&quot;color&quot;: '##fff'...}" />
+                <marker date="1560328522607" expanded="true" signature="706:861" ph="{&quot;trigger&quot;: 'axis'...}" />
+                <marker date="1560328522607" expanded="true" signature="754:853" ph="{&quot;type&quot;: 'shadow'...}" />
+                <marker date="1560328522607" expanded="true" signature="803:842" ph="{&quot;color&quot;: '##fff'...}" />
+                <marker date="1560328522607" expanded="true" signature="875:1001" ph="{...}" />
+                <marker date="1560328522607" expanded="true" signature="958:993" ph="{&quot;color&quot;: '##fff'...}" />
+                <marker date="1560328522607" expanded="true" signature="1017:1150" ph="{&quot;x&quot;: '4%'...}" />
+                <marker date="1560328522607" expanded="true" signature="1075:1110" ph="{&quot;color&quot;: '##fff'...}" />
+                <marker date="1560328522607" expanded="true" signature="1190:1631" ph="[...]" />
+                <marker date="1560328522607" expanded="true" signature="1191:1630" ph="{&quot;type&quot;: 'category'...}" />
+                <marker date="1560328522607" expanded="true" signature="1237:1309" ph="{...}" />
+                <marker date="1560328522607" expanded="true" signature="1260:1299" ph="{&quot;color&quot;: '##fff'...}" />
+                <marker date="1560328522607" expanded="true" signature="1330:1363" ph="{...}" />
+                <marker date="1560328522607" expanded="true" signature="1383:1416" ph="{...}" />
+                <marker date="1560328522607" expanded="true" signature="1437:1470" ph="{...}" />
+                <marker date="1560328522607" expanded="true" signature="1491:1525" ph="{...}" />
+                <marker date="1560328522607" expanded="true" signature="1646:1988" ph="[...]" />
+                <marker date="1560328522607" expanded="true" signature="1647:1987" ph="{&quot;type&quot;: 'value'...}" />
+                <marker date="1560328522607" expanded="true" signature="1691:1724" ph="{...}" />
+                <marker date="1560328522607" expanded="true" signature="1744:1816" ph="{...}" />
+                <marker date="1560328522607" expanded="true" signature="1767:1806" ph="{&quot;color&quot;: '##fff'...}" />
+                <marker date="1560328522607" expanded="true" signature="1836:1869" ph="{...}" />
+                <marker date="1560328522607" expanded="true" signature="1890:1924" ph="{...}" />
+                <marker date="1560328522607" expanded="true" signature="1945:1978" ph="{...}" />
+                <marker date="1560328522607" expanded="true" signature="2006:2565" ph="[...]" />
+                <marker date="1560328522607" expanded="true" signature="2007:2455" ph="{&quot;handleIcon&quot;: 'path://M306.1,413c0,2.2-1.8,4-4,4h-59.8c-2.2,0-4-1.8-4-4V200.8c0-2.2,1.8-4,4-4h59.8c2.2,0,4,1.8,4,4V413z'...}" />
+                <marker date="1560328522607" expanded="true" signature="2069:2092" ph="[...]" />
+                <marker date="1560328522607" expanded="true" signature="2327:2366" ph="{&quot;color&quot;: '##d3dee5'...}" />
+                <marker date="1560328522607" expanded="true" signature="2387:2414" ph="{&quot;color&quot;: '##fff'...}" />
+                <marker date="1560328522607" expanded="true" signature="2457:2564" ph="{&quot;type&quot;: 'inside'...}" />
+                <marker date="1560328522607" expanded="true" signature="2581:4023" ph="[...]" />
+                <marker date="1560328522607" expanded="true" signature="2582:3104" ph="{&quot;name&quot;: '女'...}" />
+                <marker date="1560328522607" expanded="true" signature="2712:3076" ph="{...}" />
+                <marker date="1560328522607" expanded="true" signature="2732:3066" ph="{&quot;color&quot;: 'rgba(255,144,128,1)'...}" />
+                <marker date="1560328522607" expanded="true" signature="2795:3054" ph="{&quot;position&quot;: 'insideTop'...}" />
+                <marker date="1560328522607" expanded="true" signature="2848:2895" ph="{&quot;color&quot;: '##fff'...}" />
+                <marker date="1560328522607" expanded="true" signature="2971:3040" ph="{...}" />
+                <marker date="1560328522607" expanded="true" signature="3112:3536" ph="{&quot;name&quot;: '男'...}" />
+                <marker date="1560328522607" expanded="true" signature="3194:3508" ph="{...}" />
+                <marker date="1560328522607" expanded="true" signature="3214:3498" ph="{&quot;color&quot;: 'rgba(0,191,183,1)'...}" />
+                <marker date="1560328522607" expanded="true" signature="3307:3486" ph="{&quot;position&quot;: 'top'...}" />
+                <marker date="1560328522607" expanded="true" signature="3403:3472" ph="{...}" />
+                <marker date="1560328522607" expanded="true" signature="3538:4015" ph="{&quot;name&quot;: '总数'...}" />
+                <marker date="1560328522607" expanded="true" signature="3672:3987" ph="{...}" />
+                <marker date="1560328522607" expanded="true" signature="3692:3977" ph="{&quot;color&quot;: 'rgba(252,230,48,1)'...}" />
+                <marker date="1560328522607" expanded="true" signature="3786:3965" ph="{&quot;position&quot;: 'top'...}" />
+                <marker date="1560328522607" expanded="true" signature="3882:3951" ph="{...}" />
+                <marker date="1560328522607" expanded="true" signature="4067:4210" ph="{...}" />
+                <marker date="1560328522607" expanded="true" signature="4231:4475" ph="{...}" />
+                <marker date="1560328522607" expanded="true" signature="4311:4404" ph="{...}" />
+                <marker date="1560328522607" expanded="true" signature="4532:4638" ph="..." />
+                <marker date="1560328522607" expanded="true" signature="4552:4630" ph="{...}" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TypeChart.vue" pinned="false" current-in-tab="false">
+      <file leaf-file-name="TypeChart.vue" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/views/analysis/components/TypeChart.vue">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="837">
@@ -120,16 +289,6 @@
               <folding>
                 <element signature="n#style#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="OneChart.vue" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/views/dashboard/admin/components/OneChart.vue">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="729">
-              <caret line="27" column="0" lean-forward="false" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -281,30 +440,6 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="views" type="462c0819:PsiDirectoryNode" />
               <item name="analysis" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="LTZJ" type="b2602c69:ProjectViewProjectNode" />
-              <item name="LTZJ" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="dashboard" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="LTZJ" type="b2602c69:ProjectViewProjectNode" />
-              <item name="LTZJ" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="dashboard" type="462c0819:PsiDirectoryNode" />
-              <item name="admin" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="LTZJ" type="b2602c69:ProjectViewProjectNode" />
-              <item name="LTZJ" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="dashboard" type="462c0819:PsiDirectoryNode" />
-              <item name="admin" type="462c0819:PsiDirectoryNode" />
               <item name="components" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -487,7 +622,7 @@
       <workItem from="1559788991722" duration="645000" />
       <workItem from="1560146095667" duration="9641000" />
       <workItem from="1560243781930" duration="7340000" />
-      <workItem from="1560301177088" duration="12646000" />
+      <workItem from="1560301177088" duration="12906000" />
     </task>
     <task id="LOCAL-00001" summary="analysis 5.22">
       <created>1558529934252</created>
@@ -615,11 +750,18 @@
       <option name="project" value="LOCAL" />
       <updated>1560239229570</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="经营管理">
+      <created>1560328525726</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1560328525726</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="97860000" />
+    <option name="totallyTimeSpent" value="98120000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-11" y="-11" width="1942" height="1042" extended-state="6" />
@@ -629,12 +771,12 @@
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1714922" sideWeight="0.5245203" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17843866" sideWeight="0.52915764" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32991362" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32961586" sideWeight="0.49784017" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.47772828" sideWeight="0.47547975" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17843866" sideWeight="0.47030237" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17843866" sideWeight="0.47084233" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29157668" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -701,7 +843,8 @@
     <MESSAGE value="导航栏顺序修改，经营分析-&gt;经营管理，6.11" />
     <MESSAGE value="样式修改1" />
     <MESSAGE value="样式修改2" />
-    <option name="LAST_COMMIT_MESSAGE" value="样式修改2" />
+    <MESSAGE value="经营管理" />
+    <option name="LAST_COMMIT_MESSAGE" value="经营管理" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -977,14 +1120,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/dashboard/admin/components/OneChart.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="729">
-          <caret line="27" column="0" lean-forward="false" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/views/activity/components/ActivityTable.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="378">
@@ -1038,9 +1173,17 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/views/analysis/components/LiuChart.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="675">
-          <caret line="69" column="21" lean-forward="false" selection-start-line="69" selection-start-column="21" selection-end-line="69" selection-end-column="21" />
-          <folding />
+        <state relative-caret-position="648">
+          <caret line="68" column="21" lean-forward="false" selection-start-line="68" selection-start-column="21" selection-end-line="68" selection-end-column="21" />
+          <folding>
+            <marker date="1560328522612" expanded="true" signature="1467:1474" ph="[...]" />
+            <marker date="1560328522612" expanded="true" signature="1467:1480" ph="{...}" />
+            <marker date="1560328522612" expanded="true" signature="1467:1517" ph="{...}" />
+            <marker date="1560328522612" expanded="true" signature="1467:1519" ph="{...}" />
+            <marker date="1560328522612" expanded="true" signature="1467:1528" ph="..." />
+            <marker date="1560328522612" expanded="true" signature="1536:1642" ph="..." />
+            <marker date="1560328522612" expanded="true" signature="1556:1634" ph="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1048,7 +1191,60 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="54">
           <caret line="2" column="37" lean-forward="false" selection-start-line="2" selection-start-column="37" selection-end-line="2" selection-end-column="37" />
-          <folding />
+          <folding>
+            <marker date="1560328522600" expanded="true" signature="71:84" ph="..." />
+            <marker date="1560328522600" expanded="true" signature="217:3964" ph="{...}" />
+            <marker date="1560328522600" expanded="true" signature="228:270" ph="{...}" />
+            <marker date="1560328522600" expanded="true" signature="241:266" ph="{...}" />
+            <marker date="1560328522600" expanded="true" signature="284:3962" ph="{...}" />
+            <marker date="1560328522600" expanded="true" signature="353:3695" ph="{...}" />
+            <marker date="1560328522600" expanded="true" signature="368:579" ph="{&quot;text&quot;: '“冰激凌”用户活跃时段'...}" />
+            <marker date="1560328522600" expanded="true" signature="477:512" ph="{&quot;color&quot;: '##fff'...}" />
+            <marker date="1560328522600" expanded="true" signature="536:571" ph="{&quot;color&quot;: '##fff'...}" />
+            <marker date="1560328522600" expanded="true" signature="596:671" ph="{&quot;trigger&quot;: 'item'...}" />
+            <marker date="1560328522600" expanded="true" signature="687:3689" ph="[...]" />
+            <marker date="1560328522600" expanded="true" signature="688:1325" ph="{&quot;name&quot;: '上网时间'...}" />
+            <marker date="1560328522600" expanded="true" signature="859:926" ph="{...}" />
+            <marker date="1560328522600" expanded="true" signature="879:916" ph="{...}" />
+            <marker date="1560328522600" expanded="true" signature="943:1010" ph="{...}" />
+            <marker date="1560328522600" expanded="true" signature="963:1000" ph="{...}" />
+            <marker date="1560328522600" expanded="true" signature="1031:1317" ph="{...}" />
+            <marker date="1560328522600" expanded="true" signature="1051:1168" ph="{&quot;shadowColor&quot;: 'rgba(0, 0, 0, 0.5)'...}" />
+            <marker date="1560328522600" expanded="true" signature="1190:1307" ph="{&quot;shadowColor&quot;: 'rgba(0, 0, 0, 0.5)'...}" />
+            <marker date="1560328522600" expanded="true" signature="1333:2531" ph="{&quot;name&quot;: ''...}" />
+            <marker date="1560328522600" expanded="true" signature="1574:1704" ph="{&quot;formatter&quot;: '{value}'...}" />
+            <marker date="1560328522600" expanded="true" signature="1652:1694" ph="{&quot;color&quot;: '##63869e'...}" />
+            <marker date="1560328522600" expanded="true" signature="1724:1757" ph="{...}" />
+            <marker date="1560328522600" expanded="true" signature="1777:2075" ph="{...}" />
+            <marker date="1560328522600" expanded="true" signature="1800:2065" ph="{&quot;width&quot;: '40%'...}" />
+            <marker date="1560328522600" expanded="true" signature="1821:1931" ph="[...]" />
+            <marker date="1560328522600" expanded="true" signature="2096:2214" ph="{...}" />
+            <marker date="1560328522600" expanded="true" signature="2140:2204" ph="{&quot;color&quot;: '##ffffff'...}" />
+            <marker date="1560328522600" expanded="true" signature="2235:2410" ph="{...}" />
+            <marker date="1560328522600" expanded="true" signature="2270:2310" ph="{...}" />
+            <marker date="1560328522600" expanded="true" signature="2333:2400" ph="{&quot;color&quot;: 'red'...}" />
+            <marker date="1560328522600" expanded="true" signature="2431:2523" ph="{...}" />
+            <marker date="1560328522600" expanded="true" signature="2451:2513" ph="{&quot;color&quot;: 'green'...}" />
+            <marker date="1560328522600" expanded="true" signature="2539:3681" ph="{&quot;name&quot;: ''...}" />
+            <marker date="1560328522600" expanded="true" signature="2780:2910" ph="{&quot;formatter&quot;: '{value}'...}" />
+            <marker date="1560328522600" expanded="true" signature="2858:2900" ph="{&quot;color&quot;: '##63869e'...}" />
+            <marker date="1560328522600" expanded="true" signature="2930:2963" ph="{...}" />
+            <marker date="1560328522600" expanded="true" signature="2983:3145" ph="{...}" />
+            <marker date="1560328522600" expanded="true" signature="3006:3135" ph="{&quot;width&quot;: '10%'...}" />
+            <marker date="1560328522600" expanded="true" signature="3027:3071" ph="[...]" />
+            <marker date="1560328522600" expanded="true" signature="3166:3309" ph="{&quot;length&quot;: '92%'...}" />
+            <marker date="1560328522600" expanded="true" signature="3236:3299" ph="{&quot;color&quot;: 'grey'...}" />
+            <marker date="1560328522600" expanded="true" signature="3330:3532" ph="{...}" />
+            <marker date="1560328522600" expanded="true" signature="3388:3428" ph="{...}" />
+            <marker date="1560328522600" expanded="true" signature="3451:3522" ph="{&quot;color&quot;: '##fb5310'...}" />
+            <marker date="1560328522600" expanded="true" signature="3553:3673" ph="{...}" />
+            <marker date="1560328522600" expanded="true" signature="3573:3663" ph="{&quot;color&quot;: 'green'...}" />
+            <marker date="1560328522600" expanded="true" signature="3716:3925" ph="{...}" />
+            <marker date="1560328522600" expanded="true" signature="3782:3904" ph="{...}" />
+            <marker date="1560328522600" expanded="true" signature="3799:3895" ph="{...}" />
+            <marker date="1560328522600" expanded="true" signature="3981:4087" ph="..." />
+            <marker date="1560328522600" expanded="true" signature="4001:4079" ph="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1057,7 +1253,36 @@
         <state relative-caret-position="378">
           <caret line="55" column="8" lean-forward="false" selection-start-line="55" selection-start-column="8" selection-end-line="57" selection-end-column="9" />
           <folding>
-            <element signature="n#style#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <marker date="1560328522592" expanded="true" signature="71:84" ph="..." />
+            <marker date="1560328522592" expanded="false" signature="127:235" ph="..." />
+            <marker date="1560328522592" expanded="true" signature="317:3377" ph="{...}" />
+            <marker date="1560328522592" expanded="true" signature="347:409" ph="{...}" />
+            <marker date="1560328522592" expanded="true" signature="360:405" ph="{...}" />
+            <marker date="1560328522592" expanded="true" signature="423:3375" ph="{...}" />
+            <marker date="1560328522592" expanded="true" signature="1060:3338" ph="{...}" />
+            <marker date="1560328522592" expanded="true" signature="1076:1166" ph="{&quot;orient&quot;: 'vertical'...}" />
+            <marker date="1560328522592" expanded="true" signature="1181:1415" ph="{&quot;text&quot;: '福建“冰激凌”用户分布'...}" />
+            <marker date="1560328522592" expanded="true" signature="1313:1348" ph="{&quot;color&quot;: '##fff'...}" />
+            <marker date="1560328522592" expanded="true" signature="1372:1407" ph="{&quot;color&quot;: '##fff'...}" />
+            <marker date="1560328522592" expanded="true" signature="1447:1871" ph="{&quot;orient&quot;: 'horizontal'...}" />
+            <marker date="1560328522592" expanded="true" signature="1754:1789" ph="{&quot;color&quot;: '##fff'...}" />
+            <marker date="1560328522592" expanded="true" signature="1808:1863" ph="{...}" />
+            <marker date="1560328522592" expanded="true" signature="1897:2057" ph="{&quot;trigger&quot;: 'item'...}" />
+            <marker date="1560328522592" expanded="true" signature="1950:2049" ph="{...}" />
+            <marker date="1560328522592" expanded="true" signature="2089:2425" ph="{&quot;orient&quot;: 'vertical'...}" />
+            <marker date="1560328522592" expanded="true" signature="2202:2417" ph="{...}" />
+            <marker date="1560328522592" expanded="true" signature="2224:2289" ph="{...}" />
+            <marker date="1560328522592" expanded="true" signature="2310:2346" ph="{...}" />
+            <marker date="1560328522592" expanded="true" signature="2371:2407" ph="{...}" />
+            <marker date="1560328522592" expanded="true" signature="2466:3332" ph="[...]" />
+            <marker date="1560328522592" expanded="true" signature="2509:3324" ph="{&quot;name&quot;: '用户数量'...}" />
+            <marker date="1560328522592" expanded="true" signature="2693:2939" ph="{...}" />
+            <marker date="1560328522592" expanded="true" signature="2741:2822" ph="{...}" />
+            <marker date="1560328522592" expanded="true" signature="2764:2808" ph="{...}" />
+            <marker date="1560328522592" expanded="true" signature="2846:2927" ph="{...}" />
+            <marker date="1560328522592" expanded="true" signature="2869:2913" ph="{...}" />
+            <marker date="1560328522592" expanded="true" signature="2957:3314" ph="[...]" />
+            <marker date="1560328522592" expanded="true" signature="3416:3494" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -1065,8 +1290,30 @@
     <entry file="file://$PROJECT_DIR$/src/views/analysis/components/OneChart.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="52">
-          <caret line="2" column="36" lean-forward="true" selection-start-line="2" selection-start-column="36" selection-end-line="2" selection-end-column="37" />
-          <folding />
+          <caret line="2" column="36" lean-forward="true" selection-start-line="2" selection-start-column="36" selection-end-line="2" selection-end-column="36" />
+          <folding>
+            <marker date="1560328522610" expanded="true" signature="5270:5403" ph="[...]" />
+            <marker date="1560328522610" expanded="true" signature="5270:6090" ph="{&quot;name&quot;: '终端品牌'...}" />
+            <marker date="1560328522610" expanded="true" signature="5270:6091" ph="[...]" />
+            <marker date="1560328522610" expanded="true" signature="5270:6097" ph="{...}" />
+            <marker date="1560328522610" expanded="true" signature="5270:6134" ph="{...}" />
+            <marker date="1560328522610" expanded="true" signature="5270:6136" ph="{...}" />
+            <marker date="1560328522610" expanded="true" signature="5270:6145" ph="..." />
+            <marker date="1560328522610" expanded="true" signature="5281:5393" ph="//..." />
+            <marker date="1560328522610" expanded="true" signature="5443:6082" ph="[...]" />
+            <marker date="1560328522610" expanded="true" signature="5444:5618" ph="{...}" />
+            <marker date="1560328522610" expanded="true" signature="5467:5608" ph="{...}" />
+            <marker date="1560328522610" expanded="true" signature="5489:5596" ph="{&quot;borderColor&quot;: '##fff'...}" />
+            <marker date="1560328522610" expanded="true" signature="5620:5839" ph="{...}" />
+            <marker date="1560328522610" expanded="true" signature="5682:5829" ph="{...}" />
+            <marker date="1560328522610" expanded="true" signature="5704:5817" ph="{...}" />
+            <marker date="1560328522610" expanded="true" signature="5841:6030" ph="{...}" />
+            <marker date="1560328522610" expanded="true" signature="5903:6020" ph="{...}" />
+            <marker date="1560328522610" expanded="true" signature="5925:6008" ph="{...}" />
+            <marker date="1560328522610" expanded="true" signature="6032:6081" ph="{...}" />
+            <marker date="1560328522610" expanded="true" signature="6153:6259" ph="..." />
+            <marker date="1560328522610" expanded="true" signature="6173:6251" ph="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1075,8 +1322,86 @@
         <state relative-caret-position="81">
           <caret line="3" column="8" lean-forward="true" selection-start-line="3" selection-start-column="8" selection-end-line="3" selection-end-column="8" />
           <folding>
-            <element signature="n#style#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <marker date="1560328522607" expanded="true" signature="71:84" ph="..." />
+            <marker date="1560328522607" expanded="true" signature="217:4515" ph="{...}" />
+            <marker date="1560328522607" expanded="true" signature="228:270" ph="{...}" />
+            <marker date="1560328522607" expanded="true" signature="241:266" ph="{...}" />
+            <marker date="1560328522607" expanded="true" signature="284:4513" ph="{...}" />
+            <marker date="1560328522607" expanded="true" signature="374:4029" ph="{...}" />
+            <marker date="1560328522607" expanded="true" signature="431:689" ph="{&quot;text&quot;: '冰激凌”用户不同年龄段男女人数统计'...}" />
+            <marker date="1560328522607" expanded="true" signature="534:595" ph="{&quot;color&quot;: '##fff'...}" />
+            <marker date="1560328522607" expanded="true" signature="619:681" ph="{&quot;color&quot;: '##fff'...}" />
+            <marker date="1560328522607" expanded="true" signature="706:861" ph="{&quot;trigger&quot;: 'axis'...}" />
+            <marker date="1560328522607" expanded="true" signature="754:853" ph="{&quot;type&quot;: 'shadow'...}" />
+            <marker date="1560328522607" expanded="true" signature="803:842" ph="{&quot;color&quot;: '##fff'...}" />
+            <marker date="1560328522607" expanded="true" signature="875:1001" ph="{...}" />
+            <marker date="1560328522607" expanded="true" signature="958:993" ph="{&quot;color&quot;: '##fff'...}" />
+            <marker date="1560328522607" expanded="true" signature="1017:1150" ph="{&quot;x&quot;: '4%'...}" />
+            <marker date="1560328522607" expanded="true" signature="1075:1110" ph="{&quot;color&quot;: '##fff'...}" />
+            <marker date="1560328522607" expanded="true" signature="1190:1631" ph="[...]" />
+            <marker date="1560328522607" expanded="true" signature="1191:1630" ph="{&quot;type&quot;: 'category'...}" />
+            <marker date="1560328522607" expanded="true" signature="1237:1309" ph="{...}" />
+            <marker date="1560328522607" expanded="true" signature="1260:1299" ph="{&quot;color&quot;: '##fff'...}" />
+            <marker date="1560328522607" expanded="true" signature="1330:1363" ph="{...}" />
+            <marker date="1560328522607" expanded="true" signature="1383:1416" ph="{...}" />
+            <marker date="1560328522607" expanded="true" signature="1437:1470" ph="{...}" />
+            <marker date="1560328522607" expanded="true" signature="1491:1525" ph="{...}" />
+            <marker date="1560328522607" expanded="true" signature="1646:1988" ph="[...]" />
+            <marker date="1560328522607" expanded="true" signature="1647:1987" ph="{&quot;type&quot;: 'value'...}" />
+            <marker date="1560328522607" expanded="true" signature="1691:1724" ph="{...}" />
+            <marker date="1560328522607" expanded="true" signature="1744:1816" ph="{...}" />
+            <marker date="1560328522607" expanded="true" signature="1767:1806" ph="{&quot;color&quot;: '##fff'...}" />
+            <marker date="1560328522607" expanded="true" signature="1836:1869" ph="{...}" />
+            <marker date="1560328522607" expanded="true" signature="1890:1924" ph="{...}" />
+            <marker date="1560328522607" expanded="true" signature="1945:1978" ph="{...}" />
+            <marker date="1560328522607" expanded="true" signature="2006:2565" ph="[...]" />
+            <marker date="1560328522607" expanded="true" signature="2007:2455" ph="{&quot;handleIcon&quot;: 'path://M306.1,413c0,2.2-1.8,4-4,4h-59.8c-2.2,0-4-1.8-4-4V200.8c0-2.2,1.8-4,4-4h59.8c2.2,0,4,1.8,4,4V413z'...}" />
+            <marker date="1560328522607" expanded="true" signature="2069:2092" ph="[...]" />
+            <marker date="1560328522607" expanded="true" signature="2327:2366" ph="{&quot;color&quot;: '##d3dee5'...}" />
+            <marker date="1560328522607" expanded="true" signature="2387:2414" ph="{&quot;color&quot;: '##fff'...}" />
+            <marker date="1560328522607" expanded="true" signature="2457:2564" ph="{&quot;type&quot;: 'inside'...}" />
+            <marker date="1560328522607" expanded="true" signature="2581:4023" ph="[...]" />
+            <marker date="1560328522607" expanded="true" signature="2582:3104" ph="{&quot;name&quot;: '女'...}" />
+            <marker date="1560328522607" expanded="true" signature="2712:3076" ph="{...}" />
+            <marker date="1560328522607" expanded="true" signature="2732:3066" ph="{&quot;color&quot;: 'rgba(255,144,128,1)'...}" />
+            <marker date="1560328522607" expanded="true" signature="2795:3054" ph="{&quot;position&quot;: 'insideTop'...}" />
+            <marker date="1560328522607" expanded="true" signature="2848:2895" ph="{&quot;color&quot;: '##fff'...}" />
+            <marker date="1560328522607" expanded="true" signature="2971:3040" ph="{...}" />
+            <marker date="1560328522607" expanded="true" signature="3112:3536" ph="{&quot;name&quot;: '男'...}" />
+            <marker date="1560328522607" expanded="true" signature="3194:3508" ph="{...}" />
+            <marker date="1560328522607" expanded="true" signature="3214:3498" ph="{&quot;color&quot;: 'rgba(0,191,183,1)'...}" />
+            <marker date="1560328522607" expanded="true" signature="3307:3486" ph="{&quot;position&quot;: 'top'...}" />
+            <marker date="1560328522607" expanded="true" signature="3403:3472" ph="{...}" />
+            <marker date="1560328522607" expanded="true" signature="3538:4015" ph="{&quot;name&quot;: '总数'...}" />
+            <marker date="1560328522607" expanded="true" signature="3672:3987" ph="{...}" />
+            <marker date="1560328522607" expanded="true" signature="3692:3977" ph="{&quot;color&quot;: 'rgba(252,230,48,1)'...}" />
+            <marker date="1560328522607" expanded="true" signature="3786:3965" ph="{&quot;position&quot;: 'top'...}" />
+            <marker date="1560328522607" expanded="true" signature="3882:3951" ph="{...}" />
+            <marker date="1560328522607" expanded="true" signature="4067:4210" ph="{...}" />
+            <marker date="1560328522607" expanded="true" signature="4231:4475" ph="{...}" />
+            <marker date="1560328522607" expanded="true" signature="4311:4404" ph="{...}" />
+            <marker date="1560328522607" expanded="true" signature="4532:4638" ph="..." />
+            <marker date="1560328522607" expanded="true" signature="4552:4630" ph="{...}" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/analysis/ice.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="14" column="14" lean-forward="true" selection-start-line="14" selection-start-column="14" selection-end-line="14" selection-end-column="14" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="e#819#863#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/dashboard/admin/components/OneChart.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="27">
+          <caret line="27" column="0" lean-forward="false" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1086,17 +1411,6 @@
           <caret line="58" column="17" lean-forward="false" selection-start-line="58" selection-start-column="17" selection-end-line="58" selection-end-column="17" />
           <folding>
             <element signature="n#style#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/analysis/ice.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="4" column="10" lean-forward="true" selection-start-line="4" selection-start-column="10" selection-end-line="4" selection-end-column="10" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="e#823#867#0" expanded="true" />
           </folding>
         </state>
       </provider>
