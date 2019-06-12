@@ -1,12 +1,10 @@
 <template>
   <el-card class="box-card">
     <div class="clearfix">
-      <span style="padding-left: 20px" icon="el-icon-chat-line-square">公司公告</span>
-      <p />
+      <span style="padding-left: 20px; color: white; height: 50px; line-height: 50px" icon="el-icon-chat-line-square">公司公告</span>
     </div>
     <div v-for="(item, index) in tableData" :key="index" class="text item show" @click=" detail(index)">
       <li>{{ item.noticeTitle }}</li>
-      <p />
     </div>
   </el-card>
 </template>
@@ -40,38 +38,44 @@ export default {
 }
 </script>
 <style>
-  .text {
-    font-size: 19px;
-    font-weight: 500;
+  li{
+    list-style: none;
   }
   .clearfix {
-    font-size: 22px;
-    font-weight: 600;
-    margin: 20px 0;
+    font-weight: bold;
+    background-image: url("3.jpg");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
   }
   .clearfix>p{
     height: 3px;
-    width: 400px;
+    width: 100%;
     background-color: red;
   }
-  .show {
+  .show{
     padding: 0 5%;
   }
   .show>li:hover { color: #F00 }
+  .show li:nth-child(1){
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
   .show>li {
     padding-right: 5%;
     overflow: hidden; /*自动隐藏文字*/
     text-overflow: ellipsis;/*文字隐藏后添加省略号*/
     white-space: nowrap;/*强制不换行*/
-    width: 20em;/*不允许出现半汉字截断*/
+    width: 100%;/*不允许出现半汉字截断*/
+    border-bottom: solid 1px #ccc;
+  }
+  .show li:nth-last-child{
+    border-bottom: none;
   }
   .show>p {
-    height: 2px;
-    background-color: #8c939d;
-    padding: 0 20px;
+    border: solid 1px #8c939d;
   }
   .box-card {
-    width: 400px;
+    width: 100%;
     margin: 0;
     padding: 0;
   }

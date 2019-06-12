@@ -44,7 +44,7 @@ export default {
         data: ['福建']
       },
       title: {
-        text: '',
+        text: '新增用户分布',
         //        subtext: '福建新增用户分布',
         left: 'center',
         top: 'top',

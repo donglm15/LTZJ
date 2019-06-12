@@ -2,7 +2,7 @@
   <section class="todoapp">
     <!-- header -->
     <header class="header">
-      <input class="new-todo" autocomplete="off" placeholder="日程表" @keyup.enter="addTodo">
+      <input class="new-todo" autocomplete="off" placeholder="待办事项" @keyup.enter="addTodo">
     </header>
     <!-- main section -->
     <section v-show="todos.length" class="main">
@@ -50,12 +50,12 @@ const defalutList = [
   { text: '查看邮件', done: true },
   { text: '查看协作任务', done: true },
   { text: '参加会议', done: false },
-  { text: '处理协作任务', done: false },
-  { text: '申请差旅报销', done: false },
-  { text: '浏览相关资讯', done: true },
-  { text: '查看近期活动', done: false },
-  { text: '查看通告', done: true },
-  { text: '进行党员学习', done: true }
+  { text: '处理协作任务', done: false }
+//  { text: '申请差旅报销', done: false },
+//  { text: '浏览相关资讯', done: true },
+//  { text: '查看近期活动', done: false },
+//  { text: '查看通告', done: true },
+//  { text: '进行党员学习', done: true }
 ]
 export default {
   components: { Todo },
@@ -125,4 +125,13 @@ export default {
 
 <style lang="scss">
   @import './index.scss';
+  .header{
+    background-image: url("1.png");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    border-radius:5px 5px 0 0px;
+  }
+  .new-todo::-webkit-input-placeholder {
+    color: #ffffff;
+  }
 </style>

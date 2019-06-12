@@ -15,187 +15,167 @@ export default {
   mounted() {
     this.chart = echarts.init(this.$refs.chart)
     const option = {
-      title: {
-        text: '物流临保概况',
-        subtext: '2017/05',
-        left: 'leafDepth'
-      },
       tooltip: {
-        formatter: '{b}:<br />临保件数： {c}件'
+        trigger: 'item',
+        formatter: '{b}点<br>{c}M ({d}%)'
       },
-      color: ['rgb(100,200,300)'],
       series: [{
-        name: '临保',
-        type: 'treemap',
-        visibleMin: 100,
-        data: [ // 注意，最外层是一个数组，而非从某个根节点开始。
-          {
-            value: 1000,
-            children: [{
-              value: 400, // value字段的值，对应到面积大小。
-              // 也可以是数组，如 [2323, 43, 55]，则数组第一项对应到面积大小。
-              // 数组其他项可以用于额外的视觉映射，详情参见 series-treemp.levels。
-              id: 'someid-1', // id 不是必须设置的。
-              // 但是如果想使用 API 来改变某个节点，需要用 id 来定位。
-              name: '超过1/3保质期', // 显示在矩形中的描述文字。
-              children: [
-                {
-                  value: 150,
-                  id: 'someid-31',
-                  name: '河北物流'
-                }, {
-                  value: 200,
-                  id: 'someid-32',
-                  name: '四川物流'
-                }, {
-                  value: 90,
-                  id: 'someid-33',
-                  name: '杭州物流'
-                }, {
-                  value: 30,
-                  id: 'someid-34',
-                  name: '重庆物流'
-                }, {
-                  value: 20,
-                  id: 'someid-31',
-                  name: '上海物流'
-                }
-                // ...
-              ],
-              label: { // 此节点特殊的 label 定义（如果需要的话）。
-                // ...         // label的格式参见 series-treemap.label。
-              },
-              itemStyle: { // 此节点特殊的 itemStyle 定义（如果需要的话）。
-                // ...         // label的格式参见 series-treemap.itemStyle。
-              }
-            }, {
-              value: 300,
-              id: 'someid-2',
-              name: '超过1/2保质期',
-              children: [
-                {
-                  value: 150,
-                  id: 'someid-31',
-                  name: '河北物流'
-                }, {
-                  value: 200,
-                  id: 'someid-32',
-                  name: '四川物流'
-                }, {
-                  value: 90,
-                  id: 'someid-33',
-                  name: '杭州物流'
-                }, {
-                  value: 30,
-                  id: 'someid-34',
-                  name: '重庆物流'
-                }, {
-                  value: 20,
-                  id: 'someid-31',
-                  name: '上海物流'
-                }
-
-                // ...
-              ]
-
-            }, {
-              value: 200,
-              id: 'someid-3',
-              name: '超过2/3保质期',
-              children: [
-                {
-                  value: 150,
-                  id: 'someid-31',
-                  name: '河北物流'
-                }, {
-                  value: 200,
-                  id: 'someid-32',
-                  name: '四川物流'
-                }, {
-                  value: 90,
-                  id: 'someid-33',
-                  name: '杭州物流'
-                }, {
-                  value: 30,
-                  id: 'someid-34',
-                  name: '重庆物流'
-                }, {
-                  value: 20,
-                  id: 'someid-31',
-                  name: '上海物流'
-                }
-                // ...
-              ]
-
-            }, {
-              value: 100,
-              id: 'someid-4',
-              name: '完全超过保质期',
-              children: [
-                {
-                  value: 150,
-                  id: 'someid-31',
-                  name: '河北物流'
-                }, {
-                  value: 200,
-                  id: 'someid-32',
-                  name: '四川物流'
-                }, {
-                  value: 90,
-                  id: 'someid-33',
-                  name: '杭州物流'
-                }, {
-                  value: 30,
-                  id: 'someid-34',
-                  name: '重庆物流'
-                }, {
-                  value: 20,
-                  id: 'someid-31',
-                  name: '上海物流'
-                }
-                // ...
-              ]
-
-            }
-
-            ]
+        name: '上网时间',
+        type: 'pie',
+        radius: ['5%', '65%'],
+        center: ['50%', '50%'],
+        roseType: 'area',
+        color: ['#3fa7dc'],
+        data: data(),
+        labelLine: {
+          normal: {
+            show: false
           }
-          // {
-          //     value: [23, 59, 12]
-          //     // 如果没有children，可以不写
-          // },
-          // ...
-        ],
-        leafDepth: 2,
-        levels: [{
-          itemStyle: {
-            normal: {
-              borderColor: '#fff',
-              borderWidth: 10,
-              gapWidth: 4
-            }
+        },
+        label: {
+          normal: {
+            show: false
           }
-        }, {
-          colorSaturation: [0.3, 0.6],
-          itemStyle: {
-            normal: {
-              borderColorSaturation: 0.7,
-              gapWidth: 5,
-              borderWidth: 2
-            }
+        },
+        itemStyle: {
+          normal: {
+            shadowBlur: 10,
+            shadowOffsetX: 0,
+            shadowColor: 'rgba(0, 0, 0, 0.5)'
+          },
+          emphasis: {
+            shadowBlur: 10,
+            shadowOffsetX: 0,
+            shadowColor: 'rgba(0, 0, 0, 0.5)'
           }
-        }, {
-          colorSaturation: [0.3, 0.5],
-          itemStyle: {
-            normal: {
-              borderColorSaturation: 0.6,
-              gapWidth: 1
-            }
+        }
+      },
+      {
+        name: '',
+        type: 'gauge',
+        min: 0,
+        max: 24,
+        startAngle: 90,
+        endAngle: 449.9,
+        radius: '88%',
+        splitNumber: 24,
+        center: ['50%', '50%'],
+        clockwise: false,
+        animation: false,
+        detail: {
+          show: false,
+          formatter: '{value}',
+          textStyle: {
+            color: '#63869e'
           }
-        }, {
-          colorSaturation: [0.3, 0.5]
-        }]
-      }]
+        },
+        axisTick: {
+          show: false
+        },
+        axisLine: {
+          lineStyle: {
+            color: [
+              [0.25, '#63869e'],
+              [0.75, '#ffffff'],
+              [1, '#63869e']
+            ],
+            width: '40%',
+            shadowColor: '#0d4b81',
+            shadowBlur: 40,
+            opacity: 1
+          }
+        },
+        splitLine: {
+          length: 5,
+          lineStyle: {
+            color: '#ffffff',
+            width: 2
+          }
+        },
+        axisLabel: {
+          formatter: function(v) {
+            return v || ''
+          },
+          textStyle: {
+            color: 'red',
+            fontWeight: 700
+          }
+        },
+        itemStyle: {
+          normal: {
+            color: 'green',
+            width: 2
+          }
+        }
+      },
+      {
+        name: '',
+        type: 'gauge',
+        min: 0,
+        max: 24,
+        startAngle: 90,
+        endAngle: 449.9,
+        radius: '72%',
+        splitNumber: 24,
+        center: ['50%', '50%'],
+        clockwise: false,
+        animation: false,
+        detail: {
+          show: false,
+          formatter: '{value}',
+          textStyle: {
+            color: '#63869e'
+          }
+        },
+        axisTick: {
+          show: false
+        },
+        axisLine: {
+          lineStyle: {
+            color: [
+              [1, '#E8E8E8']
+            ],
+            width: '10%',
+            opacity: 0.8
+          }
+        },
+        splitLine: {
+          show: true,
+          length: '92%',
+          lineStyle: {
+            color: 'grey',
+            width: '1'
+          }
+        },
+        axisLabel: {
+          show: false,
+          formatter: function(v) {
+            return v || ''
+          },
+          textStyle: {
+            color: '#fb5310',
+            fontWeight: 700
+          }
+        },
+        itemStyle: {
+          normal: {
+            color: 'green',
+            width: 2,
+            borderWidth: 3
+          }
+        }
+      }
+      ]
+    }
+    function data() {
+      const d = []
+      for (let i = 0; i < 24; i++) {
+        d.push({
+          name: i + '~' + (i + 1),
+          value: (Math.random() * 100).toFixed(1)
+        })
+      }
+      return d
     }
     this.chart.setOption(option)
   }

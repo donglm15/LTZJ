@@ -6,12 +6,26 @@
       </el-carousel-item>
     </el-carousel>
 
-    <el-row :gutter="8" class="my-wrapper">
-      <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 12}" :xl="{span: 12}" style="padding-left:50px;margin-top:40px;">
-        <todo-list />
+    <el-row :gutter="25" type="flex" justify="space-between" style="margin-top: 20px">
+      <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 13}" :xl="{span: 12}" style="margin-bottom: 30px">
+        <el-row :gutter="15" style="margin-top: 20px">
+          <el-col :span="12">
+            <todo-list style="height: 274px" />
+          </el-col>
+          <el-col :span="12">
+            <ele-calendar
+              :data="datedef"
+              :prop="prop"
+              style="height: 274px; width: 100%"
+              class="calendar"
+            />
+          </el-col>
+        </el-row>
+        <el-row style="margin-top: 44px">
+          <notice />
+        </el-row>
       </el-col>
-      <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 12}" :xl="{span: 12}" style="margin-bottom:30px;" />
-      <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 12}" :xl="{span: 12}" style="padding-left:40px;margin-bottom:30px;">
+      <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 11}" :xl="{span: 12}" style="margin-bottom:30px;">
         <Timeline />
       </el-col>
     </el-row>
@@ -44,6 +58,11 @@ import Timeline from './components/Timeline.vue'
 import BaiMap from './components/baidu.vue'
 import MapChart from './components/mapChart.vue'
 import TodoList from './components/TodoList'
+import Notice from './components/notice.vue'
+import eleCalendar from 'ele-calendar'
+import 'ele-calendar/dist/vue-calendar.css'
+import ElRow from 'element-ui/packages/row/src/row'
+import ElCol from 'element-ui/packages/col/src/col'
 
 const lineChartData = {
   newVisitis: {
@@ -67,16 +86,25 @@ const lineChartData = {
 export default {
   name: 'DashboardAdmin',
   components: {
+    ElCol,
+    ElRow,
     PieChart,
     Timeline,
     MapChart,
     BaiMap,
-    TodoList
+    TodoList,
+    eleCalendar,
+    Notice
   },
   data() {
     return {
       lineChartData: lineChartData.newVisitis,
-      urls: []
+      urls: [],
+      datedef: [
+        { 'date': '2019-06-12', 'content': '23231', 'cid': null },
+        { 'date': '2019-06-17', 'content': '223444', 'cid': null }
+      ],
+      prop: 'date'
     }
   },
   mounted() {
@@ -95,6 +123,7 @@ export default {
     handleSetLineChartData(type) {
       this.lineChartData = lineChartData[type]
     }
+
   }
 }
 </script>
@@ -110,9 +139,11 @@ export default {
     /*padding: 16px 16px 0;*/
     margin-bottom: 32px;
   }
-  .my-wrapper{
-    margin: 20px 0;
-    background-color: rgba(255,255,255,0.2);
+
+  .calendar{
+    background-image: url("10.jpg");
+    background-size: 100% 50px;
+    background-repeat: no-repeat;
   }
 
 </style>
