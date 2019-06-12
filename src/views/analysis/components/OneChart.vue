@@ -1,5 +1,7 @@
 <template>
-  <div ref="chart" class="chart-container" />
+  <div class="chart-container">
+    <div ref="chart" style="height: 500px" />
+  </div>
 </template>
 
 <script>
@@ -16,49 +18,56 @@ export default {
     this.chart = echarts.init(this.$refs.chart)
     const option = {
       title: {
-        text: '物流临保概况',
-        subtext: '2017/05',
-        left: 'leafDepth'
+        text: '“冰激凌”用户终端偏好',
+        subtext: '终端机型',
+        left: 'center',
+        textStyle: {
+          color: '#fff'
+        },
+        subtextStyle: {
+          color: '#fff'
+        }
       },
       tooltip: {
-        formatter: '{b}:<br />临保件数： {c}件'
+        formatter: '{b}:<br />用户比例： {c}%'
       },
       color: ['rgb(100,200,300)'],
       series: [{
-        name: '临保',
+        name: '终端品牌',
         type: 'treemap',
         visibleMin: 100,
+        roam: false,
         data: [ // 注意，最外层是一个数组，而非从某个根节点开始。
           {
-            value: 1000,
+            value: 100,
             children: [{
-              value: 400, // value字段的值，对应到面积大小。
+              value: 35, // value字段的值，对应到面积大小。
               // 也可以是数组，如 [2323, 43, 55]，则数组第一项对应到面积大小。
               // 数组其他项可以用于额外的视觉映射，详情参见 series-treemp.levels。
               id: 'someid-1', // id 不是必须设置的。
               // 但是如果想使用 API 来改变某个节点，需要用 id 来定位。
-              name: '超过1/3保质期', // 显示在矩形中的描述文字。
+              name: '苹果', // 显示在矩形中的描述文字。
               children: [
                 {
-                  value: 150,
-                  id: 'someid-31',
-                  name: '河北物流'
-                }, {
-                  value: 200,
-                  id: 'someid-32',
-                  name: '四川物流'
-                }, {
-                  value: 90,
-                  id: 'someid-33',
-                  name: '杭州物流'
-                }, {
                   value: 30,
-                  id: 'someid-34',
-                  name: '重庆物流'
-                }, {
-                  value: 20,
                   id: 'someid-31',
-                  name: '上海物流'
+                  name: 'iPhone 6'
+                }, {
+                  value: 32,
+                  id: 'someid-32',
+                  name: 'iPhone 7 Plus'
+                }, {
+                  value: 15,
+                  id: 'someid-33',
+                  name: 'iPhone X'
+                }, {
+                  value: 12,
+                  id: 'someid-34',
+                  name: 'iPhone 7'
+                }, {
+                  value: 11,
+                  id: 'someid-31',
+                  name: 'iPhone 6s'
                 }
                 // ...
               ],
@@ -69,89 +78,118 @@ export default {
                 // ...         // label的格式参见 series-treemap.itemStyle。
               }
             }, {
-              value: 300,
+              value: 11,
               id: 'someid-2',
-              name: '超过1/2保质期',
+              name: 'OPPO',
               children: [
                 {
-                  value: 150,
+                  value: 40,
                   id: 'someid-31',
-                  name: '河北物流'
+                  name: 'OPPO R9S'
                 }, {
-                  value: 200,
+                  value: 21,
                   id: 'someid-32',
-                  name: '四川物流'
+                  name: 'OPPO R15x'
                 }, {
-                  value: 90,
+                  value: 13,
                   id: 'someid-33',
-                  name: '杭州物流'
+                  name: 'OPPO A7'
                 }, {
-                  value: 30,
+                  value: 10,
                   id: 'someid-34',
-                  name: '重庆物流'
+                  name: 'OPPO A7X'
                 }, {
-                  value: 20,
+                  value: 7,
                   id: 'someid-31',
-                  name: '上海物流'
+                  name: 'OPPO K1'
                 }
 
                 // ...
               ]
 
             }, {
-              value: 200,
+              value: 20,
               id: 'someid-3',
-              name: '超过2/3保质期',
+              name: '华为',
               children: [
                 {
-                  value: 150,
+                  value: 32,
                   id: 'someid-31',
-                  name: '河北物流'
+                  name: '华为Mate 20 X'
                 }, {
-                  value: 200,
+                  value: 24,
                   id: 'someid-32',
-                  name: '四川物流'
+                  name: '华为Mate 20 Pro'
                 }, {
-                  value: 90,
+                  value: 14,
                   id: 'someid-33',
-                  name: '杭州物流'
+                  name: '华为P20'
                 }, {
-                  value: 30,
+                  value: 15,
                   id: 'someid-34',
-                  name: '重庆物流'
+                  name: '华为Mate30'
                 }, {
                   value: 20,
                   id: 'someid-31',
-                  name: '上海物流'
+                  name: '华为P30'
                 }
                 // ...
               ]
 
             }, {
-              value: 100,
+              value: 10,
               id: 'someid-4',
-              name: '完全超过保质期',
+              name: 'VIVO',
               children: [
                 {
-                  value: 150,
+                  value: 24,
                   id: 'someid-31',
-                  name: '河北物流'
+                  name: 'VIVO Y93'
                 }, {
-                  value: 200,
+                  value: 13,
                   id: 'someid-32',
-                  name: '四川物流'
+                  name: 'VIVO X20A'
                 }, {
-                  value: 90,
+                  value: 35,
                   id: 'someid-33',
-                  name: '杭州物流'
+                  name: 'VIVO X27'
                 }, {
                   value: 30,
                   id: 'someid-34',
-                  name: '重庆物流'
+                  name: 'VIVO NEX'
                 }, {
-                  value: 20,
+                  value: 10,
                   id: 'someid-31',
-                  name: '上海物流'
+                  name: 'VIVO S1'
+                }
+                // ...
+              ]
+
+            }, {
+              value: 15,
+              id: 'someid-5',
+              name: '其它',
+              children: [
+                {
+                  value: 25,
+                  id: 'someid-31',
+                  name: '小米'
+                }, {
+                  value: 25,
+                  id: 'someid-32',
+                  name: '荣耀'
+                }, {
+                  value: 25,
+                  id: 'someid-33',
+                  name: '三星'
+                }, {
+                  value: 12,
+                  id: 'someid-34',
+                  name: '金立'
+                }, {
+                  value: 13,
+                  id: 'someid-31',
+                  name: '魅族'
                 }
                 // ...
               ]
@@ -205,6 +243,6 @@ export default {
   .chart-container{
     position: relative;
     width: 100%;
-    height: 400px;
+    height: calc(100vh - 84px);
   }
 </style>

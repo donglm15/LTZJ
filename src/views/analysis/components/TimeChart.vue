@@ -1,5 +1,7 @@
 <template>
-  <div ref="chart" class="chart-container" />
+  <div class="chart-container">
+    <div ref="chart" style="height: 500px" />
+  </div>
 </template>
 
 <script>
@@ -19,6 +21,7 @@ export default {
         text: '“冰激凌”用户活跃时段',
         subtext: '“冰激凌”用户分时段平均使用流量',
         x: 'center',
+
         textStyle: {
           color: '#fff'
         },
@@ -67,7 +70,7 @@ export default {
         max: 24,
         startAngle: 90,
         endAngle: 449.9,
-        radius: '88%',
+        radius: '85%',
         splitNumber: 24,
         clockwise: false,
         animation: false,

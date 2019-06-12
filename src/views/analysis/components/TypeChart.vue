@@ -1,5 +1,7 @@
 <template>
-  <div ref="chart" class="chart-container" />
+  <div class="chart-container">
+    <div ref="chart" style="height: 500px" />
+  </div>
 </template>
 
 <script>
@@ -54,7 +56,7 @@ export default {
         },
         legend: {
           left: 'center',
-          bottom: '10',
+          top: '70',
           textStyle: {
             color: '#fff'
           },
